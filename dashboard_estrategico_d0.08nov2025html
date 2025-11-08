@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASHBOARD D0 - MATRIZ ESTRATÉGICA</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de Tailwind para modo oscuro y fuente Inter -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-dark': '#1e293b', // slate-800
+                        'secondary-dark': '#334155', // slate-700
+                        'critical': '#ef4444', // red-500
+                        'critical-light': '#f87171', // red-400
+                        'active': '#34d399', // emerald-400
+                        'latent': '#94a3b8', // slate-400
+                        'operative': '#60a5fa', // blue-400
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo para la fuente Inter (importación) */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        /* Asegura que el scrollbar sea discreto en modo oscuro */
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        body::-webkit-scrollbar-track {
+            background: #111827; /* gray-900 */
+        }
+        body::-webkit-scrollbar-thumb {
+            background-color: #475569; /* slate-600 */
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-slate-100 font-sans min-h-screen p-4 md:p-8 dark">
+
+    <!-- Encabezado del Dashboard -->
+    <header class="mb-10 text-center">
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
+            DASHBOARD D0 - MATRIZ ESTRATÉGICA v1.1
+        </h1>
+        <p class="text-slate-400 text-xl font-medium">Resumen de Ejes de Ejecución y Priorización</p>
+    </header>
+
+    <!-- Contenedor principal de la Matriz -->
+    <div id="dashboard-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+        <!-- Los cards de Dominio se renderizarán aquí -->
+    </div>
+
+    <!-- Línea Temporal Transversal -->
+    <section class="max-w-7xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-slate-600 pb-2 text-white flex items-center">
+            <svg class="w-6 h-6 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Línea Temporal Transversal
+        </h2>
+        <div id="timeline-container" class="space-y-4">
+            <!-- Los eventos de la Línea Temporal se renderizarán aquí -->
+        </div>
+    </section>
+
+    <!-- JavaScript para manejar y renderizar los datos -->
+    <script>
+        // Definición de los datos de la matriz estratégica
+        const strategicData = [
+            {
+                domain: "DOMINIO CORPORATIVO (OCHA)",
+                subtitle: "Impacto organizacional directo",
+                theme: "border-red-500 hover:shadow-red-500/50",
+                items: [
+                    { code: "PWO", status: "Activo", critical: true, move: "Presentación formal de resultados D1 + preparación logística misión Jairo (Nov/Dic 2025)" },
+                    { code: "Soporte Colombia/Venezuela", status: "Activo", critical: true, move: "Misión de Jairo a Venezuela/Colombia (Nov/Dic 2025) - Inspección in situ y reuniones presenciales" }
+                ]
+            },
+            {
+                domain: "DOMINIO PERSONAL (DESARROLLO)",
+                subtitle: "Crecimiento y posicionamiento profesional",
+                theme: "border-cyan-500 hover:shadow-cyan-500/50",
+                items: [
+                    { code: "SOP", status: "Operativo", critical: true, move: "Mantener protocolo (1 tableta cena + 2 almuerzo) + Ritual Atardecer Zona 2 + ritual dominical de 10 minutos para feedback" },
+                    { code: "DT+IA", status: "Latente", critical: false, move: "Activación en periodos de menor carga operativa para captura estratégica de insights" }
+                ]
+            },
+            {
+                domain: "DOMINIO INNOVACIÓN (LABORATORIO)",
+                subtitle: "Experimentación y frameworks avanzados",
+                theme: "border-yellow-500 hover:shadow-yellow-500/50",
+                items: [
+                    { code: "DM-002", status: "En uso", critical: true, move: "Bloquear 2-3 horas para redactar \"PHC-DW-002: Lecciones Aprendidas D1\"" },
+                    { code: "PSY-DEC+NL", status: "Latente", critical: false, move: "Activación post-D1 + necesidad de optimización decisoria en próximo proyecto grande" },
+                    { code: "AET-ALIGN", status: "Latente", critical: false, move: "Activación ante necesidad específica de granularidad tonal en proyecto futuro" },
+                    { code: "TA+IH", status: "Latente", critical: false, move: "Activación con oportunidad concreta de implementación con equipo o cliente" },
+                    { code: "TWR+IA", status: "Latente", critical: false, move: "Activación en ventana de 1 semana para \"ráfaga de ejecución\"" },
+                    { code: "DM-003", status: "Latente", critical: false, move: "Activación tras validación de 3 fichas DM-002 (F01, F02, F03)" }
+                ]
+            }
+        ];
+
+        // Definición de los datos de la línea temporal
+        const timelineData = [
+            { period: "Nov/Dic 2025", event: "Misión Jairo (Corporativo) + Mantenimiento SOP (Personal)", indicator: "bg-teal-600 text-white" },
+            { period: "Inmediato", event: "Presentación D1 (Corporativo) + Redacción lecciones DM-002 (Innovación)", indicator: "bg-red-600 text-white font-bold" },
+            { period: "Latente", event: "Banco de ideas pendiente de priorización (Innovación/Corporativo)", indicator: "bg-slate-600 text-slate-300" }
+        ];
+
+        /**
+         * Función para obtener clases de color basadas en el estado y criticidad.
+         */
+        function getStatusClasses(status, isCritical) {
+            let baseClasses = "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase ";
+            let colorClasses = "";
+
+            if (isCritical) {
+                // Estado CRÍTICO
+                colorClasses = "bg-critical text-white shadow-md shadow-critical/50 ring-2 ring-critical-light";
+            } else if (status.includes("Activo") || status.includes("En uso")) {
+                // Estado Activo/En uso
+                colorClasses = "bg-active text-gray-900";
+            } else if (status.includes("Operativo")) {
+                // Estado Operativo
+                colorClasses = "bg-operative text-gray-900";
+            } else if (status.includes("Latente")) {
+                // Estado Latente
+                colorClasses = "bg-slate-600 text-slate-300";
+            }
+
+            return baseClasses + colorClasses;
+        }
+
+        /**
+         * Renderiza los elementos de la matriz en un card de dominio.
+         */
+        function renderDomainCard(domainData) {
+            const itemsHtml = domainData.items.map(item => {
+                const statusClasses = getStatusClasses(item.status, item.critical);
+                
+                // Determina el icono de criticidad
+                const criticalIcon = item.critical ? 
+                    '<svg class="w-4 h-4 ml-1 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>' : 
+                    '';
+
+                return `
+                    <div class="p-4 border-b border-slate-700 last:border-b-0 hover:bg-slate-800 transition duration-150 rounded-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md mb-2 md:mb-0">${item.code}</span>
+                            <div class="${statusClasses}">
+                                ${item.status}
+                                ${item.critical ? ' #[CRÍTICO]' : ''}
+                                ${criticalIcon}
+                            </div>
+                        </div>
+                        <p class="text-white text-md font-medium">${item.move}</p>
+                    </div>
+                `;
+            }).join('');
+
+            // Construcción del card de dominio
+            return `
+                <div class="bg-primary-dark border-t-4 ${domainData.theme} rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-1 text-white">${domainData.domain}</h3>
+                        <p class="text-sm text-slate-400 mb-4">${domainData.subtitle}</p>
+                        <div class="divide-y divide-slate-700 bg-secondary-dark rounded-lg overflow-hidden border border-slate-700">
+                            ${itemsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Renderiza el componente de la línea temporal.
+         */
+        function renderTimelineItem(timelineItem) {
+            return `
+                <div class="flex items-start bg-primary-dark p-4 rounded-lg shadow-xl border border-slate-700 hover:bg-slate-800 transition duration-200">
+                    <div class="flex-shrink-0 mr-4">
+                        <span class="rounded-full ${timelineItem.indicator} text-xs md:text-sm px-4 py-1 font-mono uppercase shadow-lg">
+                            ${timelineItem.period}
+                        </span>
+                    </div>
+                    <p class="text-lg text-slate-200">${timelineItem.event}</p>
+                </div>
+            `;
+        }
+
+        // Función de inicialización
+        function initDashboard() {
+            const container = document.getElementById('dashboard-container');
+            const timeline = document.getElementById('timeline-container');
+
+            // Renderizar Cards de Dominio
+            container.innerHTML = strategicData.map(renderDomainCard).join('');
+
+            // Renderizar Línea Temporal
+            timeline.innerHTML = timelineData.map(renderTimelineItem).join('');
+        }
+
+        // Ejecutar la inicialización
+        window.onload = initDashboard;
+    </script>
+</body>
+</html>
