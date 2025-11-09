@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master File de Proyectos (MFP) v2.2 - DSRI</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de la fuente Inter y el tema oscuro -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate-900 oscuro */
+            color: #e2e8f0; /* Texto claro */
+        }
+        .card {
+            background-color: #1e293b; /* Slate-800 para tarjetas */
+            border: 1px solid #334155; /* Borde sutil */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+        }
+        .critical {
+            color: #f87171; /* Rojo suave para CRÍTICO */
+            font-weight: 700;
+        }
+        .label {
+            font-size: 0.75rem; /* Etiqueta pequeña */
+            color: #94a3b8; /* Gris claro */
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto space-y-8">
+
+            <!-- TÍTULO PRINCIPAL & METADATA -->
+            <header class="text-center space-y-2">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    DSRI - GENERANDO MASTER FILE PROYECTOS ACTUALIZADO v2.2
+                </h1>
+                <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm">
+                    <span class="label">BASE DE VERIFICACIÓN: <span class="text-sky-300 font-medium">PDAAA-PAMP v8.3 - SECCIÓN 5/11</span></span>
+                    <span class="label">CHECKSUM ORIGEN: <code class="bg-slate-700 text-sky-200 px-2 py-0.5 rounded">pdaaa_pamp_v83_completo_20251018</code></span>
+                </div>
+            </header>
+
+            <!-- CARD: MASTER FILE CORE INFO -->
+            <div class="card p-6 rounded-xl space-y-4">
+                <h2 class="text-xl font-bold text-sky-400 border-b border-sky-600 pb-2">
+                    MASTER FILE - PROYECTOS (MFP) v2.2
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <p class="label">FECHA DE EMISIÓN</p>
+                        <p class="text-white font-semibold">08/11/2025</p>
+                    </div>
+                    <div>
+                        <p class="label">CHECKSUM DE VERSIÓN</p>
+                        <code class="bg-sky-900 text-sky-300 px-2 py-1 rounded text-xs">mfp_v2_2_priorizacion_corregida_20251108</code>
+                    </div>
+                    <div class="md:col-span-3">
+                        <p class="label">PROPÓSITO</p>
+                        <p class="text-slate-300 italic">
+                            Documentar el ecosistema completo de proyectos activos, módulos latentes y banco de ideas, bajo la filosofía operativa de "Menos Palabras, Más Resultados".
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD: FILOSOFÍA OPERATIVA -->
+            <div class="card p-6 rounded-xl">
+                <h2 class="text-xl font-bold text-teal-400 border-b border-teal-600 pb-2 mb-4">
+                    FILOSOFÍA OPERATIVA
+                </h2>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li class="flex items-start">
+                        <span class="text-teal-400 mr-3 mt-1 text-lg">■</span>
+                        <p><span class="font-semibold text-white">El terreno fértil:</span> Actuar sobre el "dolor silencioso" operativo normalizado.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-teal-400 mr-3 mt-1 text-lg">■</span>
+                        <p><span class="font-semibold text-white">La estrategia:</span> Menos palabras, más resultados. Crear hechos consumados.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-teal-400 mr-3 mt-1 text-lg">■</span>
+                        <p><span class="font-semibold text-white">Control narrativo:</span> La evidencia tangible redefine lo posible.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-teal-400 mr-3 mt-1 text-lg">■</span>
+                        <p><span class="font-semibold text-white">Efecto dominó:</span> Cada proyecto es una semilla estratégica de expansión orgánica.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-teal-400 mr-3 mt-1 text-lg">■</span>
+                        <p><span class="font-semibold text-white">El mandato:</span> Se gana con resultados, no se negocia con promesas.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- FRENTES OPERATIVOS ACTIVOS -->
+            <h2 class="text-2xl font-bold text-red-400 pt-4 border-b border-red-900 pb-2">
+                FRENTES OPERATIVOS ACTIVOS (Máximo 3)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- PROYECTO 1: PWO -->
+                <div class="card p-5 rounded-xl space-y-3 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">1. PWO - PERFORMANCE WORKPLAN OCHA</h3>
+                        <p class="text-xs text-sky-400 font-mono mb-2">Código: `pwo`</p>
+                        <p class="critical">Estado: Activo #[CRÍTICO]</p>
+                        <p class="text-slate-400 text-sm mt-2">Propósito: Transformar la gestión del Workplan y evaluaciones OCHA en ventaja estratégica de posicionamiento interno.</p>
+                    </div>
+                    <div class="mt-4">
+                        <p class="label">PRÓXIMOS PASOS</p>
+                        <ul class="list-disc list-inside text-sm text-slate-300 ml-2">
+                            <li>Presentación formal de resultados D1</li>
+                            <li>Preparación logística misión Nov/Dic</li>
+                        </ul>
+                        <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded text-xs mt-2 block">pwo_actualizado_mision_jairo_20251022</code>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2: SOP -->
+                <div class="card p-5 rounded-xl space-y-3 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">2. SOP - SISTEMA OPERATIVO PERSONAL</h3>
+                        <p class="text-xs text-sky-400 font-mono mb-2">Código: `sop`</p>
+                        <p class="critical">Estado: Operativo #[CRÍTICO]</p>
+                        <p class="text-slate-400 text-sm mt-2">Propósito: Diseñar, implementar y mantener el sistema personalizado de gestión de tiempo, atención y energía.</p>
+                    </div>
+                    <div class="mt-4">
+                        <p class="label">PRÓXIMO PASO</p>
+                        <p class="text-sm text-slate-300">Mantener protocolo (1 tableta cena + 2 almuerzo) + Ritual Atardecer Zona 2 + ritual dominical 10min feedback</p>
+                        <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded text-xs mt-2 block">sop_fundamentos_verificados_20251004</code>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 3: PMSL -->
+                <div class="card p-5 rounded-xl space-y-3 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">3. PMSL - MOTOR SCRAPPING LABORAL</h3>
+                        <p class="text-xs text-sky-400 font-mono mb-2">Código: `pmsl`</p>
+                        <p class="critical">Estado: Activo #[CRÍTICO]</p>
+                        <p class="text-slate-400 text-sm mt-2">Propósito: Convertir expertise tácito en oportunidades concretas de posicionamiento profesional en sistema UN.</p>
+                    </div>
+                    <div class="mt-4">
+                        <p class="label">PRÓXIMO MOVIMIENTO</p>
+                        <p class="text-sm text-slate-300">Verificación manual de capacidades de 10 agencias objetivo + implementación sistema ponderación</p>
+                        <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded text-xs mt-2 block">pmsl_prioridad_critica_20251108</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÓDULOS ESTRATÉGICOS -->
+            <h2 class="text-2xl font-bold text-purple-400 pt-4 border-b border-purple-900 pb-2">
+                MÓDULOS ESTRATÉGICOS EN USO/LATENTES
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- EN USO -->
+                <div class="card p-5 rounded-xl">
+                    <h3 class="text-lg font-bold text-purple-300 mb-3 border-b border-purple-800 pb-2">EN USO (Metodologías activas)</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-slate-700 p-3 rounded">
+                            <p class="text-white font-semibold">DM-002 (`dw_002`)</p>
+                            <p class="text-xs text-slate-400">Framework de deconstrucción - Estado: En uso</p>
+                            <code class="bg-slate-600 text-purple-200 px-2 py-0.5 rounded text-xs mt-1 inline-block">dw_002_metodologia_establecida_20251011</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LATENTES -->
+                <div class="card p-5 rounded-xl">
+                    <h3 class="text-lg font-bold text-purple-300 mb-3 border-b border-purple-800 pb-2">LATENTES (Estructurados, en pausa)</h3>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li><span class="font-semibold text-white">PSY-DEC+NL</span> (`psy_dec_nl`) - Activación post-D1</li>
+                        <li><span class="font-semibold text-white">AET-ALIGN</span> (`aet_align`) - Activación por necesidad granularidad tonal</li>
+                        <li><span class="font-semibold text-white">TA+IH</span> (`ta_ih`) - Activación por oportunidad concreta</li>
+                        <li><span class="font-semibold text-white">DT+IA</span> (`dt_ia`) - Activación en periodos de menor carga</li>
+                        <li><span class="font-semibold text-white">TWR+IA</span> (`twr_ia`) - Activación en ventana de 1 semana</li>
+                        <li><span class="font-semibold text-white">DM-003</span> (`dw_003`) - Activación tras 3 fichas DM-002 validadas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BANCO DE IDEAS -->
+            <h2 class="text-2xl font-bold text-yellow-400 pt-4 border-b border-yellow-900 pb-2">
+                BANCO DE IDEAS ACTUALIZADO
+            </h2>
+            <div class="space-y-4">
+                <!-- IDEA 1 -->
+                <div class="card p-5 rounded-xl border-l-4 border-yellow-500">
+                    <h3 class="text-lg font-bold text-white mb-2">1. UNIFICAR PROCESOS DE IT ENTRE PANAMÁ, COLOMBIA Y VENEZUELA</h3>
+                    <p class="text-sm text-slate-400"><span class="font-medium text-yellow-300">Estado:</span> Pendiente de resultados de misión de Jairo (Nov/Dic 2025)</p>
+                    <p class="text-sm text-slate-300 mt-1"><span class="font-medium text-yellow-300">Próximo paso:</span> Esperar findings de la misión</p>
+                </div>
+                <!-- IDEA 2 -->
+                <div class="card p-5 rounded-xl border-l-4 border-yellow-500">
+                    <h3 class="text-lg font-bold text-white mb-2">2. DESALOJAR DEPÓSITO DE INVENTARIO SIN AIRE ACONDICIONADO</h3>
+                    <p class="text-sm text-slate-400"><span class="font-medium text-yellow-300">Estado:</span> En coordinación con Kiko/Rolando</p>
+                    <p class="text-sm text-slate-300 mt-1"><span class="font-medium text-yellow-300">Fecha tope:</span> Fin de noviembre 2025</p>
+                    <p class="text-sm text-slate-300 mt-1"><span class="font-medium text-yellow-300">Acciones:</span> Mover remanente, comunicar no-renovación</p>
+                </div>
+            </div>
+
+
+            <!-- PROTOCOLOS OPERATIVOS -->
+            <h2 class="text-2xl font-bold text-sky-400 pt-4 border-b border-sky-900 pb-2">
+                PROTOCOLOS OPERATIVOS MFP
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- VALIDACIÓN CRUZADA -->
+                <div class="card p-5 rounded-xl">
+                    <h3 class="text-lg font-bold text-sky-300 mb-3 border-b border-sky-800 pb-2">VALIDACIÓN CRUZADA OBLIGATORIA</h3>
+                    <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300 ml-2">
+                        <li>Inyectar MFP + archivo específico del proyecto</li>
+                        <li>Verificar coincidencia EXACTA de descripciones y códigos</li>
+                        <li>Si hay discrepancia → <span class="text-red-400 font-bold">PARAR</span> y Clarificar</li>
+                        <li>Ajustar versión incorrecta inmediatamente</li>
+                        <li>Actualizar checksum correspondiente</li>
+                    </ol>
+                </div>
+
+                <!-- ACTUALIZACIÓN & INYECCIÓN -->
+                <div class="card p-5 rounded-xl">
+                    <h3 class="text-lg font-bold text-sky-300 mb-3 border-b border-sky-800 pb-2">ACTUALIZACIÓN & INYECCIÓN</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-semibold text-white">ACTUALIZACIÓN GRANULAR:</p>
+                            <ul class="list-disc list-inside text-sm text-slate-300 ml-2">
+                                <li>Proyectos se actualizan individualmente en MFP</li>
+                                <li>Sin necesidad de regenerar core operativo</li>
+                                <li>PHC-Sesión como buffer documental para cambios durante Pomodoro</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-white">INYECCIÓN CONTEXTUAL:</p>
+                            <ul class="list-disc list-inside text-sm text-slate-300 ml-2">
+                                <li>Sesiones generales: Solo core</li>
+                                <li>Sesiones projectizadas: Core + MFP (o archivo proyecto específico)</li>
+                                <li>Revisiones estratégicas: Core + MFP para visión panorámica</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- FOOTER / FINAL STATUS -->
+            <footer class="text-center pt-8 pb-4 space-y-2">
+                <p class="text-lg font-bold text-green-400">
+                    DOCUMENTO MAESTRO ACTUALIZADO - LISTO PARA OPERACIÓN
+                </p>
+                <p class="label">CHECKSUM FINAL: <code class="bg-green-900 text-green-300 px-2 py-0.5 rounded text-xs">mfp_v2_2_priorizacion_corregida_20251108</code></p>
+                <p class="text-xs text-slate-600">FIN DEL MASTER FILE - PROYECTOS v2.2</p>
+            </footer>
+
+        </div>
+    </div>
+
+</body>
+</html>
