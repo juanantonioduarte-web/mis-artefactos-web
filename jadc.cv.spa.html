@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV: Administrador de Sistemas IT</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuente Inter de Google Fonts - Ideal para CVs modernos */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+
+        /* Estilos generales del CV */
+        .cv-container {
+            max-width: 1200px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 0 10px -5px rgba(0, 0, 0, 0.04);
+            background-color: white;
+        }
+
+        /* Estilo para la barra lateral (Side Panel) */
+        .side-panel {
+            background-color: #1e293b; /* Slate-800: Azul oscuro elegante */
+            color: #f1f5f9; /* Slate-100 */
+        }
+
+        /* Estilo para los títulos de sección en la barra lateral */
+        .side-title {
+            border-bottom: 2px solid #38bdf8; /* Sky-400: Accent color */
+        }
+
+        /* Estilo para las barras de habilidades */
+        .skill-bar-bg {
+            background-color: #334155; /* Slate-700 */
+        }
+
+        .skill-bar-fill {
+            background-color: #38bdf8; /* Sky-400 */
+        }
+
+        /* Responsive layout adjustment */
+        @media (max-width: 1024px) {
+            .cv-grid {
+                grid-template-columns: 1fr; /* Stack columns on mobile/tablet */
+            }
+            .side-panel {
+                padding: 1.5rem;
+            }
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Iconos de Lucide (para contacto y secciones) -->
+    <script>
+        const ICONS = {
+            Phone: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 17.5 17.5 0 0 0 .1 1.63a1 1 0 0 1-.06.77l-1.8 1.8a18.3 18.3 0 0 0 6 6l1.8-1.8a1 1 0 0 1 .77-.06 17.5 17.5 0 0 0 1.63.1h3a2 2 0 0 1 2 2z"></path></svg>`,
+            Mail: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+            Link: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.54-7.54l-3 3a5 5 0 0 0-.54 7.54zm-7.46-7.46a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.54-7.54l-3 3a5 5 0 0 0-.54 7.54z"></path></svg>`,
+            Briefcase: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`,
+            Book: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20h-4v-4H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`,
+        };
+        
+        // Data de habilidades para el renderizado
+        const skillsData = [
+            { category: "Desktop OS", subSkills: [
+                { name: "Windows", percent: 100 },
+                { name: "Linux", percent: 100 },
+                { name: "Mac OS", percent: 70 }
+            ]},
+            { category: "Server OS", subSkills: [
+                { name: "Linux Server", percent: 90 },
+                { name: "Windows Server", percent: 80 },
+                { name: "Other Server OS", percent: 70 }
+            ]},
+            { category: "CMS", subSkills: [
+                { name: "Wordpress", percent: 80 },
+                { name: "Joomla", percent: 70 }
+            ]},
+            { category: "Accounting Cycle", subSkills: [
+                { name: "A/P & A/R", percent: 100 },
+                { name: "Inventory Mgt.", percent: 100 },
+                { name: "Fixed Assets", percent: 100 },
+                { name: "Sales & Purchasing", percent: 100 },
+                { name: "General Ledger", percent: 80 },
+                { name: "Budgeting & Fin. Report.", percent: 80 },
+                { name: "Payroll", percent: 70 }
+            ]}
+        ];
+
+        // Array de Experiencias Laborales (limpiado y estructurado)
+        const experienceData = [
+            {
+                role: "ICT Assistant",
+                company: "OCHA ROLAC (United Nations Office for the Coordination of Humanitarian Affairs)",
+                period: "Jul 2022 - Present",
+                location: "Panama",
+                description: [
+                    "Administración y mantenimiento de la infraestructura IT, asegurando óptimo rendimiento y fiabilidad en todas las áreas operacionales.",
+                    "Colaboración con partners y proveedores para la gestión de servicios (comunicaciones, networking, CRM, plataformas de examen), identificando y proponiendo optimizaciones de procesos.",
+                    "Gestión completa de usuarios en Active Directory, seguridad de grupos y unidades organizacionales.",
+                    "Administración de plataformas cloud: Office365, Adobe Creative Cloud, sistemas VoIP y redes Cisco Meraki.",
+                    "**Logros clave:** Liderazgo en el proyecto de reubicación de edificios (resolución de problemas complejos), participación destacada en Hackathon 2023 (invitado como SME para 2024), y desarrollo continuo de conocimiento técnico (TESS+ Regional Training y Emergency Telecommunications Training)."
+                ]
+            },
+            {
+                role: "IT System Administrator",
+                company: "New Horizons Panamá (Tech Education Franchise)",
+                period: "Sep 2016 - Jan 2020",
+                location: "Panama",
+                description: [
+                    "Responsable de la infraestructura IT (hardware, software, redes) para la plataforma administrativa, aulas y plataforma de exámenes.",
+                    "Administración de Active Directory, Cisco Meraki, Office365, McAfee Console, Adobe Creative Cloud y plataformas de aprendizaje (GotoTraining).",
+                    "Gestión y coordinación con proveedores de exámenes (Nextex, Prometric, Pearson Vue) para soporte, actualizaciones y seguridad de plataformas.",
+                    "Administración de servidores de actualización (WSUS) y despliegue de imágenes (WDS), y gestión de copias de seguridad con Veeam Backup."
+                ]
+            },
+            {
+                role: "IT Manager",
+                company: "Mallol & Mallol Architects",
+                period: "Sep 2015 - Aug 2016",
+                location: "Panama",
+                description: [
+                    "Liderazgo estratégico y operativo del departamento de TI, con foco en planificar, dirigir y supervisar todos los sistemas de soporte a las operaciones de diseño y administrativas.",
+                    "Supervisión del equipo de soporte IT, asegurando el funcionamiento continuo de equipos de comunicación, sistemas de procesamiento de datos y la infraestructura esencial.",
+                    "Implementación y optimización de plataformas tecnológicas (digitales, telecomunicaciones, móviles) para facilitar la colaboración interna y con stakeholders."
+                ]
+            },
+            {
+                role: "Technology Administrator for Red Bull Regional Office (LATAM)",
+                company: "Red Bull Panamá / Tecnasa",
+                period: "Jul 2008 - Aug 2015",
+                location: "Panama",
+                description: [
+                    "Responsabilidad integral por las operaciones IT de la Oficina Regional, incluyendo infraestructura, sistemas, soporte, entrenamiento de usuarios y presupuesto.",
+                    "**Infraestructura:** Gestión de red local (cableado, data link), optimización de ancho de banda, administración de VoIP Cisco, almacenamiento NAS (local y Data Center USA).",
+                    "**Administración:** Gestión de cuentas de usuario, inventario, garantías, procuración de equipos/licencias, y administración de plataformas web/intranet (WordPress, Joomla).",
+                    "**Soporte:** Soporte a usuarios en Windows/Mac, sistemas A/V, videoconferencia (Cisco, Webex) y gestión de plataformas de despliegue (Landesk, Empirum)."
+                ]
+            },
+            {
+                role: "Freelance System Analyst and Developer",
+                company: "Freelance",
+                period: "1995 - Jun 2007",
+                location: "Panama",
+                description: [
+                    "Administración, configuración y mantenimiento de infraestructura crítica: servidores Linux (internet gateways, proxy, DHCP, Samba).",
+                    "Gestión de plataformas de acceso inalámbrico (WiFi), soporte y monitoreo de líneas de fibra óptica (Internet/VoIP).",
+                    "Administración de antivirus Kaspersky Business Space (Linux/Windows XP) y gestión de inventario de hardware y licencias (ciclo de vida completo)."
+                ]
+            },
+            {
+                role: "Head of the IT Department",
+                company: "Impresora Real, S.A.",
+                period: "1991 - 1995",
+                location: "Panama",
+                description: [
+                    "Liderazgo en el desarrollo y mantenimiento de aplicaciones de negocio (contabilidad, nómina, inventario, control de producción).",
+                    "Establecimiento de procedimientos de Recuperación de Desastres (DR) y coordinación directa de políticas departamentales y presupuestos con la gerencia.",
+                    "Transición de Data Entry a Jefe de IT, logrando el dominio autodidacta del lenguaje de programación Dataflex para el desarrollo de sistemas esenciales."
+                ]
+            },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. RENDERIZADO DE CONTACTO ---
+            const contactItems = [
+                { icon: 'Phone', text: '+507 65505136', link: 'tel:+50765505136' },
+                { icon: 'Mail', text: 'juan.antonio.duarte@gmail.com', link: 'mailto:juan.antonio.duarte@gmail.com' },
+                { icon: 'Link', text: 'LinkedIn Profile', link: '#' }, /* Placeholder - usar enlace real */
+                { icon: 'Link', text: 'juanduarteconsulting.com', link: 'http://juanduarteconsulting.com/' },
+            ];
+
+            const contactHtml = contactItems.map(item => `
+                <a href="${item.link}" target="_blank" class="flex items-center text-sm space-x-2 hover:text-sky-300 transition duration-150">
+                    ${ICONS[item.icon] || ''}
+                    <span>${item.text}</span>
+                </a>
+            `).join('');
+
+            document.getElementById('contact-info').innerHTML = contactHtml;
+
+
+            // --- 2. RENDERIZADO DE HABILIDADES ---
+            const skillsContainer = document.getElementById('skills-section');
+            skillsData.forEach(cat => {
+                let catHtml = `
+                    <h4 class="text-sm font-bold mt-4 mb-2 uppercase text-sky-400">${cat.category}</h4>
+                    <div class="space-y-3">
+                `;
+                cat.subSkills.forEach(skill => {
+                    catHtml += `
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span>${skill.name}</span>
+                                <span>${skill.percent}%</span>
+                            </div>
+                            <div class="skill-bar-bg h-2 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full rounded-full" style="width: ${skill.percent}%;"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                catHtml += `</div>`;
+                skillsContainer.innerHTML += catHtml;
+            });
+
+            // --- 3. RENDERIZADO DE EXPERIENCIA ---
+            const expContainer = document.getElementById('experience-section');
+            experienceData.forEach(job => {
+                const descriptionList = job.description.map(desc => `<li class="ml-4 pl-1 mb-1 list-disc text-gray-700">${desc}</li>`).join('');
+
+                const jobHtml = `
+                    <div class="mb-6 p-4 rounded-lg bg-gray-50 hover:bg-white transition duration-300 border-l-4 border-sky-400">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-gray-900">${job.role}</h3>
+                            <span class="text-sm font-medium text-sky-600">${job.period}</span>
+                        </div>
+                        <p class="text-md font-semibold text-gray-600 mb-2">${job.company} | ${job.location}</p>
+                        <ul class="text-sm mt-3 space-y-1">
+                            ${descriptionList}
+                        </ul>
+                    </div>
+                `;
+                expContainer.innerHTML += jobHtml;
+            });
+            
+            // --- 4. RENDERIZADO DE ÍCONOS DE SECCIÓN (CORRECCIÓN) ---
+            document.getElementById('icon-briefcase').innerHTML = ICONS.Briefcase;
+            document.getElementById('icon-book').innerHTML = ICONS.Book;
+        });
+    </script>
+</head>
+
+<body class="min-h-screen p-4 md:p-8 lg:p-12">
+    <div class="cv-container rounded-xl shadow-2xl overflow-hidden cv-grid lg:grid lg:grid-cols-3">
+        
+        <!-- BARRA LATERAL (SIDE PANEL) -->
+        <div class="side-panel lg:col-span-1 p-6 md:p-8">
+            
+            <!-- INFORMACIÓN DE CONTACTO Y TÍTULO -->
+            <header class="pb-6 border-b border-sky-600 mb-6">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-1 tracking-tight">Juan Duarte</h1>
+                <p class="text-xl font-light text-sky-400">IT System Administrator</p>
+            </header>
+
+            <!-- RESUMEN PROFESIONAL -->
+            <section class="mb-8">
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">Perfil</h2>
+                <p class="text-sm leading-relaxed text-slate-200">
+                    Con más de **30 años de experiencia** como Administrador de Sistemas IT, he liderado iniciativas de innovación tecnológica y gestionado sistemas complejos a nivel internacional. Mi compromiso con la **mejora continua** y el aprendizaje autodirigido me permite impulsar la **rentabilidad** y la eficiencia operativa. Busco un entorno profesional que combine estabilidad e innovación, fomentando un ecosistema tecnológico colaborativo.
+                </p>
+            </section>
+            
+            <!-- CONTACTO -->
+            <section class="mb-8">
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">Contacto</h2>
+                <div id="contact-info" class="space-y-2">
+                    <!-- Contenido inyectado por JS -->
+                </div>
+            </section>
+            
+            <!-- HABILIDADES TÉCNICAS -->
+            <section class="mb-8">
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">Dominio Técnico</h2>
+                <div id="skills-section">
+                    <!-- Barras de habilidades inyectadas por JS -->
+                </div>
+            </section>
+
+            <!-- REFERENCIAS (simplificadas) -->
+            <section>
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">Referencias</h2>
+                <div class="space-y-4 text-sm text-slate-200">
+                    <div>
+                        <p class="font-bold text-sky-400">Bernadette Rosch</p>
+                        <p>Finance Analyst - Dell Corporate FP&A</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sky-400">Eng. Elías Mendoza H.</p>
+                        <p>Vice-Dean of Academics, UTP</p>
+                    </div>
+                </div>
+                <p class="text-xs italic mt-4 text-slate-400">Detalles de contacto disponibles bajo solicitud.</p>
+            </section>
+
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main-content lg:col-span-2 p-6 md:p-8">
+            
+            <!-- EXPERIENCIA LABORAL -->
+            <section class="mb-8">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span id="icon-briefcase"></span>
+                    <h2 class="text-2xl font-extrabold text-gray-900 border-b-4 border-sky-400 pb-1">Experiencia Laboral</h2>
+                </div>
+                <div id="experience-section" class="space-y-4">
+                    <!-- Experiencia inyectada por JS -->
+                </div>
+            </section>
+
+            <!-- EDUCACIÓN Y CERTIFICACIONES -->
+            <section>
+                <div class="flex items-center space-x-3 mb-6">
+                    <span id="icon-book"></span>
+                    <h2 class="text-2xl font-extrabold text-gray-900 border-b-4 border-sky-400 pb-1">Educación & Certificaciones</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Bloque de Estudios Principales -->
+                    <div>
+                        <h3 class="side-title text-lg font-bold pb-1 mb-3 uppercase tracking-wider text-gray-800">Grados Académicos</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">Ingeniería de Sistemas (Especialización en Análisis de Sistemas)</p>
+                                <p class="text-sm text-gray-600">Universidad Tecnológica de Panamá (1988 - 1994)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque de Certificaciones IT -->
+                    <div>
+                        <h3 class="side-title text-lg font-bold pb-1 mb-3 uppercase tracking-wider text-gray-800">Certificaciones Clave</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">Microsoft Certified Solutions Associate (MCSA) - Windows 7</p>
+                                <p class="text-sm text-gray-600">Microsoft | 2012</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">SCRUM Master Certified + SCRUM Fundamentals Certified</p>
+                                <p class="text-sm text-gray-600">EdducaIT S.A.S (ScrumStudy Partner) | 2002</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">CompTIA Linux+, CompTIA Cloud+</p>
+                                <p class="text-sm text-gray-600">Cybrary | 2020-2021</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">AZ-103 Microsoft Azure Administrator, AZ-900 Azure Fundamentals</p>
+                                <p class="text-sm text-gray-600">Cybrary | 2020-2021</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">Axelos ITIL Foundations</p>
+                                <p class="text-sm text-gray-600">Cybrary | 2020-2021</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cursos Adicionales (Sección compacta) -->
+                <h3 class="side-title text-lg font-bold pb-1 mt-6 mb-3 uppercase tracking-wider text-gray-800">Cursos y Workshops Adicionales</h3>
+                <div class="text-sm space-y-2 text-gray-700">
+                    <p>
+                        **Cursos UN OCHA:** TESS+ Regional Training, Emergency Telecommunications Training, Data Analysis (Power BI, Data Quality, Privacy & Ethics).
+                    </p>
+                    <p>
+                        **Programación/Sistemas:** Linux Red Hat (Instalación, Admin. de Red), Desarrollo con Dataflex, Taller de Lenguaje PHP, Soluciones IDEAS (Intranet).
+                    </p>
+                    <p>
+                        **Modernización:** Power Apps Crash Course, Power Automate, CHATGPT Prompt Engineering, WordPress 5 Essential Training.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
