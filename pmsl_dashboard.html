@@ -48,10 +48,11 @@
 
             <!-- CABECERA PRINCIPAL Y METADATA -->
             <header class="text-center space-y-2 mb-8">
+                <!-- Título CORREGIDO para ser solo el nombre del proyecto -->
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    30/10/2025 - PHC-PMSL - PROYECTO MOTOR SCRAPPING LABORAL (PMSL)
+                    PROYECTO MOTOR SCRAPPING LABORAL (PMSL)
                 </h1>
-                <p class="text-xl text-sky-400 font-semibold">(MASTER FILE ACTUALIZADO)</p>
+                
                 <div class="flex flex-wrap justify-center space-x-4 text-sm pt-2">
                     <span class="label">Versión: <span class="text-white font-medium">1.1</span></span>
                     <span class="label">Fecha: <span class="text-white font-medium">08/11/2025</span></span>
@@ -129,7 +130,7 @@
 
             </div>
 
-            <!-- AGENCIAS OBJETIVO - LISTA PRIORIZADA (Tabla) -->
+            <!-- AGENCIAS OBJETIVO - LISTA PRIORIZADA (Tabla) - CARD 3 -->
             <div class="card p-6 rounded-xl overflow-x-auto">
                 <h2 class="text-xl font-bold text-green-400 border-b border-green-700 pb-2 mb-4">3. AGENCIAS OBJETIVO - LISTA PRIORIZADA</h2>
                 <table class="min-w-full text-sm text-left rounded-lg overflow-hidden">
@@ -229,14 +230,52 @@
                 </table>
             </div>
 
-            <!-- PRÓXIMOS MOVIMIENTOS PENDIENTES -->
+            <!-- VACANTES ACTIVAS - CARD 4 -->
+            <div class="card p-6 rounded-xl overflow-x-auto border-l-4 border-fuchsia-500">
+                <h2 class="text-xl font-bold text-fuchsia-400 border-b border-fuchsia-700 pb-2 mb-4">4. Vacantes activas (3)</h2>
+                
+                <table class="min-w-full text-sm text-left rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="px-4 py-3">Position</th>
+                            <th class="px-4 py-3">Source</th>
+                            <th class="px-4 py-3">Organization</th>
+                            <th class="px-4 py-3">Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                            <td class="px-4 py-3 font-semibold">Systems Administrator</td>
+                            <td class="px-4 py-3">Linkedin</td>
+                            <td class="px-4 py-3">Launchpad Technologies</td>
+                            <td class="px-4 py-3 text-fuchsia-300">Aplicacion en Greenhouse</td>
+                        </tr>
+                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                            <td class="px-4 py-3 font-semibold">Windows Administrator / Domain Manager</td>
+                            <td class="px-4 py-3">Linkedin</td>
+                            <td class="px-4 py-3">Launchpad Technologies</td>
+                            <td class="px-4 py-3 text-fuchsia-300">Aplicacion en Greenhouse</td>
+                        </tr>
+                        <tr class="hover:bg-slate-700 transition">
+                            <td class="px-4 py-3 font-semibold">System Administrator</td>
+                            <td class="px-4 py-3">Linkedin</td>
+                            <td class="px-4 py-3">Lacias International Corporation</td>
+                            <td class="px-4 py-3 text-fuchsia-300">Aplicacion en Greenhouse</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- PRÓXIMOS MOVIMIENTOS PENDIENTES - CARD 5 -->
             <div class="card p-6 rounded-xl border-l-4 border-red-500 space-y-4">
-                <h2 class="text-xl font-bold text-red-400 border-b border-red-700 pb-2">4. PRÓXIMOS MOVIMIENTOS PENDIENTES</h2>
+                <h2 class="text-xl font-bold text-red-400 border-b border-red-700 pb-2">5. PRÓXIMOS MOVIMIENTOS PENDIENTES</h2>
 
                 <!-- Verificación Manual -->
                 <div>
                     <h3 class="text-lg font-bold text-white mb-2">VERIFICACIÓN MANUAL REQUERIDA:</h3>
                     <ul class="list-disc list-inside text-sm text-slate-300 ml-4 space-y-1">
+                        <li>verificar vacantes en Linkedin</li>
                         <li>Investigar capacidades técnicas de las 10 agencias listadas</li>
                         <li>Validar URLs exactas de portales de vacantes</li>
                         <li>Documentar disponibilidad de: RSS feeds, alertas email, requerimientos de login</li>
@@ -255,9 +294,9 @@
                 </div>
             </div>
 
-            <!-- CHECKSUMS DE VERIFICACIÓN Y SALUDO -->
+            <!-- CHECKSUMS DE VERIFICACIÓN Y SALUDO - CARD 6 -->
             <div class="card p-5 rounded-xl space-y-3">
-                <h2 class="text-xl font-bold text-sky-400 border-b border-sky-700 pb-2">5. CHECKSUMS DE VERIFICACIÓN</h2>
+                <h2 class="text-xl font-bold text-sky-400 border-b border-sky-700 pb-2">6. CHECKSUMS DE VERIFICACIÓN</h2>
                 <div class="space-y-2 text-sm">
                     <p class="label">Documento: <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded">phc_pmsl_v1_1_verificacion_pendiente_20251108</code></p>
                     <p class="label">Integridad Estratégica: <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded">sistema_ponderacion_4criterios_definido_20251108</code></p>
@@ -273,10 +312,10 @@
 
             <!-- FINAL STATUS -->
             <footer class="text-center pt-6 pb-4">
-                <p class="text-sm text-slate-600">FIN DEL DOCUMENTO MAESTRO ACTUALIZADO</p>
+                <!-- Se eliminó el carácter de cierre de comillas que estaba en el footer original -->
             </footer>
+
         </div>
     </div>
-
 </body>
 </html>
