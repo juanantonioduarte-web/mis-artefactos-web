@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juan Antonio Duarte - CV IT System Administrator</title>
+    <!-- Carga de Tailwind CSS para el diseño rápido y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos base personalizados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f9;
+        }
+        .cv-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 0 10px -5px rgba(0, 0, 0, 0.04);
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 30px;
+        }
+        /* Estilos para el separador de la línea de tiempo */
+        /* Se usa para la experiencia principal */
+        .timeline-item {
+            position: relative;
+            padding-left: 20px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: #3498db; /* Azul corporativo */
+            border-radius: 9999px;
+        }
+        /* Se usa para el historial anterior */
+        .historical-item {
+            position: relative;
+            padding-left: 15px;
+            margin-bottom: 10px;
+            border-left: 2px dashed #e67e22; /* Naranja para diferenciar el historial */
+        }
+        .section-title {
+            color: #34495e; /* Azul oscuro para títulos */
+            border-bottom: 2px solid #3498db; /* Azul corporativo para la línea */
+            padding-bottom: 5px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        /* Barras de progreso */
+        .progress-bar-container {
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cv-container">
+
+    <!-- ENCABEZADO Y PERFIL -->
+    <header class="mb-6">
+        <h1 class="text-4xl font-extrabold text-[#2c3e50] border-b-4 border-[#3498db] pb-2">
+            🚀 JUAN ANTONIO DUARTE
+        </h1>
+        <h2 class="text-xl font-light text-[#34495e] mt-1 mb-4">
+            IT System Administrator | Liderazgo y Experiencia (30+ Años)
+        </h2>
+        
+        <!-- CONTACTO -->
+        <div class="bg-[#2c3e50] text-white p-4 rounded-lg flex justify-around flex-wrap text-sm shadow-md">
+            <span class="flex items-center m-2">📞 +507 65505136</span>
+            <span class="flex items-center m-2">📧 juan.antonio.duarte@gmail.com</span>
+            <span class="flex items-center m-2">🌐 juanduarteconsulting.com/</span>
+            <span class="flex items-center m-2">🔗 linkedin.com/in/juan-duarte-540aaa3a/</span>
+        </div>
+    </header>
+
+    <!-- CUERPO PRINCIPAL - LAYOUT DE DOS COLUMNAS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+        <!-- COLUMNA IZQUIERDA: HABILIDADES, EDUCACIÓN, CERTIFICACIONES (1/3) -->
+        <div class="md:col-span-1 pr-4 md:border-r border-[#bdc3c7]">
+            
+            <!-- PERFIL PROFESIONAL -->
+            <h2 class="section-title text-xl">⭐ PERFIL PROFESIONAL</h2>
+            <p class="text-gray-700 text-justify text-sm mb-4">
+                IT System Administrator con más de 30 años de experiencia, destacando en roles de liderazgo en empresas internacionales. Impulsado por la organización, la automotivación y el aprendizaje autodirigido. Busco un equilibrio entre estabilidad e innovación, enfocado en impulsar la rentabilidad y las eficiencias operativas mientras fomento un ecosistema tecnológico colaborativo.
+            </p>
+
+            <!-- HABILIDADES TÉCNICAS -->
+            <h2 class="section-title text-xl mt-6">🛠️ ÁREAS DE ESPECIALIZACIÓN</h2>
+            
+            <!-- INFRAESTRUCTURA -->
+            <div class="mb-4">
+                <h4 class="text-lg font-semibold text-[#2980b9] mb-1">INFRAESTRUCTURA & REDES</h4>
+                <ul class="list-none pl-0 text-sm space-y-1">
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Administración de Servidores (Linux/Windows)</li>
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Cisco Meraki Networking, TCP/IP, VoIP (Cisco 7960)</li>
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Plataformas de Acceso Inalámbrico (WiFi) y Fibra Óptica</li>
+                </ul>
+            </div>
+
+            <!-- CLOUD Y ADMIN -->
+            <div class="mb-4">
+                <h4 class="text-lg font-semibold text-[#2980b9] mb-1">CLOUD & ADMIN. DE SISTEMAS</h4>
+                <ul class="list-none pl-0 text-sm space-y-1">
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Microsoft Azure (AZ-900, AZ-103), Office 365</li>
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Active Directory, WSUS, WDS, Imaging (Landesk, Empirum)</li>
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">CMS (WordPress, Joomla) y Plataformas de Examen</li>
+                </ul>
+            </div>
+            
+            <!-- SEGURIDAD Y GESTION -->
+            <div class="mb-4">
+                <h4 class="text-lg font-semibold text-[#2980b9] mb-1">SEGURIDAD & GESTIÓN</h4>
+                <ul class="list-none pl-0 text-sm space-y-1">
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Corporate Cybersecurity, Firewalls, SSL, Intrusion Detection</li>
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Scrum Master, ITIL Foundations, Incident Management</li>
+                    <li class="flex items-start before:content-['👉'] before:mr-2 before:text-[#e67e22]">Dataflex, PHP, Power Apps, Power Automate (Flow)</li>
+                </ul>
+            </div>
+
+            <!-- NIVELES DE DOMINIO -->
+            <h2 class="section-title text-xl mt-6">📊 NIVELES DE DOMINIO</h2>
+            
+            <div class="mb-4">
+                <strong class="text-[#3498db] text-sm">Sistemas Operativos</strong>
+                <div class="text-xs text-gray-600">
+                    Linux (Desktop/Server): <span class="float-right font-bold">100% / 90%</span>
+                    <div class="progress-bar-container"><div class="h-full bg-[#3498db]" style="width: 100%;"></div></div>
+                    Windows (Desktop/Server): <span class="float-right font-bold">100% / 80%</span>
+                    <div class="progress-bar-container"><div class="h-full bg-[#3498db]" style="width: 80%;"></div></div>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <strong class="text-[#3498db] text-sm">Conocimiento Contable</strong>
+                <div class="text-xs text-gray-600">
+                    A/P, A/R, Inventario: <span class="float-right font-bold">100%</span>
+                    <div class="progress-bar-container"><div class="h-full bg-[#2ecc71]" style="width: 100%;"></div></div>
+                    Contabilidad General, Presupuesto: <span class="float-right font-bold">80%</span>
+                    <div class="progress-bar-container"><div class="h-full bg-[#2ecc71]" style="width: 80%;"></div></div>
+                </div>
+            </div>
+
+            <!-- EDUCACIÓN Y CERTIFICACIONES -->
+            <h2 class="section-title text-xl mt-6">🎓 EDUCACIÓN Y FORMACIÓN</h2>
+            
+            <div class="timeline-item mb-4">
+                <h4 class="text-base font-bold text-[#e67e22] mt-0">Ingeniería de Sistemas</h4>
+                <p class="text-sm text-gray-700">Universidad Tecnológica de Panamá | 1988 - 1994</p>
+            </div>
+            
+            <div class="timeline-item mb-4">
+                <h4 class="text-base font-bold text-[#e67e22] mt-0">Cursos de Inglés (Intermedio / Avanzado)</h4>
+                <p class="text-sm text-gray-700">Universidad Latina - English Department | 2003 - 2004</p>
+            </div>
+
+            <h2 class="section-title text-xl mt-6">🏅 CERTIFICACIONES CLAVE</h2>
+            <ul class="list-none pl-0 text-sm space-y-1">
+                <li class="flex items-start before:content-['✔️'] before:mr-2 before:text-[#2ecc71]">**SCRUM Master Certified** & **ITIL Foundations**</li>
+                <li class="flex items-start before:content-['✔️'] before:mr-2 before:text-[#2ecc71]">**Microsoft Certified IT Professional** – Windows 7 (2012)</li>
+                <li class="flex items-start before:content-['✔️'] before:mr-2 before:text-[#2ecc71]">**AZ-103 Azure Administrator** & **CompTIA Cloud+** (2020-2021)</li>
+                <li class="flex items-start before:content-['✔️'] before:mr-2 before:text-[#2ecc71]">**TESS+ Regional Training** (UN Security Comms System)</li>
+            </ul>
+
+        </div>
+        
+        <!-- COLUMNA DERECHA: EXPERIENCIA LABORAL (2/3) -->
+        <div class="md:col-span-2">
+            
+            <h2 class="section-title text-xl">🏢 EXPERIENCIA LABORAL</h2>
+            
+            <!-- OCHA ROLAC -->
+            <div class="timeline-item mb-6 pl-4">
+                <h3 class="text-xl font-bold text-[#2c3e50] mb-1">ICT Assistant</h3>
+                <p class="text-base font-italic text-[#3498db] mb-2">OCHA ROLAC (United Nations) | Panamá | <span class="font-bold">Julio 2022 - Presente</span></p>
+                <strong class="text-sm block mb-1">Responsabilidades y Logros:</strong>
+                <ul class="list-disc pl-5 text-sm space-y-1 text-gray-700">
+                    <li>Administración de Active Directory, Office365, Adobe CC.</li>
+                    <li>Colaboración con socios y gestión de redes.</li>
+                    <li>**Logro:** Invitado como Experto en la Materia para Hackathon 2024 (Reconocimiento por participación destacada en 2023).</li>
+                    <li>**Logro:** Mejora continua en conocimiento técnico (TESS+, Emergency Telecommunications Training).</li>
+                </ul>
+            </div>
+            
+            <!-- New Horizons Panamá -->
+            <div class="timeline-item mb-6 pl-4">
+                <h3 class="text-xl font-bold text-[#2c3e50] mb-1">IT System Administrator</h3>
+                <p class="text-base font-italic text-[#3498db] mb-2">New Horizons Panamá | Panamá | <span class="font-bold">Septiembre 2016 - Enero 2020</span></p>
+                <ul class="list-disc pl-5 text-sm space-y-1 text-gray-700">
+                    <li>Supervisión de infraestructura (plataforma administrativa, aulas y exámenes Nextex, Prometric, Pearson Vue).</li>
+                    <li>Gestión de infraestructura de redes **Cisco Meraki**, Office365, McAfee.</li>
+                    <li>Administración de **WSUS Server, WDS Server, Veeam Backup**.</li>
+                </ul>
+            </div>
+            
+            <!-- Mallol & Mallol Architects -->
+            <div class="timeline-item mb-6 pl-4">
+                <h3 class="text-xl font-bold text-[#2c3e50] mb-1">IT Manager</h3>
+                <p class="text-base font-italic text-[#3498db] mb-2">Mallol & Mallol Architects | Panamá | <span class="font-bold">Septiembre 2015 - Agosto 2016</span></p>
+                <ul class="list-disc pl-5 text-sm space-y-1 text-gray-700">
+                    <li>Liderazgo estratégico, supervisión operacional y gestión de presupuesto de TI.</li>
+                    <li>Aseguramiento del cumplimiento de políticas de TI y seguridad.</li>
+                    <li>Implementación de plataformas para mejorar la colaboración (clientes/stakeholders).</li>
+                </ul>
+            </div>
+            
+            <!-- Red Bull Panamá -->
+            <div class="timeline-item mb-6 pl-4">
+                <h3 class="text-xl font-bold text-[#2c3e50] mb-1">Technology Administrator (LATAM)</h3>
+                <p class="text-base font-italic text-[#3498db] mb-2">Red Bull Panamá / Tecnasa | Panamá | <span class="font-bold">Julio 2008 - Agosto 2015</span></p>
+                <ul class="list-disc pl-5 text-sm space-y-1 text-gray-700">
+                    <li>Responsabilidad integral para operaciones de TI (infraestructura, sistemas, presupuesto).</li>
+                    <li>Administración del sistema **Cisco VoIP** y gestión de soluciones de almacenamiento (**NAS**).</li>
+                    <li>Gestión de inventario, garantías y sistemas de videoconferencia.</li>
+                    <li>Uso de plataformas de *imaging* (**Landesk, Empirum**) e Intranet (**WordPress, Joomla**).</li>
+                </ul>
+            </div>
+
+            <!-- Historial Profesional Anterior (Expandido) -->
+            <h3 class="text-lg font-bold text-[#2c3e50] border-b border-[#bdc3c7] pb-1 mt-6">HISTORIAL PROFESIONAL ANTERIOR</h3>
+            
+            <div class="mt-4">
+                <!-- WS Management, S.A. -->
+                <div class="historical-item mb-4">
+                    <h4 class="text-base font-bold text-[#e67e22] mt-0 mb-1">Head of the IT Department, WS Management, S.A.</h4>
+                    <p class="text-xs text-gray-500 mb-1">Jun 2007 - Oct 2007</p>
+                    <p class="text-sm text-gray-700">Administración y configuración de servidores **Linux** (incluyendo Gateways, Proxy y Samba). Provisión de soporte técnico para líneas de fibra óptica y terminales **VoIP Cisco 7960**.</p>
+                </div>
+                
+                <!-- Freelance System Analyst and Developer -->
+                <div class="historical-item mb-4">
+                    <h4 class="text-base font-bold text-[#e67e22] mt-0 mb-1">Freelance System Analyst and Developer</h4>
+                    <p class="text-xs text-gray-500 mb-1">1995 - Jun 2007</p>
+                    <p class="text-sm text-gray-700">Análisis de sistemas, desarrollo de aplicaciones y administración de infraestructura de red. Configuración de servidores **Linux** e implementación de políticas de respaldo automatizadas y monitoreo.</p>
+                </div>
+
+                <!-- Impresora Real, S.A. -->
+                <div class="historical-item mb-4">
+                    <h4 class="text-base font-bold text-[#e67e22] mt-0 mb-1">Head of the IT Department, Impresora Real, S.A.</h4>
+                    <p class="text-xs text-gray-500 mb-1">1991 - 1995</p>
+                    <p class="text-sm text-gray-700">Liderazgo en el desarrollo de aplicaciones comerciales usando **Dataflex** y Visual J++. Responsable del mantenimiento de sistemas y establecimiento de procedimientos de Recuperación ante Desastres (DR).</p>
+                </div>
+
+                <!-- Cox Communications – USA/Sitel, S.A. -->
+                <div class="historical-item mb-4">
+                    <h4 class="text-base font-bold text-[#e67e22] mt-0 mb-1">Tech Support Agent, Cox Communications – USA/Sitel, S.A.</h4>
+                    <p class="text-xs text-gray-500 mb-1">2004 - May 2007</p>
+                    <p class="text-sm text-gray-700">Agente de soporte técnico avanzado para clientes de Internet y Cable en **inglés y español**. Resolución de problemas de red y conectividad (L1 y L2).</p>
+                </div>
+            </div>
+            
+            <!-- REFERENCIAS (Movidas aquí para rellenar el espacio) -->
+            <h2 class="section-title text-xl mt-8">🤝 REFERENCIAS</h2>
+            <p class="text-sm text-gray-700 mb-4">**Bernadette Rosch** - Finance</p>
+            <p class="text-sm text-gray-700">Disponibles bajo solicitud (Available upon request).</p>
+            
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>
