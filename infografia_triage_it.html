@@ -6,42 +6,49 @@
     <title>Infografía Protocolo de Triage IT</title>
     <!-- Carga de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración de la fuente Inter -->
+    <!-- Configuración de la fuente Inter y el tema oscuro DSRI -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f4f7f9; /* Fondo muy claro */
-            color: #1e293b; /* Texto oscuro, similar al slate-800 */
+            background-color: #0f172a; /* Slate-900 oscuro para el fondo del dashboard */
+            color: #e2e8f0; /* Texto claro general */
         }
         .card {
-            background-color: #ffffff;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
+            background-color: #1e293b; /* Slate-800 para tarjetas */
+            border: 1px solid #334155; /* Borde sutil */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
         .header-title {
-            color: #007AC3; /* Azul OCHA simulado (Principal) */
+            color: #0ea5e9; /* Azul de acento (Sky-500) para el título */
         }
-        .primary-bg {
-            background-color: #007AC3; /* Azul OCHA simulado */
-        }
+        
+        /* Colores de Prioridad (Se mantienen fuertes para el contraste en el tema oscuro) */
         .alert-red {
-            background-color: #E32833; /* Rojo de Alerta simulado */
+            background-color: #E32833;
+            color: white;
+            font-weight: 600;
         }
         .warning-yellow {
-            background-color: #FFBF00; /* Amarillo de Cuidado simulado */
+            background-color: #FFBF00;
+            color: #1e293b; /* Texto oscuro sobre amarillo */
+            font-weight: 600;
         }
         .standard-blue {
-            background-color: #007AC3; /* Azul Estándar simulado */
+            background-color: #007AC3;
+            color: white;
         }
         .routine-gray {
-            background-color: #788691; /* Gris de Rutina simulado */
+            background-color: #475569; /* Slate-600 oscuro para Baja Prioridad */
+            color: white;
         }
         .low-priority-silver {
-            background-color: #BCC8D1; /* Plata de Baja Prioridad simulado */
+            background-color: #94a3b8; /* Slate-400 para No Urgente */
+            color: #1e293b; /* Texto oscuro */
         }
+        
         .section-separator {
-            border-bottom: 2px solid #007AC3; /* Línea separadora azul */
+            border-bottom: 2px solid #0ea5e9; /* Línea separadora azul de acento */
         }
         /* Estilo para los círculos del flujo */
         .flow-circle {
@@ -53,13 +60,13 @@
             font-weight: bold;
             color: white;
             border-radius: 50%;
-            background-color: #007AC3;
+            background-color: #0ea5e9; /* Sky-500 */
             flex-shrink: 0;
             margin-right: 1rem;
         }
         .table-header {
-            background-color: #007AC31a; /* Azul muy claro para encabezados de tabla */
-            color: #007AC3;
+            background-color: #0ea5e920; /* Azul de acento semi-transparente para encabezados */
+            color: #0ea5e9;
         }
     </style>
 </head>
@@ -67,31 +74,38 @@
 
     <div class="max-w-6xl mx-auto space-y-8">
 
+        <!-- Botón para volver al menú principal -->
+        <div class="max-w-6xl mx-auto mb-6">
+            <a href="index.html" class="text-white bg-slate-700 hover:bg-slate-600 py-2 px-4 rounded-lg font-semibold flex items-center shadow-lg w-fit">
+                <span class="mr-2">←</span> Volver al Menú Principal D0
+            </a>
+        </div>
+        
         <!-- TÍTULO PRINCIPAL -->
         <header class="text-center p-6 card rounded-xl">
             <h1 class="text-3xl sm:text-4xl font-extrabold header-title">
                 📊 INFOGRAFÍA: PROTOCOLO DE TRIAGE IT
             </h1>
-            <p class="mt-2 text-lg text-slate-600">
+            <p class="mt-2 text-lg text-slate-400">
                 Clasificación de Incidentes para la Mesa de Servicio
             </p>
         </header>
 
         <!-- SECCIÓN 1: LOS 3 EJES DE CLASIFICACIÓN -->
         <div class="card p-6 rounded-xl">
-            <h2 class="text-2xl font-bold section-separator pb-2 mb-4 text-slate-800">
+            <h2 class="text-2xl font-bold section-separator pb-2 mb-4 text-white">
                 1. 🔑 LOS 3 EJES DE CLASIFICACIÓN (La Tríada del Triage)
             </h2>
-            <p class="text-slate-600 mb-6">
+            <p class="text-slate-400 mb-6">
                 El proceso de Triage se basa en evaluar el incidente a través de la combinación de estos tres criterios:
             </p>
 
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <!-- EJE: IMPACTO -->
-                <div class="border-t-4 border-standard-blue p-4 rounded-lg bg-gray-50">
-                    <div class="text-3xl font-bold standard-blue mb-2"></div>
-                    <h3 class="text-xl font-semibold mb-2 standard-blue">IMPACTO</h3>
-                    <p class="text-sm text-slate-700 font-medium">
+                <div class="border-t-4 border-[#0ea5e9] p-4 rounded-lg bg-slate-900">
+                    <div class="text-3xl font-bold text-[#0ea5e9] mb-2">👥</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#0ea5e9]">IMPACTO</h3>
+                    <p class="text-sm text-slate-300 font-medium">
                         ¿A cuántos usuarios afecta y si compromete procesos críticos del negocio?
                     </p>
                     <p class="mt-3 text-xs text-slate-500">
@@ -100,10 +114,10 @@
                 </div>
 
                 <!-- EJE: URGENCIA -->
-                <div class="border-t-4 border-standard-blue p-4 rounded-lg bg-gray-50">
-                    <div class="text-3xl font-bold standard-blue mb-2"></div>
-                    <h3 class="text-xl font-semibold mb-2 standard-blue">URGENCIA</h3>
-                    <p class="text-sm text-slate-700 font-medium">
+                <div class="border-t-4 border-[#0ea5e9] p-4 rounded-lg bg-slate-900">
+                    <div class="text-3xl font-bold text-[#0ea5e9] mb-2">⏳</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#0ea5e9]">URGENCIA</h3>
+                    <p class="text-sm text-slate-300 font-medium">
                         ¿Qué tan rápido debe resolverse? ¿Existe alguna alternativa temporal?
                     </p>
                     <p class="mt-3 text-xs text-slate-500">
@@ -112,10 +126,10 @@
                 </div>
 
                 <!-- EJE: COMPLEJIDAD -->
-                <div class="border-t-4 border-standard-blue p-4 rounded-lg bg-gray-50">
-                    <div class="text-3xl font-bold standard-blue mb-2"></div>
-                    <h3 class="text-xl font-semibold mb-2 standard-blue">COMPLEJIDAD</h3>
-                    <p class="text-sm text-slate-700 font-medium">
+                <div class="border-t-4 border-[#0ea5e9] p-4 rounded-lg bg-slate-900">
+                    <div class="text-3xl font-bold text-[#0ea5e9] mb-2">⚙️</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#0ea5e9]">COMPLEJIDAD</h3>
+                    <p class="text-sm text-slate-300 font-medium">
                         ¿El problema requiere escalamiento (Nivel 2/3) o involucra múltiples sistemas?
                     </p>
                     <p class="mt-3 text-xs text-slate-500">
@@ -127,12 +141,12 @@
 
         <!-- SECCIÓN 2: MATRIZ DE DECISIÓN OPERATIVA -->
         <div class="card p-6 rounded-xl">
-            <h2 class="text-2xl font-bold section-separator pb-2 mb-4 text-slate-800">
+            <h2 class="text-2xl font-bold section-separator pb-2 mb-4 text-white">
                 2. 🚨 MATRIZ DE DECISIÓN OPERATIVA (Niveles y SLA)
             </h2>
 
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+                <table class="min-w-full divide-y divide-slate-700 rounded-lg overflow-hidden">
                     <thead class="table-header">
                         <tr>
                             <th class="px-3 py-3 text-left text-xs font-bold uppercase tracking-wider">Nivel</th>
@@ -141,10 +155,10 @@
                             <th class="px-3 py-3 text-center text-xs font-bold uppercase tracking-wider">⏱️ SLA Respuesta</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-slate-900 divide-y divide-slate-700">
 
                         <!-- NIVEL I: CRÍTICO / EMERGENCIA -->
-                        <tr class="alert-red text-white font-semibold">
+                        <tr class="alert-red">
                             <td class="px-3 py-3 text-sm">I</td>
                             <td class="px-3 py-3 text-sm">CRÍTICO / EMERGENCIA</td>
                             <td class="px-3 py-3 text-sm">Caída total de **servidores de producción**, Ciberataque, Sistema de pagos inoperable.</td>
@@ -152,7 +166,7 @@
                         </tr>
 
                         <!-- NIVEL II: ALTA PRIORIDAD -->
-                        <tr class="warning-yellow text-black font-semibold">
+                        <tr class="warning-yellow">
                             <td class="px-3 py-3 text-sm">II</td>
                             <td class="px-3 py-3 text-sm">ALTA PRIORIDAD</td>
                             <td class="px-3 py-3 text-sm">Corte de red en un sector, Fallo en sistema de **nómina**, error en login masivo.</td>
@@ -160,7 +174,7 @@
                         </tr>
 
                         <!-- NIVEL III: MEDIA PRIORIDAD -->
-                        <tr class="standard-blue text-white">
+                        <tr class="standard-blue">
                             <td class="px-3 py-3 text-sm">III</td>
                             <td class="px-3 py-3 text-sm">MEDIA PRIORIDAD</td>
                             <td class="px-3 py-3 text-sm">Problemas de acceso individual al correo, errores de software **no críticos** para la operación.</td>
@@ -168,7 +182,7 @@
                         </tr>
 
                         <!-- NIVEL IV: BAJA PRIORIDAD -->
-                        <tr class="routine-gray text-white">
+                        <tr class="routine-gray">
                             <td class="px-3 py-3 text-sm">IV</td>
                             <td class="px-3 py-3 text-sm">BAJA PRIORIDAD</td>
                             <td class="px-3 py-3 text-sm">Instalación de software, configuración de impresora o hardware menor.</td>
@@ -176,7 +190,7 @@
                         </tr>
 
                         <!-- NIVEL V: NO URGENTE / MEJORA -->
-                        <tr class="low-priority-silver text-black">
+                        <tr class="low-priority-silver">
                             <td class="px-3 py-3 text-sm">V</td>
                             <td class="px-3 py-3 text-sm">NO URGENTE / MEJORA</td>
                             <td class="px-3 py-3 text-sm">Recomendaciones, solicitudes de mejora o tickets de mantenimiento **programado**.</td>
@@ -190,70 +204,75 @@
 
         <!-- SECCIÓN 3: FLUJO OPERATIVO SUGERIDO -->
         <div class="card p-6 rounded-xl">
-            <h2 class="text-2xl font-bold section-separator pb-2 mb-4 text-slate-800">
+            <h2 class="text-2xl font-bold section-separator pb-2 mb-4 text-white">
                 3. 🔄 FLUJO OPERATIVO SUGERIDO (5 Pasos)
             </h2>
 
             <div class="space-y-4">
                 <!-- Paso 1 -->
-                <div class="flex items-center p-3 border rounded-lg bg-white">
+                <div class="flex items-center p-3 border border-slate-700 rounded-lg bg-slate-900">
                     <div class="flow-circle">1</div>
                     <div>
-                        <p class="font-semibold text-standard-blue">RECEPCIÓN DEL TICKET</p>
-                        <p class="text-sm text-slate-600">Registro del incidente vía portal, correo o llamada.</p>
+                        <p class="font-semibold text-sky-400">RECEPCIÓN DEL TICKET</p>
+                        <p class="text-sm text-slate-400">Registro del incidente vía portal, correo o llamada.</p>
                     </div>
                 </div>
 
                 <!-- Paso 2 -->
-                <div class="flex items-center p-3 border rounded-lg bg-white">
+                <div class="flex items-center p-3 border border-slate-700 rounded-lg bg-slate-900">
                     <div class="flow-circle">2</div>
                     <div>
-                        <p class="font-semibold text-standard-blue">EVALUACIÓN INICIAL</p>
-                        <p class="text-sm text-slate-600">Agente Nivel 1 (L1) realiza análisis de **IMPACTO** y **URGENCIA**.</p>
+                        <p class="font-semibold text-sky-400">EVALUACIÓN INICIAL</p>
+                        <p class="text-sm text-slate-400">Agente Nivel 1 (L1) realiza análisis de **IMPACTO** y **URGENCIA**.</p>
                     </div>
                 </div>
 
                 <!-- Paso 3 -->
-                <div class="flex items-center p-3 border rounded-lg bg-white">
+                <div class="flex items-center p-3 border border-slate-700 rounded-lg bg-slate-900">
                     <div class="flow-circle">3</div>
                     <div>
-                        <p class="font-semibold text-standard-blue">ASIGNACIÓN DE NIVEL</p>
-                        <p class="text-sm text-slate-600">Se asigna el **Nivel I a V** (con base en la Matriz) y se define el SLA.</p>
+                        <p class="font-semibold text-sky-400">ASIGNACIÓN DE NIVEL</p>
+                        <p class="text-sm text-slate-400">Se asigna el **Nivel I a V** (con base en la Matriz) y se define el SLA.</p>
                     </div>
                 </div>
 
                 <!-- Paso 4 -->
-                <div class="flex items-center p-3 border rounded-lg bg-white">
+                <div class="flex items-center p-3 border border-slate-700 rounded-lg bg-slate-900">
                     <div class="flow-circle">4</div>
                     <div>
-                        <p class="font-semibold text-standard-blue">EJECUCIÓN / ESCALAMIENTO</p>
-                        <p class="text-sm text-slate-600">Si la prioridad es alta o la **Complejidad** lo requiere, se escala al equipo técnico adecuado (N2/N3).</p>
+                        <p class="font-semibold text-sky-400">EJECUCIÓN / ESCALAMIENTO</p>
+                        <p class="text-sm text-slate-400">Si la prioridad es alta o la **Complejidad** lo requiere, se escala al equipo técnico adecuado (N2/N3).</p>
                     </div>
                 </div>
 
                 <!-- Paso 5 -->
-                <div class="flex items-center p-3 border rounded-lg bg-white">
+                <div class="flex items-center p-3 border border-slate-700 rounded-lg bg-slate-900">
                     <div class="flow-circle">5</div>
                     <div>
-                        <p class="font-semibold text-standard-blue">SEGUIMIENTO Y CIERRE</p>
-                        <p class="text-sm text-slate-600">Resolución del incidente, notificación al usuario y documentación del cierre.</p>
+                        <p class="font-semibold text-sky-400">SEGUIMIENTO Y CIERRE</p>
+                        <p class="text-sm text-slate-400">Resolución del incidente, notificación al usuario y documentación del cierre.</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- SECCIÓN 4: BUENAS PRÁCTICAS -->
-        <div class="card p-6 rounded-xl primary-bg text-white">
+        <div class="card p-6 rounded-xl bg-slate-700 text-white">
             <h2 class="text-2xl font-bold section-separator pb-2 mb-4 border-white text-white">
                 4. ✔️ BUENAS PRÁCTICAS CLAVE
             </h2>
-            <ul class="list-disc list-inside space-y-2 text-sm">
+            <ul class="list-disc list-inside space-y-2 text-sm text-slate-200">
                 <li>**Entrenamiento L1:** El personal de primer contacto debe estar 100% capacitado para identificar correctamente los Niveles I y II.</li>
                 <li>**Automatización:** Usar el sistema ITSM para registrar y escalar automáticamente según el nivel de Triage asignado.</li>
                 <li>**Visibilidad:** Mantener la matriz de Triage (SLA) visible para todo el equipo de soporte.</li>
                 <li>**Prioridad Absoluta:** Un incidente de Nivel I (Crítico) siempre anula la atención de otros tickets de menor prioridad.</li>
             </ul>
         </div>
+        
+        <!-- PIE DE PÁGINA INFOGRAFÍA -->
+        <footer class="text-center pt-5 pb-5">
+            <p class="text-sm text-slate-600">PHC Triage Protocol V1.0 | Revisión 2025</p>
+        </footer>
 
     </div>
 
