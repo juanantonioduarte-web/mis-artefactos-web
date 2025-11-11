@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV: IT System Administrator</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Inter Font from Google Fonts - Ideal for modern CVs */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+
+        /* General CV styles */
+        .cv-container {
+            max-width: 1200px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 0 10px -5px rgba(0, 0, 0, 0.04);
+            background-color: white;
+        }
+
+        /* Side Panel Style */
+        .side-panel {
+            background-color: #1e293b; /* Slate-800: Elegant dark blue */
+            color: #f1f5f9; /* Slate-100 */
+        }
+
+        /* Side panel section title style */
+        .side-title {
+            border-bottom: 2px solid #38bdf8; /* Sky-400: Accent color */
+        }
+
+        /* Skill bar style */
+        .skill-bar-bg {
+            background-color: #334155; /* Slate-700 */
+        }
+
+        .skill-bar-fill {
+            background-color: #38bdf8; /* Sky-400 */
+        }
+
+        /* Responsive layout adjustment */
+        @media (max-width: 1024px) {
+            .cv-grid {
+                grid-template-columns: 1fr; /* Stack columns on mobile/tablet */
+            }
+            .side-panel {
+                padding: 1.5rem;
+            }
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Lucide Icons (for contact and sections) -->
+    <script>
+        const ICONS = {
+            Phone: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 17.5 17.5 0 0 0 .1 1.63a1 1 0 0 1-.06.77l-1.8 1.8a18.3 18.3 0 0 0 6 6l1.8-1.8a1 1 0 0 1 .77-.06 17.5 17.5 0 0 0 1.63.1h3a2 2 0 0 1 2 2z"></path></svg>`,
+            Mail: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+            Link: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.54-7.54l-3 3a5 5 0 0 0-.54 7.54zm-7.46-7.46a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.54-7.54l-3 3a5 5 0 0 0-.54 7.54z"></path></svg>`,
+            Briefcase: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`,
+            Book: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20h-4v-4H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`,
+        };
+        
+        // Skills data for rendering
+        const skillsData = [
+            { category: "Desktop OS", subSkills: [
+                { name: "Windows", percent: 100 },
+                { name: "Linux", percent: 100 },
+                { name: "Mac OS", percent: 70 }
+            ]},
+            { category: "Server OS", subSkills: [
+                { name: "Linux Server", percent: 90 },
+                { name: "Windows Server", percent: 80 },
+                { name: "Other Server OS", percent: 70 }
+            ]},
+            { category: "CMS", subSkills: [
+                { name: "Wordpress", percent: 80 },
+                { name: "Joomla", percent: 70 }
+            ]},
+            { category: "Accounting Cycle", subSkills: [
+                { name: "A/P & A/R", percent: 100 },
+                { name: "Inventory Mgt.", percent: 100 },
+                { name: "Fixed Assets", percent: 100 },
+                { name: "Sales & Purchasing", percent: 100 },
+                { name: "General Ledger", percent: 80 },
+                { name: "Budgeting & Fin. Report.", percent: 80 },
+                { name: "Payroll", percent: 70 }
+            ]}
+        ];
+
+        // Work Experience Array
+        const experienceData = [
+            {
+                role: "ICT Assistant",
+                company: "OCHA ROLAC (United Nations Office for the Coordination of Humanitarian Affairs)",
+                period: "Jul 2022 - Present",
+                location: "Panama",
+                description: [
+                    "Administration and maintenance of IT infrastructure, ensuring optimal performance and reliability across all operational areas.",
+                    "Collaboration with partners and vendors for service management (communications, networking, CRM, examination platforms), identifying and proposing process optimizations.",
+                    "Comprehensive user management in Active Directory, group security, and organizational units.",
+                    "Administration of cloud platforms: Office365, Adobe Creative Cloud, VoIP systems, and Cisco Meraki networks.",
+                    "**Key Achievements:** Leadership in the building relocation project (complex problem resolution), prominent participation in Hackathon 2023 (invited as SME for 2024), and continuous technical knowledge development (TESS+ Regional Training and Emergency Telecommunications Training)."
+                ]
+            },
+            {
+                role: "IT System Administrator",
+                company: "New Horizons Panamá (Tech Education Franchise)",
+                period: "Sep 2016 - Jan 2020",
+                location: "Panama",
+                description: [
+                    "Responsible for IT infrastructure (hardware, software, networks) for the administrative platform, classrooms, and examination platform.",
+                    "Administration of Active Directory, Cisco Meraki, Office365, McAfee Console, Adobe Creative Cloud, and learning platforms (GotoTraining).",
+                    "Management and coordination with exam vendors (Nextex, Prometric, Pearson Vue) for platform support, updates, and security.",
+                    "Administration of update servers (WSUS) and image deployment (WDS), and backup management with Veeam Backup."
+                ]
+            },
+            {
+                role: "IT Manager",
+                company: "Mallol & Mallol Architects",
+                period: "Sep 2015 - Aug 2016",
+                location: "Panama",
+                description: [
+                    "Strategic and operational leadership of the IT department, focusing on planning, directing, and supervising all support systems for design and administrative operations.",
+                    "Supervision of the IT support team, ensuring continuous operation of communication equipment, data processing systems, and essential infrastructure.",
+                    "Implementation and optimization of technological platforms (digital, telecommunications, mobile) to facilitate internal and stakeholder collaboration."
+                ]
+            },
+            {
+                role: "Technology Administrator for Red Bull Regional Office (LATAM)",
+                company: "Red Bull Panamá / Tecnasa",
+                period: "Jul 2008 - Aug 2015",
+                location: "Panama",
+                description: [
+                    "Comprehensive responsibility for IT operations of the Regional Office, including infrastructure, systems, support, user training, and budget.",
+                    "**Infrastructure:** Local network management (cabling, data link), bandwidth optimization, Cisco VoIP administration, NAS storage (local and USA Data Center).",
+                    "**Administration:** Management of user accounts, inventory, warranties, procurement of equipment/licenses, and administration of web/intranet platforms (WordPress, Joomla).",
+                    "**Support:** User support on Windows/Mac, A/V systems, video conferencing (Cisco, Webex), and deployment platform management (Landesk, Empirum)."
+                ]
+            },
+            {
+                role: "Freelance System Analyst and Developer",
+                company: "Freelance",
+                period: "1995 - Jun 2007",
+                location: "Panama",
+                description: [
+                    "Administration, configuration, and maintenance of critical infrastructure: Linux servers (internet gateways, proxy, DHCP, Samba).",
+                    "Management of wireless access platforms (WiFi), support, and monitoring of fiber optic lines (Internet/VoIP).",
+                    "Administration of Kaspersky Business Space antivirus (Linux/Windows XP) and management of hardware and license inventory (full lifecycle)."
+                ]
+            },
+            {
+                role: "Head of the IT Department",
+                company: "Impresora Real, S.A.",
+                period: "1991 - 1995",
+                location: "Panama",
+                description: [
+                    "Leadership in the development and maintenance of business applications (accounting, payroll, inventory, production control).",
+                    "Establishment of Disaster Recovery (DR) procedures and direct coordination of departmental policies and budgets with management.",
+                    "Transition from Data Entry to IT Head, achieving self-taught mastery of the Dataflex programming language for the development of essential systems."
+                ]
+            },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. RENDER CONTACT INFO ---
+            const contactItems = [
+                { icon: 'Phone', text: '+507 65505136', link: 'tel:+50765505136' },
+                { icon: 'Mail', text: 'juan.antonio.duarte@gmail.com', link: 'mailto:juan.antonio.duarte@gmail.com' },
+                { icon: 'Link', text: 'LinkedIn Profile', link: '#' }, /* Placeholder - use real link */
+                { icon: 'Link', text: 'juanduarteconsulting.com', link: 'http://juanduarteconsulting.com/' },
+            ];
+
+            const contactHtml = contactItems.map(item => `
+                <a href="${item.link}" target="_blank" class="flex items-center text-sm space-x-2 hover:text-sky-300 transition duration-150">
+                    ${ICONS[item.icon] || ''}
+                    <span>${item.text}</span>
+                </a>
+            `).join('');
+
+            document.getElementById('contact-info').innerHTML = contactHtml;
+
+
+            // --- 2. RENDER SKILLS ---
+            const skillsContainer = document.getElementById('skills-section');
+            skillsData.forEach(cat => {
+                let catHtml = `
+                    <h4 class="text-sm font-bold mt-4 mb-2 uppercase text-sky-400">${cat.category}</h4>
+                    <div class="space-y-3">
+                `;
+                cat.subSkills.forEach(skill => {
+                    catHtml += `
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span>${skill.name}</span>
+                                <span>${skill.percent}%</span>
+                            </div>
+                            <div class="skill-bar-bg h-2 rounded-full overflow-hidden">
+                                <div class="skill-bar-fill h-full rounded-full" style="width: ${skill.percent}%;"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                catHtml += `</div>`;
+                skillsContainer.innerHTML += catHtml;
+            });
+
+            // --- 3. RENDER EXPERIENCE ---
+            const expContainer = document.getElementById('experience-section');
+            experienceData.forEach(job => {
+                const descriptionList = job.description.map(desc => `<li class="ml-4 pl-1 mb-1 list-disc text-gray-700">${desc}</li>`).join('');
+
+                const jobHtml = `
+                    <div class="mb-6 p-4 rounded-lg bg-gray-50 hover:bg-white transition duration-300 border-l-4 border-sky-400">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-gray-900">${job.role}</h3>
+                            <span class="text-sm font-medium text-sky-600">${job.period}</span>
+                        </div>
+                        <p class="text-md font-semibold text-gray-600 mb-2">${job.company} | ${job.location}</p>
+                        <ul class="text-sm mt-3 space-y-1">
+                            ${descriptionList}
+                        </ul>
+                    </div>
+                `;
+                expContainer.innerHTML += jobHtml;
+            });
+            
+            // --- 4. RENDER SECTION ICONS ---
+            document.getElementById('icon-briefcase').innerHTML = ICONS.Briefcase;
+            document.getElementById('icon-book').innerHTML = ICONS.Book;
+        });
+    </script>
+</head>
+
+<body class="min-h-screen p-4 md:p-8 lg:p-12">
+    <div class="cv-container rounded-xl shadow-2xl overflow-hidden cv-grid lg:grid lg:grid-cols-3">
+        
+        <!-- SIDE PANEL -->
+        <div class="side-panel lg:col-span-1 p-6 md:p-8">
+            
+            <!-- CONTACT INFO AND TITLE -->
+            <header class="pb-6 border-b border-sky-600 mb-6">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-1 tracking-tight">Juan Duarte</h1>
+                <p class="text-xl font-light text-sky-400">IT System Administrator</p>
+            </header>
+
+            <!-- PROFESSIONAL PROFILE -->
+            <section class="mb-8">
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">Profile</h2>
+                <p class="text-sm leading-relaxed text-slate-200">
+                    With over **30 years of experience** as an IT System Administrator, I have led technological innovation initiatives and managed complex systems at an international level. My commitment to **continuous improvement** and self-directed learning allows me to drive **profitability** and operational efficiency. I seek a professional environment that combines stability and innovation, fostering a collaborative technological ecosystem.
+                </p>
+            </section>
+            
+            <!-- CONTACT -->
+            <section class="mb-8">
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">Contact</h2>
+                <div id="contact-info" class="space-y-2">
+                    <!-- Content injected by JS -->
+                </div>
+            </section>
+            
+            <!-- TECHNICAL SKILLS -->
+            <section class="mb-8">
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">Technical Proficiency</h2>
+                <div id="skills-section">
+                    <!-- Skill bars injected by JS -->
+                </div>
+            </section>
+
+            <!-- REFERENCES (simplified) -->
+            <section>
+                <h2 class="side-title text-xl font-bold pb-2 mb-3 uppercase tracking-wider">References</h2>
+                <div class="space-y-4 text-sm text-slate-200">
+                    <div>
+                        <p class="font-bold text-sky-400">Bernadette Rosch</p>
+                        <p>Finance Analyst - Dell Corporate FP&A</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sky-400">Eng. Elías Mendoza H.</p>
+                        <p>Vice-Dean of Academics, UTP</p>
+                    </div>
+                </div>
+                <p class="text-xs italic mt-4 text-slate-400">Contact details available upon request.</p>
+            </section>
+
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content lg:col-span-2 p-6 md:p-8">
+            
+            <!-- WORK EXPERIENCE -->
+            <section class="mb-8">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span id="icon-briefcase"></span>
+                    <h2 class="text-2xl font-extrabold text-gray-900 border-b-4 border-sky-400 pb-1">Work Experience</h2>
+                </div>
+                <div id="experience-section" class="space-y-4">
+                    <!-- Experience injected by JS -->
+                </div>
+            </section>
+
+            <!-- EDUCATION & CERTIFICATIONS -->
+            <section>
+                <div class="flex items-center space-x-3 mb-6">
+                    <span id="icon-book"></span>
+                    <h2 class="text-2xl font-extrabold text-gray-900 border-b-4 border-sky-400 pb-1">Education & Certifications</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Academic Degrees Block -->
+                    <div>
+                        <h3 class="side-title text-lg font-bold pb-1 mb-3 uppercase tracking-wider text-gray-800">Academic Degrees</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">Systems Engineering (Specialization in Systems Analysis)</p>
+                                <p class="text-sm text-gray-600">Technological University of Panama (1988 - 1994)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Certifications Block -->
+                    <div>
+                        <h3 class="side-title text-lg font-bold pb-1 mb-3 uppercase tracking-wider text-gray-800">Key Certifications</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">Microsoft Certified Solutions Associate (MCSA) - Windows 7</p>
+                                <p class="text-sm text-gray-600">Microsoft | 2012</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">SCRUM Master Certified + SCRUM Fundamentals Certified</p>
+                                <p class="text-sm text-gray-600">EdducaIT S.A.S (ScrumStudy Partner) | 2002</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">CompTIA Linux+, CompTIA Cloud+</p>
+                                <p class="text-sm text-gray-600">Cybrary | 2020-2021</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">AZ-103 Microsoft Azure Administrator, AZ-900 Azure Fundamentals</p>
+                                <p class="text-sm text-gray-600">Cybrary | 2020-2021</p>
+                            </div>
+                            <div class="border-l-4 border-sky-200 pl-3">
+                                <p class="font-semibold text-gray-900">Axelos ITIL Foundations</p>
+                                <p class="text-sm text-gray-600">Cybrary | 2020-2021</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Courses (Compact Section) -->
+                <h3 class="side-title text-lg font-bold pb-1 mt-6 mb-3 uppercase tracking-wider text-gray-800">Additional Courses & Workshops</h3>
+                <div class="text-sm space-y-2 text-gray-700">
+                    <p>
+                        **UN OCHA Courses:** TESS+ Regional Training, Emergency Telecommunications Training, Data Analysis (Power BI, Data Quality, Privacy & Ethics).
+                    </p>
+                    <p>
+                        **Programming/Systems:** Linux Red Hat (Installation, Network Admin), Dataflex Development, PHP Language Workshop, IDEAS Solutions (Intranet).
+                    </p>
+                    <p>
+                        **Modernization:** Power Apps Crash Course, Power Automate, CHATGPT Prompt Engineering, WordPress 5 Essential Training.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
