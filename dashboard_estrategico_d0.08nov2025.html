@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DASHBOARD D0 - MATRIZ ESTRATÉGICA</title>
+    <title>DASHBOARD D0 - MATRIZ ESTRATÉGICA v2.4</title>
     <!-- Carga de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Configuración de Tailwind para modo oscuro y fuente Inter -->
@@ -16,6 +16,7 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
+                        // Colores ajustados para el tema oscuro
                         'primary-dark': '#1e293b', // slate-800
                         'secondary-dark': '#334155', // slate-700
                         'critical': '#ef4444', // red-500
@@ -23,6 +24,9 @@
                         'active': '#34d399', // emerald-400
                         'latent': '#94a3b8', // slate-400
                         'operative': '#60a5fa', // blue-400
+                        'completed': '#10b981', // emerald-500
+                        'confirmed': '#f97316', // orange-500
+                        'en-curso': '#eab308', // yellow-600
                     }
                 }
             }
@@ -50,12 +54,13 @@
     <!-- Encabezado del Dashboard -->
     <header class="mb-6 text-center">
         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
-            DASHBOARD D0 - MATRIZ ESTRATÉGICA v1.1
+            DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO v2.4
         </h1>
-        <p class="text-slate-400 text-xl font-medium">Resumen de Ejes de Ejecución y Priorización</p>
+        <p class="text-slate-400 text-xl font-medium">Resumen de Ejes de Ejecución y Priorización (Fuente: MFP v2.4)</p>
+        <p class="text-sm text-slate-500 mt-1">Checksum: dzero_v2_estructura_corregida_20251112</p>
     </header>
 
-    <!-- Botón de retorno al menú principal D0 (Añadido) -->
+    <!-- Botón de retorno al menú principal D0 (Mantenido) -->
     <div class="mb-10 text-center">
         <a href="https://juanantonioduarte-web.github.io/mis-artefactos-web/index.html"
            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-blue-500/50 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
@@ -65,7 +70,7 @@
     </div>
 
     <!-- Contenedor principal de la Matriz -->
-    <div id="dashboard-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+    <div id="dashboard-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10 max-w-7xl mx-auto">
         <!-- Los cards de Dominio se renderizarán aquí -->
     </div>
 
@@ -73,7 +78,7 @@
     <section class="max-w-7xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-slate-600 pb-2 text-white flex items-center">
             <svg class="w-6 h-6 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Línea Temporal Transversal
+            Línea Temporal Estratégica Actualizada
         </h2>
         <div id="timeline-container" class="space-y-4">
             <!-- Los eventos de la Línea Temporal se renderizarán aquí -->
@@ -82,67 +87,79 @@
 
     <!-- JavaScript para manejar y renderizar los datos -->
     <script>
-        // Definición de los datos de la matriz estratégica
+        // Datos extraídos y adaptados del PDF "12/11/2025 - DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO - Actualizado | Fuente: MFP v2.4"
         const strategicData = [
             {
                 domain: "DOMINIO CORPORATIVO (OCHA)",
-                subtitle: "Impacto organizacional directo",
+                subtitle: "¿QUÉ RESUELVE? → Conecta ejecución técnica con impacto estratégico regional tangible.",
                 theme: "border-red-500 hover:shadow-red-500/50",
                 items: [
-                    { code: "PWO", status: "Activo", critical: true, move: "Presentación formal de resultados D1 + preparación logística misión Jairo (Nov/Dic 2025)" },
-                    { code: "Soporte Colombia/Venezuela", status: "Activo", critical: true, move: "Misión de Jairo a Venezuela/Colombia (Nov/Dic 2025) - Inspección in situ y reuniones presenciales" }
+                    { project: "PWO", task: "Presentación resultados D1", status: "COMPLETADO", move: "Réplica regional VZLA/COL", critical: true },
+                    { project: "PWO", task: "Misión COL (23 Nov-5 Dic)", status: "CONFIRMADO", move: "Inspección in situ + protocolo triage IT", critical: true },
+                    { project: "PWO", task: "Misión VZLA (8-19 Dic)", status: "CONFIRMADO (Pte. Visa)", move: "Réplica metodología + informe regional", critical: true },
+                    { project: "PWO", task: "Estandarización metodología", status: "EN CURSO", move: "Matriz decisión + infografía end-users", critical: true }
                 ]
             },
             {
-                domain: "DOMINIO PERSONAL (DESARROLLO)",
-                subtitle: "Crecimiento y posicionamiento profesional",
+                domain: "DOMINIO PERSONAL (POSICIONAMIENTO)",
+                subtitle: "¿QUÉ RESUELVE? → Convierte expertise tácito en oportunidades concretas con evidencias medibles.",
                 theme: "border-cyan-500 hover:shadow-cyan-500/50",
                 items: [
-                    { code: "SOP", status: "Operativo", critical: true, move: "Mantener protocolo (1 tableta cena + 2 almuerzo) + Ritual Atardecer Zona 2 + ritual dominical de 10 minutos para feedback" },
-                    { code: "DT+IA", status: "Latente", critical: false, move: "Activación en periodos de menor carga operativa para captura estratégica de insights" }
+                    { project: "PMSL", task: "Scrapping activo (10 agencias)", status: "ACTIVO [CRÍTICO]", move: "Ritual AM 5 días/semana + 1 tableta cena/2 almuerzo + ritual dominical 10min", critical: true }
                 ]
             },
             {
                 domain: "DOMINIO INNOVACIÓN (LABORATORIO)",
-                subtitle: "Experimentación y frameworks avanzados",
+                subtitle: "¿QUÉ RESUELVE? → Estandariza evolución deliberada de productos y procesos.",
                 theme: "border-yellow-500 hover:shadow-yellow-500/50",
                 items: [
-                    { code: "DM-002", status: "En uso", critical: true, move: "Bloquear 2-3 horas para redactar \"PHC-DW-002: Lecciones Aprendidas D1\"" },
-                    { code: "PSY-DEC+NL", status: "Latente", critical: false, move: "Activación post-D1 + necesidad de optimización decisoria en próximo proyecto grande" },
-                    { code: "AET-ALIGN", status: "Latente", critical: false, move: "Activación ante necesidad específica de granularidad tonal en proyecto futuro" },
-                    { code: "TA+IH", status: "Latente", critical: false, move: "Activación con oportunidad concreta de implementación con equipo o cliente" },
-                    { code: "TWR+IA", status: "Latente", critical: false, move: "Activación en ventana de 1 semana para \"ráfaga de ejecución\"" },
-                    { code: "DM-003", status: "Latente", critical: false, move: "Activación tras validación de 3 fichas DM-002 (F01, F02, F03)" }
+                    { project: "DW-002", task: "Fichas de lecciones aprendidas", status: "EN USO", move: "3 fichas validadas para activar DW-003", critical: true },
+                    { project: "PSY-DEC+NL", task: "Psicología Decisional + Neuro-L", status: "LATENTE", move: "Esperando proyecto grande", critical: false },
+                    { project: "TA+IH", task: "Tecnologías de Alineación + Infra Humana", status: "LATENTE", move: "Esperando oportunidad concreta", critical: false },
+                    { project: "AET-ALIGN", task: "Alineación de Tono Estructural", status: "LATENTE", move: "Esperando necesidad granularidad tonal", critical: false },
+                    { project: "DT+IA", task: "Design Thinking + IA", status: "LATENTE", move: "Esperando ventana de capacidad", critical: false },
+                    { project: "TWR+IA", task: "Time Window Refinements + IA", status: "LATENTE", move: "Esperando ráfaga ejecución 1 semana", critical: false }
                 ]
             }
         ];
 
         // Definición de los datos de la línea temporal
         const timelineData = [
-            { period: "Nov/Dic 2025", event: "Misión Jairo (Corporativo) + Mantenimiento SOP (Personal)", indicator: "bg-teal-600 text-white" },
-            { period: "Inmediato", event: "Presentación D1 (Corporativo) + Redacción lecciones DM-002 (Innovación)", indicator: "bg-red-600 text-white font-bold" },
-            { period: "Latente", event: "Banco de ideas pendiente de priorización (Innovación/Corporativo)", indicator: "bg-slate-600 text-slate-300" }
+            { period: "NOV 2025", event: "Misión Colombia (23 Nov-5 Dic) | Aplicaciones PMSL activas | Protocolo triage IT desplegado", indicator: "bg-red-600 text-white font-bold" },
+            { period: "DIC 2025", event: "Misión Venezuela (8-19 Dic) | Réplica regional | Cierre ciclo 2025", indicator: "bg-orange-500 text-white" },
+            { period: "2026", event: "Posicionamiento consolidado | Ecosistema maduro", indicator: "bg-teal-600 text-white" }
         ];
 
         /**
-         * Función para obtener clases de color basadas en el estado y criticidad.
+         * Función para obtener clases de color basadas en el estado.
          */
-        function getStatusClasses(status, isCritical) {
-            let baseClasses = "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase ";
+        function getStatusClasses(statusText) {
+            let baseClasses = "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase whitespace-nowrap ";
             let colorClasses = "";
+            let isCritical = statusText.includes("[CRÍTICO]");
+            let status = statusText.replace(" [CRÍTICO]", "").trim();
 
             if (isCritical) {
-                // Estado CRÍTICO
+                 // Estado CRÍTICO (Prioridad máxima)
                 colorClasses = "bg-critical text-white shadow-md shadow-critical/50 ring-2 ring-critical-light";
-            } else if (status.includes("Activo") || status.includes("En uso")) {
-                // Estado Activo/En uso
+            } else if (status === "COMPLETADO") {
+                 // Estado COMPLETADO
+                colorClasses = "bg-completed text-gray-900";
+            } else if (status === "CONFIRMADO" || status.includes("Pte. Visa")) {
+                 // Estado CONFIRMADO
+                colorClasses = "bg-confirmed text-gray-900";
+            } else if (status === "EN CURSO" || status === "EN USO") {
+                 // Estado EN CURSO / EN USO
+                colorClasses = "bg-en-curso text-gray-900";
+            } else if (status === "ACTIVO") {
+                 // Estado ACTIVO (No crítico, pero en marcha)
                 colorClasses = "bg-active text-gray-900";
-            } else if (status.includes("Operativo")) {
-                // Estado Operativo
-                colorClasses = "bg-operative text-gray-900";
-            } else if (status.includes("Latente")) {
-                // Estado Latente
+            } else if (status === "LATENTE") {
+                 // Estado LATENTE
                 colorClasses = "bg-slate-600 text-slate-300";
+            } else {
+                 // Default para otros
+                 colorClasses = "bg-gray-500 text-white";
             }
 
             return baseClasses + colorClasses;
@@ -153,24 +170,27 @@
          */
         function renderDomainCard(domainData) {
             const itemsHtml = domainData.items.map(item => {
-                const statusClasses = getStatusClasses(item.status, item.critical);
-                
+                const statusClasses = getStatusClasses(item.status);
+                const isCritical = item.status.includes("[CRÍTICO]") || item.critical; // Usa critical por si acaso, aunque el nuevo status lo incluye
+
                 // Determina el icono de criticidad
-                const criticalIcon = item.critical ? 
+                const criticalIcon = isCritical ? 
                     '<svg class="w-4 h-4 ml-1 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>' : 
                     '';
 
                 return `
                     <div class="p-4 border-b border-slate-700 last:border-b-0 hover:bg-slate-800 transition duration-150 rounded-lg">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md mb-2 md:mb-0">${item.code}</span>
+                            <!-- Fila 1: Proyecto y Estado -->
+                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md mb-2 md:mb-0">${item.project}</span>
                             <div class="${statusClasses}">
                                 ${item.status}
-                                ${item.critical ? ' #[CRÍTICO]' : ''}
                                 ${criticalIcon}
                             </div>
                         </div>
-                        <p class="text-white text-md font-medium">${item.move}</p>
+                        <!-- Fila 2: Tarea Crítica y Próximo Movimiento -->
+                        <p class="text-slate-300 text-sm font-light mb-1 italic">Tarea Crítica: ${item.task}</p>
+                        <p class="text-white text-md font-medium">Próximo Movimiento: ${item.move}</p>
                     </div>
                 `;
             }).join('');
