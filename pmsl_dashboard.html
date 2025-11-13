@@ -3,41 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHC-PMSL - Proyecto Motor Scrapping Laboral</title>
+    <title>PMSL - Proyecto Motor Scrapping Laboral</title>
     <!-- Carga de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración de la fuente Inter y el tema oscuro -->
+    
+    <!-- Configuración de Tailwind para incluir el color OCHA Blue -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ocha-blue': '#009edb', // Color primario UN Blue de OCHA
+                        'ocha-light-text': '#f1f5f9', // Slate-100 para texto claro sobre fondo oscuro
+                        'ocha-dark-text': '#1e293b', // Slate-800 para texto oscuro sobre fondo claro
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos Personalizados - Tema Claro OCHA -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Slate-900 oscuro */
-            color: #e2e8f0; /* Texto claro */
+            background-color: #f7f9fb; /* Fondo muy claro (casi blanco) */
+            color: #1e293b; /* Texto oscuro principal (ocha-dark-text) */
         }
         .card {
-            background-color: #1e293b; /* Slate-800 para tarjetas */
-            border: 1px solid #334155; /* Borde sutil */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff; /* Fondo de tarjetas blanco */
+            border: 1px solid #e2e8f0; /* Borde sutil gris claro */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra muy ligera */
         }
         .label {
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: #64748b; /* Gris medio para etiquetas */
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
         .kpi-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #10b981; /* Verde esmeralda para valores clave */
+            color: #009edb; /* OCHA Blue para valores clave */
         }
         .table-header {
-            background-color: #334155; /* Slate-700 para encabezados de tabla */
-            color: #f1f5f9;
+            background-color: #e2e8f0; /* Gris claro para encabezados de tabla */
+            color: #1e293b;
         }
         .table-row-total {
-            background-color: #1e3a8a; /* Azul más oscuro para filas de total o prioridad */
+            background-color: #e0f2fe; /* Azul muy claro para filas de total/prioridad */
             font-weight: 700;
-            color: #bfdbfe;
+            color: #009edb; /* OCHA Blue */
         }
     </style>
 </head>
@@ -48,35 +64,36 @@
 
             <!-- CABECERA PRINCIPAL Y METADATA -->
             <header class="text-center space-y-2 mb-8">
-                <!-- Título CORREGIDO para ser solo el nombre del proyecto -->
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <!-- Título PRINCIPAL en color de texto oscuro -->
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-ocha-dark-text tracking-tight">
                     PROYECTO MOTOR SCRAPPING LABORAL (PMSL)
                 </h1>
                 
-                <div class="flex flex-wrap justify-center space-x-4 text-sm pt-2">
-                    <span class="label">Versión: <span class="text-white font-medium">1.1</span></span>
-                    <span class="label">Fecha: <span class="text-white font-medium">08/11/2025</span></span>
-                    <span class="label">Estado: <span class="text-red-400 font-bold">ACTIVO [CRÍTICO]</span></span>
+                <div class="flex flex-wrap justify-center space-x-4 text-sm pt-2 text-ocha-dark-text">
+                    <span class="label">Versión: <span class="text-ocha-dark-text font-medium">1.1</span></span>
+                    <span class="label">Fecha: <span class="text-ocha-dark-text font-medium">08/11/2025</span></span>
+                    <span class="label">Estado: <span class="text-red-600 font-bold">ACTIVO [CRÍTICO]</span></span>
                 </div>
 
                 <!-- ENLACES DE BOTONES -->
                 <div class="pt-4 flex justify-center flex-wrap gap-4">
                     
-                    <!-- BOTÓN ACTUALIZADO: VOLVER AL MENÚ PRINCIPAL D0 -->
-                    <a href="https://juanantonioduarte-web.github.io/mis-artefactos-web/index.html" class="inline-flex items-center bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-200 transform hover:scale-[1.02]">
+                    <!-- BOTÓN VOLVER AL MENÚ PRINCIPAL D0 (Gris) -->
+                    <a href="https://juanantonioduarte-web.github.io/mis-artefactos-web/index.html" class="inline-flex items-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-5 rounded-lg shadow-md transition duration-200 transform hover:scale-[1.02]">
                         <!-- Icono de flecha izquierda/volver (Back arrow) -->
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Volver al menú Principal D0
                     </a>
-                    <!-- Botón 1: REGISTRO DE VACANTES EN NOTION -->
-                    <a href="https://www.notion.so/PMSL-MOTOR-SCRAPPING-LABORAL-2a69ff30be58805d888efc129381a687" target="_blank" class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-200 transform hover:scale-[1.02]">
+                    
+                    <!-- Botón 1: REGISTRO DE VACANTES EN NOTION (OCHA Blue) -->
+                    <a href="https://www.notion.so/PMSL-MOTOR-SCRAPPING-LABORAL-2a69ff30be58805d888efc129381a687" target="_blank" class="inline-flex items-center bg-ocha-blue hover:bg-sky-600 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-200 transform hover:scale-[1.02]">
                         <!-- Icono de enlace o de Notion (ejemplo con SVG genérico) -->
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                         Registro de Vacantes en Notion
                     </a>
 
-                    <!-- Botón 2: WEB PROFESIONAL -->
-                    <a href="https://juanduarteconsulting.com/" target="_blank" class="inline-flex items-center bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-200 transform hover:scale-[1.02]">
+                    <!-- Botón 2: WEB PROFESIONAL (UN Blue más oscuro para contraste) -->
+                    <a href="https://juanduarteconsulting.com/" target="_blank" class="inline-flex items-center bg-sky-800 hover:bg-sky-900 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition duration-200 transform hover:scale-[1.02]">
                         <!-- Icono de página web/globo -->
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         WebPage
@@ -87,59 +104,59 @@
             <!-- PROPÓSITO DEL DOCUMENTO Y CHECKSUM -->
             <div class="card p-5 rounded-xl space-y-3">
                 <p class="label">Checksum de Versión</p>
-                <code class="bg-sky-900 text-sky-300 px-3 py-1 rounded text-sm block">phc_pmsl_v1_1_verificacion_pendiente_20251108</code>
+                <code class="bg-gray-100 text-ocha-blue px-3 py-1 rounded text-sm block border border-gray-200">phc_pmsl_v1_1_verificacion_pendiente_20251108</code>
                 <p class="label pt-2">Propósito del Documento</p>
-                <p class="text-slate-300 italic text-sm">
+                <p class="text-gray-600 italic text-sm">
                     Servir como referencia maestra única y autocontenida para el proyecto PMSL, asegurando que cada reinicio encuentre contexto estratégico, operativo y relacional completo.
                 </p>
             </div>
 
             <!-- MARCO NARRATIVO CENTRAL -->
-            <div class="card p-6 rounded-xl border-l-4 border-yellow-500">
-                <h2 class="text-xl font-bold text-yellow-400 mb-3">1. MARCO NARRATIVO CENTRAL – EL PORQUÉ</h2>
-                <p class="text-base text-slate-300 leading-relaxed">
+            <div class="card p-6 rounded-xl border-l-4 border-ocha-blue">
+                <h2 class="text-xl font-bold text-ocha-blue mb-3">1. MARCO NARRATIVO CENTRAL – EL PORQUÉ</h2>
+                <p class="text-base text-gray-700 leading-relaxed">
                     “Este proyecto existe para convertir el expertise tácito desarrollado en nuestro ecosistema operativo en oportunidades concretas de posicionamiento profesional dentro del sistema UN, comenzando por Panamá. No es solo ‘buscar trabajo’; es la materialización estratégica de que nuestro valor real –el de un Estratega-Resolverdor– trasciende las descripciones de puesto convencionales y resuelve dolores silenciosos del sector.”
                 </p>
             </div>
 
             <!-- CONTEXTO OPERATIVO ACTUALIZADO -->
             <div class="card p-6 rounded-xl space-y-4">
-                <h2 class="text-xl font-bold text-red-400 border-b border-red-700 pb-2">2. CONTEXTO OPERATIVO ACTUALIZADO</h2>
+                <h2 class="text-xl font-bold text-red-600 border-b border-gray-200 pb-2">2. CONTEXTO OPERATIVO ACTUALIZADO</h2>
                 
                 <!-- Estado Actual -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div class="bg-slate-700 p-3 rounded">
+                    <div class="bg-gray-50 p-3 rounded border border-gray-200">
                         <p class="label">Código</p>
-                        <p class="text-white font-mono">pmsl</p>
+                        <p class="text-ocha-dark-text font-mono">pmsl</p>
                     </div>
-                    <div class="bg-slate-700 p-3 rounded">
+                    <div class="bg-gray-50 p-3 rounded border border-gray-200">
                         <p class="label">Ubicación en MFP</p>
-                        <p class="text-white font-medium">Frente Operativo Activo</p>
+                        <p class="text-ocha-dark-text font-medium">Frente Operativo Activo</p>
                     </div>
-                    <div class="bg-slate-700 p-3 rounded">
+                    <div class="bg-gray-50 p-3 rounded border border-gray-200">
                         <p class="label">Prioridad</p>
-                        <p class="text-red-300 font-bold">Crítica</p>
+                        <p class="text-red-600 font-bold">Crítica</p>
                     </div>
                     <div class="md:col-span-3 pt-2">
                         <p class="label">Próximo Movimiento Pendiente</p>
-                        <p class="text-lg text-white font-semibold">Verificación manual de capacidades técnicas de 10 agencias objetivo</p>
+                        <p class="text-lg text-ocha-dark-text font-semibold">Verificación manual de capacidades técnicas de 10 agencias objetivo</p>
                     </div>
                 </div>
 
                 <!-- Umbrales y Ponderación -->
                 <div class="pt-4">
-                    <h3 class="text-base font-bold text-slate-300 mb-2">SISTEMA DE PONDERACIÓN DEFINIDO (4 CRITERIOS)</h3>
+                    <h3 class="text-base font-bold text-ocha-dark-text mb-2">SISTEMA DE PONDERACIÓN DEFINIDO (4 CRITERIOS)</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                        <div class="bg-indigo-900 p-2 rounded text-indigo-300 text-center">Presencia Estratégica (1-5)</div>
-                        <div class="bg-indigo-900 p-2 rounded text-indigo-300 text-center">Roles Relevantes (1-5)</div>
-                        <div class="bg-indigo-900 p-2 rounded text-indigo-300 text-center">Alineación Expertise (1-5)</div>
-                        <div class="bg-indigo-900 p-2 rounded text-indigo-300 text-center">Potencial de Impacto (1-5)</div>
+                        <div class="bg-ocha-blue p-2 rounded text-white text-center">Presencia Estratégica (1-5)</div>
+                        <div class="bg-ocha-blue p-2 rounded text-white text-center">Roles Relevantes (1-5)</div>
+                        <div class="bg-ocha-blue p-2 rounded text-white text-center">Alineación Expertise (1-5)</div>
+                        <div class="bg-ocha-blue p-2 rounded text-white text-center">Potencial de Impacto (1-5)</div>
                     </div>
-                    <h3 class="text-base font-bold text-slate-300 mt-4 mb-2">UMBRALES OPERATIVOS</h3>
-                    <ul class="text-sm space-y-1">
-                        <li class="flex items-center text-green-400"><span class="mr-2 text-xl">🚀</span> 16-20 puntos: Monitoreo prioritario</li>
-                        <li class="flex items-center text-yellow-400"><span class="mr-2 text-xl">🟡</span> 12-15 puntos: Monitoreo regular</li>
-                        <li class="flex items-center text-slate-400"><span class="mr-2 text-xl">⚪</span> &lt;12 puntos: Monitoreo básico</li>
+                    <h3 class="text-base font-bold text-ocha-dark-text mt-4 mb-2">UMBRALES OPERATIVOS</h3>
+                    <ul class="text-sm space-y-1 text-gray-700">
+                        <li class="flex items-center text-green-600"><span class="mr-2 text-xl">🚀</span> 16-20 puntos: Monitoreo prioritario</li>
+                        <li class="flex items-center text-yellow-600"><span class="mr-2 text-xl">🟡</span> 12-15 puntos: Monitoreo regular</li>
+                        <li class="flex items-center text-gray-500"><span class="mr-2 text-xl">⚪</span> &lt;12 puntos: Monitoreo básico</li>
                     </ul>
                 </div>
 
@@ -147,7 +164,7 @@
 
             <!-- AGENCIAS OBJETIVO - LISTA PRIORIZADA (Tabla) - CARD 3 -->
             <div class="card p-6 rounded-xl overflow-x-auto">
-                <h2 class="text-xl font-bold text-green-400 border-b border-green-700 pb-2 mb-4">3. AGENCIAS OBJETIVO - LISTA PRIORIZADA</h2>
+                <h2 class="text-xl font-bold text-ocha-blue border-b border-gray-200 pb-2 mb-4">3. AGENCIAS OBJETIVO - LISTA PRIORIZADA</h2>
                 <table class="min-w-full text-sm text-left rounded-lg overflow-hidden">
                     <thead>
                         <tr class="table-header">
@@ -160,8 +177,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Fila de ejemplo con mayor prioridad -->
-                        <tr class="table-row-total text-lg">
+                        <!-- Fila de ejemplo con mayor prioridad (resalta con OCHA Blue) -->
+                        <tr class="table-row-total text-lg border-b border-gray-200">
                             <td class="px-4 py-3">OIM</td>
                             <td class="px-2 py-3 text-center">5</td>
                             <td class="px-2 py-3 text-center">5</td>
@@ -169,85 +186,85 @@
                             <td class="px-2 py-3 text-center">5</td>
                             <td class="px-4 py-3 text-center kpi-value">20</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">PNUD</td>
                             <td class="px-2 py-3 text-center">5</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
-                            <td class="px-4 py-3 text-center font-bold">17</td>
+                            <td class="px-4 py-3 text-center font-bold text-ocha-dark-text">17</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">ACNUR</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">5</td>
                             <td class="px-2 py-3 text-center">4</td>
-                            <td class="px-4 py-3 text-center font-bold">17</td>
+                            <td class="px-4 py-3 text-center font-bold text-ocha-dark-text">17</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">UNICEF</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
-                            <td class="px-4 py-3 text-center font-bold text-green-300">16</td>
+                            <td class="px-4 py-3 text-center font-bold text-green-600">16</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">OCHA</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">5</td>
-                            <td class="px-4 py-3 text-center font-bold text-yellow-300">15</td>
+                            <td class="px-4 py-3 text-center font-bold text-yellow-600">15</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">UNOPS</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">4</td>
-                            <td class="px-4 py-3 text-center font-bold text-yellow-300">15</td>
+                            <td class="px-4 py-3 text-center font-bold text-yellow-600">15</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">OPS/OMS</td>
                             <td class="px-2 py-3 text-center">4</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
-                            <td class="px-4 py-3 text-center font-bold text-yellow-300">13</td>
+                            <td class="px-4 py-3 text-center font-bold text-yellow-600">13</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">FAO</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
-                            <td class="px-4 py-3 text-center font-bold text-slate-400">12</td>
+                            <td class="px-4 py-3 text-center font-bold text-gray-500">12</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                             <td class="px-4 py-3">PMA</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
-                            <td class="px-4 py-3 text-center font-bold text-slate-400">12</td>
+                            <td class="px-4 py-3 text-center font-bold text-gray-500">12</td>
                         </tr>
-                        <tr class="hover:bg-slate-700 transition">
+                        <tr class="hover:bg-gray-50 transition">
                             <td class="px-4 py-3">ONU Mujeres</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
                             <td class="px-2 py-3 text-center">3</td>
-                            <td class="px-4 py-3 text-center font-bold text-slate-400">12</td>
+                            <td class="px-4 py-3 text-center font-bold text-gray-500">12</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <!-- VACANTES ACTIVAS - CARD 4 -->
-            <div class="card p-6 rounded-xl overflow-x-auto border-l-4 border-fuchsia-500">
-                <h2 class="text-xl font-bold text-fuchsia-400 border-b border-fuchsia-700 pb-2 mb-4">4. Vacantes activas (3)</h2>
+            <div class="card p-6 rounded-xl overflow-x-auto border-l-4 border-fuchsia-600">
+                <h2 class="text-xl font-bold text-fuchsia-600 border-b border-gray-200 pb-2 mb-4">4. Vacantes activas (3)</h2>
                 
                 <table class="min-w-full text-sm text-left rounded-lg overflow-hidden">
                     <thead>
@@ -259,23 +276,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
-                            <td class="px-4 py-3 font-semibold">Systems Administrator</td>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 font-semibold text-ocha-dark-text">Systems Administrator</td>
                             <td class="px-4 py-3">Linkedin</td>
                             <td class="px-4 py-3">Launchpad Technologies</td>
-                            <td class="px-4 py-3 text-fuchsia-300">Aplicacion en Greenhouse</td>
+                            <td class="px-4 py-3 text-fuchsia-600">Aplicacion en Greenhouse</td>
                         </tr>
-                        <tr class="border-b border-slate-700 hover:bg-slate-700 transition">
-                            <td class="px-4 py-3 font-semibold">Windows Administrator / Domain Manager</td>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 font-semibold text-ocha-dark-text">Windows Administrator / Domain Manager</td>
                             <td class="px-4 py-3">Linkedin</td>
                             <td class="px-4 py-3">Launchpad Technologies</td>
-                            <td class="px-4 py-3 text-fuchsia-300">Aplicacion en Greenhouse</td>
+                            <td class="px-4 py-3 text-fuchsia-600">Aplicacion en Greenhouse</td>
                         </tr>
-                        <tr class="hover:bg-slate-700 transition">
-                            <td class="px-4 py-3 font-semibold">System Administrator</td>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 font-semibold text-ocha-dark-text">System Administrator</td>
                             <td class="px-4 py-3">Linkedin</td>
                             <td class="px-4 py-3">Lacias International Corporation</td>
-                            <td class="px-4 py-3 text-fuchsia-300">Aplicacion en Greenhouse</td>
+                            <td class="px-4 py-3 text-fuchsia-600">Aplicacion en Greenhouse</td>
                         </tr>
                     </tbody>
                 </table>
@@ -283,13 +300,13 @@
             </div>
 
             <!-- PRÓXIMOS MOVIMIENTOS PENDIENTES - CARD 5 -->
-            <div class="card p-6 rounded-xl border-l-4 border-red-500 space-y-4">
-                <h2 class="text-xl font-bold text-red-400 border-b border-red-700 pb-2">5. PRÓXIMOS MOVIMIENTOS PENDIENTES</h2>
+            <div class="card p-6 rounded-xl border-l-4 border-red-600 space-y-4">
+                <h2 class="text-xl font-bold text-red-600 border-b border-gray-200 pb-2">5. PRÓXIMOS MOVIMIENTOS PENDIENTES</h2>
 
                 <!-- Verificación Manual -->
                 <div>
-                    <h3 class="text-lg font-bold text-white mb-2">VERIFICACIÓN MANUAL REQUERIDA:</h3>
-                    <ul class="list-disc list-inside text-sm text-slate-300 ml-4 space-y-1">
+                    <h3 class="text-lg font-bold text-ocha-dark-text mb-2">VERIFICACIÓN MANUAL REQUERIDA:</h3>
+                    <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-1">
                         <li>verificar vacantes en Linkedin</li>
                         <li>Investigar capacidades técnicas de las 10 agencias listadas</li>
                         <li>Validar URLs exactas de portales de vacantes</li>
@@ -300,8 +317,8 @@
 
                 <!-- Implementación Post-Verificación -->
                 <div>
-                    <h3 class="text-lg font-bold text-white mb-2">IMPLEMENTACIÓN POST-VERIFICACIÓN:</h3>
-                    <ul class="list-disc list-inside text-sm text-slate-300 ml-4 space-y-1">
+                    <h3 class="text-lg font-bold text-ocha-dark-text mb-2">IMPLEMENTACIÓN POST-VERIFICACIÓN:</h3>
+                    <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-1">
                         <li>Diseñar flujo de trabajo manual basado en capacidades reales</li>
                         <li>Crear sistema de registro y seguimiento de oportunidades</li>
                         <li>Integrar en ritual dominical de revisión SOP</li>
@@ -311,15 +328,15 @@
 
             <!-- CHECKSUMS DE VERIFICACIÓN Y SALUDO - CARD 6 -->
             <div class="card p-5 rounded-xl space-y-3">
-                <h2 class="text-xl font-bold text-sky-400 border-b border-sky-700 pb-2">6. CHECKSUMS DE VERIFICACIÓN</h2>
-                <div class="space-y-2 text-sm">
-                    <p class="label">Documento: <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded">phc_pmsl_v1_1_verificacion_pendiente_20251108</code></p>
-                    <p class="label">Integridad Estratégica: <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded">sistema_ponderacion_4criterios_definido_20251108</code></p>
-                    <p class="label">Estado: <code class="bg-slate-700 text-sky-300 px-2 py-0.5 rounded">pendiente_verificacion_manual_10agencias_20251108</code></p>
+                <h2 class="text-xl font-bold text-ocha-blue border-b border-gray-200 pb-2">6. CHECKSUMS DE VERIFICACIÓN</h2>
+                <div class="space-y-2 text-sm text-gray-700">
+                    <p class="label">Documento: <code class="bg-gray-100 text-ocha-dark-text px-2 py-0.5 rounded border border-gray-200">phc_pmsl_v1_1_verificacion_pendiente_20251108</code></p>
+                    <p class="label">Integridad Estratégica: <code class="bg-gray-100 text-ocha-dark-text px-2 py-0.5 rounded border border-gray-200">sistema_ponderacion_4criterios_definido_20251108</code></p>
+                    <p class="label">Estado: <code class="bg-gray-100 text-ocha-dark-text px-2 py-0.5 rounded border border-gray-200">pendiente_verificacion_manual_10agencias_20251108</code></p>
                 </div>
 
-                <div class="pt-4 border-t border-slate-700">
-                    <p class="text-lg italic text-yellow-300 font-semibold">
+                <div class="pt-4 border-t border-gray-200">
+                    <p class="text-lg italic text-ocha-blue font-semibold">
                         "La ruta está trazada, solo falta caminarla."
                     </p>
                 </div>
