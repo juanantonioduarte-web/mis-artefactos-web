@@ -3,287 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DASHBOARD D0 - MATRIZ ESTRATÉGICA v2.4 (Columna)</title>
-    <!-- Carga de Tailwind CSS -->
+    <title>DASHBOARD D0 - Matriz Estratégica con Mapa de Misión</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración de Tailwind para Paleta de Colores OCHA Light Mode y fuente Inter -->
+    <style>
+        /* Fuente Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        :root {
+            --color-primary: #009edb; /* UN Blue / OCHA Blue */
+            --color-accent: #ffc800; /* Yellow accent */
+            --color-col-route: #f58220; /* Naranja/Tierra */
+            --color-ven-route: #009edb; /* Azul OCHA */
+            --color-land-fill: #e5e7eb; /* Gray-200, un gris claro para el continente */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Fondo gris muy claro (Slate-50) */
+            color: #1f2937; /* Texto oscuro (Gray-800) */
+            min-height: 100vh;
+        }
+        
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-internal-bg {
+             background-color: #f8fafc; /* Slate-50 para fondos internos */
+        }
+
+        /* Estilos específicos para la visualización del mapa SVG */
+        .map-container {
+            position: relative;
+            width: 100%;
+            padding-top: 66.66%; /* 3:2 Aspect Ratio (e.g., 600x400) */
+        }
+
+        .map-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-line {
+            stroke-width: 4; /* Línea más gruesa */
+            stroke-linecap: round;
+            fill: none;
+            /* Animación para dibujar la línea */
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 3s ease-in-out forwards;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .map-marker {
+            fill: var(--color-primary);
+            stroke: #ffffff;
+            stroke-width: 1.5;
+            transition: fill 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+        }
+
+        .map-marker:hover {
+            fill: var(--color-accent);
+            transform: scale(1.2);
+        }
+
+        /* AJUSTES CLAVE DE VISIBILIDAD EN EL MAPA BASE
+           Siluetas más oscuras y claras para el relleno.
+        */
+        .map-base {
+            fill: #d1d5db; /* Gray-300 para el relleno */
+            stroke: #1f2937; /* Borde oscuro (Gray-800) para la silueta clara y definida */
+            stroke-width: 1.5; /* Borde notable */
+            transition: fill 0.5s ease;
+        }
+
+        .country-label {
+            fill: #1f2937; 
+            font-size: 10px; /* Reducido para caber mejor */
+            font-weight: bold; 
+            text-anchor: middle;
+            text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
     <script>
+        // Configuración de Tailwind para usar colores personalizados
         tailwind.config = {
-            darkMode: 'class', // Aunque usamos light mode, se mantiene para flexibilidad
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
                     colors: {
-                        // Colores de Marca OCHA - Guía Corporativa
-                        'ocha-blue': '#009edb', // UN Blue (Primario, Títulos, ACTIVO)
-                        'ocha-yellow': '#ffc800', // OCHA Yellow (Acento, EN CURSO)
-                        'gray-text': '#374151', // gray-700 para texto principal
-                        
-                        // Colores Funcionales (Estados)
-                        'status-critical': '#ef4444', // Red (CRÍTICO/RIESGO)
-                        'status-completed': '#34d399', // Green (COMPLETADO)
-                        'status-confirmed': '#f97316', // Orange (CONFIRMADO)
-                        'status-en-curso': '#ffc800', // Yellow (EN CURSO)
-                        'status-latent-bg': '#f3f4f6', // gray-50 (Fondo sutil para Latente)
+                        'ocha-blue': '#009edb',
+                        'ocha-yellow': '#ffc800',
                     }
                 }
             }
         }
     </script>
-    <style>
-        /* Estilo para la fuente Inter (importación) */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-        /* Estilos generales para Light Mode */
-        body {
-            /* Scrollbar más limpio en Light Mode */
-            scrollbar-color: #d1d5db #f3f4f6; /* thumb track */
-        }
-        body::-webkit-scrollbar {
-            width: 8px;
-        }
-        body::-webkit-scrollbar-track {
-            background: #f3f4f6;
-        }
-        body::-webkit-scrollbar-thumb {
-            background-color: #d1d5db;
-            border-radius: 4px;
-        }
+    <!-- Header / Título Principal -->
+    <header class="mb-8 border-b border-ocha-blue pb-4 max-w-6xl mx-auto">
+        <h1 class="text-3xl font-extrabold text-ocha-blue">DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO</h1>
+        <p class="text-sm text-gray-600">Actualizado al 13/11/2025 | Fuente: MFP v2.4</p>
+    </header>
 
-        /* Estilo para tarjetas y tablas (limpio y corporativo) */
-        .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        /* Asegura que el contenido de las celdas se ajuste al ancho de la tabla */
-        .responsive-cell {
-            white-space: normal !important; /* Anula cualquier regla nowrap */
-            word-break: break-words; /* Rompe palabras largas para evitar desbordamiento */
-            overflow-wrap: break-word; /* Compatibilidad */
-        }
+    <!-- Contenedor Principal de Tarjetas (Una sola columna) -->
+    <main class="grid grid-cols-1 gap-8 max-w-6xl mx-auto">
 
-        /* Ajuste específico para la columna 'Próximo Movimiento' en móviles */
-        @media (max-width: 767px) {
-            .hide-on-mobile {
-                display: none;
-            }
-            /* Aumentamos el peso de la primera columna en móviles */
-            .w-1\/3-mobile {
-                 width: 45%; /* Aumenta el espacio de la tarea crítica */
-            }
-            .w-1\/4-mobile {
-                width: 55%; /* Reduce el espacio del estado */
-            }
-        }
-    </style>
-</head>
-<body class="bg-white text-gray-900 font-sans min-h-screen p-4 md:p-10">
-
-    <!-- Contenedor principal del Encabezado (Sin Logo, Ocupa todo el ancho) -->
-    <div class="flex flex-col items-center justify-center mb-8 pb-4 border-b border-gray-200">
-        
-        <!-- Títulos del Dashboard -->
-        <header class="text-center w-full">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-ocha-blue mb-1">
-                DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO v2.4
-            </h1>
-            <p class="text-gray-700 text-xl font-medium">Resumen de Ejes de Ejecución y Priorización (Fuente: MFP v2.4)</p>
-            <p class="text-sm text-gray-500 mt-1">Checksum: dzero_v2_estructura_columna_20251113</p>
-        </header>
-    </div>
-
-    <!-- Botón de retorno al menú principal D0 (Estilizado con UN Blue) -->
-    <div class="mb-12 text-center">
-        <a href="https://juanantonioduarte-web.github.io/mis-artefactos-web/index.html"
-           class="inline-flex items-center justify-center px-8 py-3 border-2 border-ocha-blue text-base font-semibold rounded-full shadow-lg text-white bg-ocha-blue hover:bg-ocha-blue/90 transition duration-300 ease-in-out transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-ocha-blue focus:ring-opacity-50">
-            <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
-            Volver al Menú D0
-        </a>
-    </div>
-
-    <!-- Contenido del Dashboard: Matriz Estratégica en COLUMNA ÚNICA -->
-    <!-- Se cambia de grid-cols-3 a grid-cols-1 para forzar la columna única -->
-    <div class="grid grid-cols-1 gap-8 max-w-6xl mx-auto"> 
-
-        <!-- DOMINIO 1: CORPORATIVO (OCHA) - Ahora ocupa todo el ancho -->
-        <div class="bg-white p-6 rounded-xl border-t-4 border-ocha-blue card-shadow">
-            <h2 class="text-2xl font-bold text-ocha-blue mb-2">DOMINIO CORPORATIVO (OCHA)</h2>
-            <p class="text-sm text-gray-600 mb-4 italic">Conecta ejecución técnica con impacto estratégico regional tangible.</p>
+        <!-- CARD 1: DOMINIO CORPORATIVO (OCHA) -->
+        <div class="col-span-1 p-6 card h-fit">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">DOMINIO CORPORATIVO (OCHA)</h2>
             
             <div class="space-y-4">
-                <!-- Tarjeta de Proyectos PWO (Tabla) -->
-                <div class="border border-gray-200 rounded-lg overflow-x-auto"> <!-- Añadimos overflow-x-auto para el scroll en tablas en móviles -->
-                    <div class="bg-gray-100 p-3 text-lg font-semibold text-gray-800 border-b border-gray-200">Proyecto PWO</div>
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <!-- Ajuste de ancho para mobile vs desktop con clases responsive -->
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3 w-1\/3-mobile">Tarea Crítica</th>
-                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4 w-1\/4-mobile">Estado</th>
-                                <!-- Esta columna se oculta en móviles si se vuelve demasiado apretado -->
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4/12 hidden md:table-cell">Próximo Movimiento</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- Fila 1 -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Presentación resultados D1</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-completed text-white">COMPLETADO</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Réplica regional VZLA/COL</td>
-                            </tr>
-                            <!-- Fila 2 -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Misión COL (23 Nov-5 Dic)</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-confirmed text-white">CONFIRMADO</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Inspección in situ + protocolo triage IT</td>
-                            </tr>
-                            <!-- Fila 3 -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Misión VZLA (8-19 Dic)</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-confirmed text-white">CONFIRMADO (Pte. Visa)</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Réplica metodología + informe regional</td>
-                            </tr>
-                            <!-- Fila 4 -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Estandarización metodología</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-en-curso text-gray-900">EN CURSO</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Matriz decisión + infografía end-users</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Presentación resultados D1</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-green-600">COMPLETADO</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Réplica regional VZLA/COL</p>
+                </div>
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Misión COL (23 Nov-5 Dic)</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-ocha-yellow">CONFIRMADO</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Inspección in situ + protocolo triage IT</p>
+                </div>
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Misión VZLA (8-19 Dic)</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-ocha-yellow">CONFIRMADO (Pte. Visa)</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Réplica metodología + informe regional</p>
+                </div>
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Estandarización metodología</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-yellow-500">EN CURSO</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Matriz decisión + infografía end-users</p>
+                </div>
+            </div>
+            
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ RESUELVE? → Conecta ejecución técnica con impacto estratégico regional tangible.</p>
+        </div>
+        
+        <!-- CARD 2: MISIÓN COLOMBIA & VENEZUELA (MAPA GRÁFICO) - CON MAPA DE FONDO REALISTA -->
+        <div class="col-span-1 p-6 card">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-ocha-blue pb-2 flex items-center">
+                MISIÓN COLOMBIA & VENEZUELA 
+                <span class="ml-2 inline-block px-3 py-1 text-xs font-medium rounded-full bg-ocha-blue text-white">RUTA ACTIVA</span>
+            </h2>
+
+            <!-- Contenedor del Mapa y la Leyenda -->
+            <div class="flex flex-col md:flex-row gap-6">
+                
+                <!-- Visualización de la Ruta (SVG Realista) -->
+                <div class="w-full md:w-2/3 p-2 card-internal-bg border border-gray-200 rounded-lg flex items-center justify-center relative">
+                    <div class="map-container">
+                        <!-- El viewBox define el sistema de coordenadas. Usamos 600x400 -->
+                        <svg id="mission-map" viewBox="0 0 600 400" class="map-svg">
+                            
+                            <!-- Fondo del SVG (representa mar/océano/aire) -->
+                            <rect x="0" y="0" width="600" height="400" fill="#e0f2fe" /> <!-- Azul muy claro para agua -->
+
+                            <!-- MAPA BASE GEOGRÁFICO REALISTA -->
+                            
+                            <!-- Panamá (Silueta más detallada del Istmo) -->
+                            <path id="map-panama" class="map-base" 
+                                d="M0 180 L30 140 L80 150 L120 120 L180 160 L180 220 L120 250 L50 220 L0 180 Z" />
+                            <text x="90" y="180" class="country-label">PANAMÁ</text>
+
+                            <!-- Colombia (Silueta más detallada de las costas y fronteras) -->
+                            <path id="map-colombia" class="map-base" 
+                                d="M180 160 L200 100 L250 100 L300 180 L350 180 L300 350 L200 380 L180 300 L180 220 L180 160 Z" />
+                            <text x="260" y="270" class="country-label" font-size="14px">COLOMBIA</text>
+                            
+                            <!-- Venezuela (Silueta más detallada de las costas y fronteras) -->
+                            <path id="map-venezuela" class="map-base" 
+                                d="M350 180 L400 100 L550 80 L590 150 L500 250 L400 300 L300 350 L350 180 Z" />
+                            <text x="470" y="190" class="country-label" font-size="14px">VENEZUELA</text>
+                            
+                            
+                            <!-- LÍNEAS DE CONEXIÓN (RUTA) - Se superponen sobre el mapa -->
+                            <!-- Puntos ajustados para que las rutas parezcan más lógicas sobre las nuevas formas -->
+                            <!-- Origen: Ciudad de Panamá (cerca de la costa) -->
+                            <polyline id="route-colombia" points="150,200 250,150 280,250 250,350 200,380 280,250" class="map-line" style="stroke: var(--color-col-route);" /> 
+                            <polyline id="route-venezuela" points="280,250 380,200 450,150 500,250 450,300 150,200" class="map-line" style="stroke: var(--color-ven-route);" />
+                            
+                            <!-- PUNTOS DE LA MISIÓN -->
+                            
+                            <!-- Panamá Markers (Inicio/Fin) - Ajustado a Panamá Capital (cerca del origen de la ruta) -->
+                            <circle cx="150" cy="200" r="8" data-name="Panamá (Salida)" data-dates="Domingo 23 Nov (Inicio)" class="map-marker" id="pt-0" style="fill: var(--color-accent);"/>
+                            <circle cx="150" cy="200" r="12" style="fill: transparent; stroke: var(--color-accent); stroke-width: 3;" data-name="Panamá (Retorno)" data-dates="Vie 19 Dic (Fin de Misión)" id="pt-8"/>
+                            
+                            <!-- Colombia Markers -->
+                            <!-- Bogotá (Arriba, cerca del centro) -->
+                            <circle cx="250" cy="150" r="8" data-name="Bogotá (COL)" data-dates="Dom 23 Nov y Mié 3 - Vie 5 Dic" class="map-marker" id="pt-1"/>
+                            <!-- Quibdó (Oeste de Colombia) -->
+                            <circle cx="280" cy="250" r="8" data-name="Quibdó (COL) - Conexión" data-dates="Lun 24 - Mié 26 Nov" class="map-marker" id="pt-2"/>
+                            <!-- Popayán (Centro-Sur) -->
+                            <circle cx="250" cy="350" r="8" data-name="Popayán (COL)" data-dates="Jue 27 - Vie 28 Nov" class="map-marker" id="pt-3"/>
+                            <!-- Pasto (Sur, frontera con Ecuador) -->
+                            <circle cx="200" cy="380" r="8" data-name="Pasto (COL)" data-dates="Lun 1 - Mar 2 Dic" class="map-marker" id="pt-4"/>
+                            
+                            <!-- Venezuela Markers -->
+                            <!-- Caracas (Norte/Centro) -->
+                            <circle cx="450" cy="150" r="8" data-name="Caracas (VEN)" data-dates="Mar 9 - Vie 12 Dic" class="map-marker" id="pt-5"/>
+                            <!-- San Cristobal (Oeste, frontera con COL) -->
+                            <circle cx="380" cy="200" r="8" data-name="San Cristobal (VEN)" data-dates="Lun 15 - Mar 16 Dic" class="map-marker" id="pt-6"/>
+                            <!-- Ciudad Guayana (Sureste) -->
+                            <circle cx="500" cy="250" r="8" data-name="Ciudad Guayana (VEN)" data-dates="Mié 17 - Jue 18 Dic" class="map-marker" id="pt-7"/>
+                            
+                            <!-- Leyenda de Rutas -->
+                            <text x="30" y="30" fill="var(--color-col-route)" font-size="14" font-weight="bold" filter="drop-shadow(0 0 1px #fff)">RUTA COLOMBIA</text>
+                            <text x="570" y="30" fill="var(--color-ven-route)" font-size="14" font-weight="bold" text-anchor="end" filter="drop-shadow(0 0 1px #fff)">RUTA VENEZUELA</text>
+
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Detalle del Punto de Ruta Seleccionado / Tabla de Ruta -->
+                <div class="w-full md:w-1/3 space-y-4">
+                    <div id="point-detail" class="p-4 rounded-lg card-internal-bg border border-gray-200 h-28 flex flex-col justify-center transition-all duration-300">
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">Punto de la Ruta</h3>
+                        <p class="text-ocha-blue font-semibold" id="point-name">Seleccione un punto del mapa</p>
+                        <p class="text-sm text-gray-700" id="point-dates">para ver los detalles de la fecha.</p>
+                    </div>
+
+                    <div class="h-64 overflow-y-auto card-internal-bg border border-gray-200 rounded-lg p-3">
+                        <h4 class="text-sm font-semibold text-gray-500 mb-2">ITINERARIO COMPLETO</h4>
+                        <table class="min-w-full text-xs text-gray-700">
+                            <thead>
+                                <tr class="border-b border-gray-300 text-left">
+                                    <th class="py-1 text-ocha-blue">País</th>
+                                    <th class="py-1 text-ocha-blue">Ubicación</th>
+                                    <th class="py-1 text-ocha-blue">Fechas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- COLOMBIA -->
+                                <tr><td class="pt-2 text-gray-900 font-semibold" colspan="3">COLOMBIA</td></tr>
+                                <tr><td></td><td>Panamá (Salida)</td><td>Dom 23 Nov</td></tr>
+                                <tr><td></td><td>Quibdó</td><td>Lun 24 - Mié 26 Nov</td></tr>
+                                <tr><td></td><td>Popayán</td><td>Jue 27 - Vie 28 Nov</td></tr>
+                                <tr><td></td><td>Pasto</td><td>Lun 1 - Mar 2 Dic</td></tr>
+                                <tr><td></td><td>Bogotá</td><td>Mié 3 - Vie 5 Dic</td></tr>
+                                <!-- VENEZUELA -->
+                                <tr><td class="pt-3 text-gray-900 font-semibold" colspan="3">VENEZUELA</td></tr>
+                                <tr><td></td><td>Caracas</td><td>Mar 9 - Vie 12 Dic</td></tr>
+                                <tr><td></td><td>San Cristobal</td><td>Lun 15 - Mar 16 Dic</td></tr>
+                                <tr><td></td><td>Ciudad Guayana</td><td>Mié 17 - Jue 18 Dic</td></tr>
+                                <tr><td></td><td>Panamá (Retorno)</td><td>Vie 19 Dic</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ MUESTRA? → Visualización detallada de la trayectoria operacional de PWO, facilitando la coordinación logística y el seguimiento de hitos.</p>
+        </div>
+        
+        <!-- CARD 3: DOMINIO PERSONAL (POSICIONAMIENTO) -->
+        <div class="col-span-1 p-6 card h-fit">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">DOMINIO PERSONAL (POSICIONAMIENTO)</h2>
+            <div class="p-3 rounded card-internal-bg border border-gray-200">
+                <p class="text-ocha-blue font-semibold">PMSL: Scrapping activo (10 agencias)</p>
+                <p class="text-sm text-gray-700">Estado: <span class="font-bold text-red-600">ACTIVO [CRÍTICO]</span></p>
+                <p class="text-xs text-gray-500">Próximo: Alta frecuencia + ritual dominical 10min</p>
+            </div>
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ RESUELVE? → Convierte expertise tácito en oportunidades concretas con evidencias medibles.</p>
+        </div>
+
+        <!-- CARD 4: DOMINIO INNOVACIÓN (LABORATORIO) -->
+        <div class="col-span-1 p-6 card h-fit">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">DOMINIO INNOVACIÓN (LABORATORIO)</h2>
+            <div class="p-3 rounded card-internal-bg border border-gray-200">
+                <p class="text-ocha-blue font-semibold">DW-002</p>
+                <p class="text-sm text-gray-700">Estado: <span class="font-bold text-green-600">EN USO</span></p>
+                <p class="text-xs text-gray-500">Próxima: 3 fichas validadas para activar DW-003</p>
+            </div>
+            <!-- Lista de módulos latentes -->
+            <div class="mt-4 space-y-1">
+                <p class="text-sm text-gray-500">Módulos Latentes:</p>
+                <ul class="list-disc list-inside text-xs text-gray-600 ml-4">
+                    <li>PSY-DEC+NL</li>
+                    <li>TA+IH</li>
+                    <li>AET-ALIGN</li>
+                    <li>DT+IA</li>
+                    <li>TWR+IA</li>
+                </ul>
+            </div>
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ RESUELVE? → Estandariza evolución deliberada de productos y procesos.</p>
+        </div>
+
+        <!-- CARD 5: LÍNEA TEMPORAL / HALLAZGO ESTRATÉGICO -->
+        <div class="col-span-1 p-6 card">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">LÍNEA TEMPORAL Y HALLAZGO ESTRATÉGICO</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Línea Temporal -->
+                <div>
+                    <h3 class="text-lg font-semibold text-ocha-yellow mb-2">LÍNEA TEMPORAL ESTRATÉGICA</h3>
+                    <ul class="space-y-2">
+                        <li class="p-3 border-l-4 border-ocha-blue card-internal-bg rounded">
+                            <span class="font-bold">NOV 2025:</span> Misión Colombia (23 Nov-5 Dic) | Protocolo triage IT
+                        </li>
+                        <li class="p-3 border-l-4 border-ocha-blue card-internal-bg rounded">
+                            <span class="font-bold">DIC 2025:</span> Misión Venezuela (8-19 Dic) | Réplica regional | Cierre ciclo
+                        </li>
+                        <li class="p-3 border-l-4 border-ocha-blue card-internal-bg rounded">
+                            <span class="font-bold">2026:</span> Posicionamiento consolidado | Ecosistema maduro
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Hallazgo Estratégico -->
+                <div>
+                    <h3 class="text-lg font-semibold text-ocha-yellow mb-2">HALLAZGO ESTRATÉGICO ACTUAL (NOV 2025)</h3>
+                    <blockquote class="border-l-4 border-ocha-yellow pl-4 italic text-gray-700 bg-yellow-50 p-4 rounded">
+                        "Ejecutando sobre dos vectores críticos: 1) PWO con metodología estandarizada (Colombia/Venezuela) y 2) PMSL..."
+                    </blockquote>
+                    <p class="text-xs mt-2 text-gray-500">Foco: Convergencia de proyectos tácticos y estratégicos.</p>
                 </div>
             </div>
         </div>
-        
-        <!-- DOMINIO 2: PERSONAL (POSICIONAMIENTO) - Ahora ocupa todo el ancho -->
-        <div class="bg-white p-6 rounded-xl border-t-4 border-status-critical card-shadow">
-            <h2 class="text-2xl font-bold text-status-critical mb-2">DOMINIO PERSONAL (POSICIONAMIENTO)</h2>
-            <p class="text-sm text-gray-600 mb-4 italic">Convierte expertise tácito en oportunidades concretas con evidencias medibles.</p>
+    </main>
+
+    <script>
+        // JS para la interactividad del mapa SVG
+        document.addEventListener('DOMContentLoaded', () => {
+            const markers = document.querySelectorAll('.map-marker');
+            const pointNameElement = document.getElementById('point-name');
+            const pointDatesElement = document.getElementById('point-dates');
+            const detailCard = document.getElementById('point-detail');
+            let activeMarker = null;
+
+            // Función para actualizar el panel de detalles
+            const updateDetailPanel = (name, dates) => {
+                pointNameElement.textContent = name;
+                pointDatesElement.textContent = dates;
+                
+                // Efecto de resaltado
+                detailCard.classList.remove('active-point-info');
+                void detailCard.offsetWidth; // Truco para reiniciar la animación CSS
+                detailCard.classList.add('active-point-info');
+            };
+
+            // Listener para cada marcador
+            markers.forEach(marker => {
+                marker.addEventListener('click', (event) => {
+                    const name = event.target.getAttribute('data-name');
+                    const dates = event.target.getAttribute('data-dates');
+
+                    // Resetear el marcador activo anterior
+                    if (activeMarker) {
+                        // El pt-8 es el círculo exterior (anillo)
+                        activeMarker.setAttribute('r', activeMarker.id === 'pt-8' ? '12' : '8');
+                        activeMarker.style.fill = activeMarker.id === 'pt-8' ? 'transparent' : 'var(--color-primary)';
+                    }
+
+                    // Establecer el nuevo marcador activo
+                    event.target.setAttribute('r', event.target.id === 'pt-8' ? '14' : '10'); // Más grande al hacer clic
+                    event.target.style.fill = event.target.id === 'pt-8' ? 'transparent' : 'var(--color-accent)';
+                    activeMarker = event.target;
+                    
+                    updateDetailPanel(name, dates);
+                });
+
+                // Establecer el estado inicial en "Panama (Salida)" (pt-0)
+                if (marker.id === 'pt-0') {
+                    const name = marker.getAttribute('data-name');
+                    const dates = marker.getAttribute('data-dates');
+                    updateDetailPanel(name, dates);
+                    marker.setAttribute('r', '10');
+                    marker.style.fill = 'var(--color-accent)';
+                    activeMarker = marker;
+                }
+            });
             
-            <div class="space-y-4">
-                 <!-- Tarjeta de Proyectos PMSL (Tabla) -->
-                 <div class="border border-gray-200 rounded-lg overflow-x-auto">
-                    <div class="bg-gray-100 p-3 text-lg font-semibold text-gray-800 border-b border-gray-200">Proyecto PMSL</div>
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3 w-1\/3-mobile">Tarea Crítica</th>
-                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4 w-1\/4-mobile">Estado</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4/12 hidden md:table-cell">Próximo Movimiento</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- Fila 1 -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Scrapping activo (10 agencias)</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-ocha-blue text-white">ACTIVO 
-                                        <span class="ml-1 text-status-critical font-bold">[CRÍTICO]</span>
-                                    </span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Estructura final + Publicación 1ra ficha</td>
-                            </tr>
-                            <!-- Fila 2 -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Revisión de CV/Portafolio</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-en-curso text-gray-900">EN CURSO</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Ajuste de tono + frecuencia + ritual dominical 10min</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+            // Listener para el punto de retorno (pt-8)
+            const returnMarker = document.getElementById('pt-8');
+            returnMarker.addEventListener('click', (event) => {
+                const name = event.target.getAttribute('data-name');
+                const dates = event.target.getAttribute('data-dates');
 
-        <!-- DOMINIO 3: INNOVACIÓN (LABORATORIO) - Ahora ocupa todo el ancho -->
-        <div class="bg-white p-6 rounded-xl border-t-4 border-ocha-yellow card-shadow">
-            <h2 class="text-2xl font-bold text-ocha-yellow mb-2">DOMINIO INNOVACIÓN (LABORATORIO)</h2>
-            <p class="text-sm text-gray-600 mb-4 italic">Estandariza evolución deliberada de productos y procesos.</p>
-            
-            <div class="space-y-4">
-                 <!-- Tarjeta de MÓDULOS (Tabla) -->
-                 <div class="border border-gray-200 rounded-lg overflow-x-auto">
-                    <div class="bg-gray-100 p-3 text-lg font-semibold text-gray-800 border-b border-gray-200">Módulos de Laboratorio</div>
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3 w-1\/3-mobile">Módulo</th>
-                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4 w-1\/4-mobile">Estado</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4/12 hidden md:table-cell">Próxima Activación</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- DW-002 -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile font-medium text-ocha-blue">DW-002</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-ocha-yellow text-gray-900">EN USO</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">3 fichas validadas para activar DW-003</td>
-                            </tr>
-                            <!-- Módulos LATENTES -->
-                            <tr class="hover:bg-gray-50 bg-status-latent-bg">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">PSY-DEC+NL</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-700">LATENTE</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Esperando proyecto grande</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 bg-status-latent-bg">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">TA+IH</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-700">LATENTE</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Esperando oportunidad concreta</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 bg-status-latent-bg">
-                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">AET-ALIGN</td>
-                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-700">LATENTE</span>
-                                </td>
-                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Esperando necesidad granularidad tonal</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Sección de Línea Temporal y Hallazgo Estratégico -->
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 card-shadow">
-            <h3 class="text-xl font-bold text-ocha-blue mb-3 border-b pb-2 border-gray-200">LÍNEA TEMPORAL ESTRATÉGICA</h3>
-            <ul class="list-disc list-inside space-y-2 text-gray-700">
-                <li class="pl-2"><strong>NOV 2025:</strong> Misión Colombia (23 Nov-5 Dic) | Aplicaciones PMSL activas | Protocolo triage IT desplegado</li>
-                <li class="pl-2"><strong>DIC 2025:</strong> Misión Venezuela (8-19 Dic) | Réplica regional | Cierre ciclo 2025</li>
-                <li class="pl-2"><strong>2026:</strong> Posicionamiento consolidado | Ecosistema maduro</li>
-            </ul>
-        </div>
-        <div class="bg-red-50 p-6 rounded-xl border border-status-critical card-shadow">
-            <h3 class="text-xl font-bold text-status-critical mb-3 border-b pb-2 border-status-critical/30">HALLAZGO ESTRATÉGICO ACTUAL (NOV 2025)</h3>
-            <p class="text-gray-800 italic">
-                "Ejecutando sobre dos vectores críticos: 1) PWO con metodología estandarizada (Colombia/Venezuela) y 2) PMSL."
-            </p>
-        </div>
-    </div>
+                // Resetear el marcador activo anterior
+                if (activeMarker) {
+                    activeMarker.setAttribute('r', activeMarker.id === 'pt-8' ? '12' : '8');
+                    activeMarker.style.fill = activeMarker.id === 'pt-8' ? 'transparent' : 'var(--color-primary)';
+                }
 
-    <!-- Pie de página (Checksum) -->
-    <footer class="mt-12 text-center text-gray-500 text-sm">
-        <p>Dashboard impulsado por D0 | Chekcsum: dzero_v2_estructura_columna_20251113</p>
-    </footer>
-
+                // Establecer el nuevo marcador activo (pt-8)
+                event.target.setAttribute('r', '14');
+                activeMarker = event.target;
+                
+                updateDetailPanel(name, dates);
+            });
+        });
+    </script>
 </body>
 </html>
