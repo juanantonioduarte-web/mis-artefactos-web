@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DASHBOARD D0 - MATRIZ ESTRATÉGICA v2.4</title>
+    <title>DASHBOARD D0 - MATRIZ ESTRATÉGICA v2.4 (Columna)</title>
     <!-- Carga de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración de Tailwind para modo oscuro y fuente Inter -->
+    <!-- Configuración de Tailwind para Paleta de Colores OCHA Light Mode y fuente Inter -->
     <script>
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Aunque usamos light mode, se mantiene para flexibilidad
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        // Colores ajustados para el tema oscuro
-                        'primary-dark': '#1e293b', // slate-800
-                        'secondary-dark': '#334155', // slate-700
-                        'critical': '#ef4444', // red-500
-                        'critical-light': '#f87171', // red-400
-                        'active': '#34d399', // emerald-400
-                        'latent': '#94a3b8', // slate-400
-                        'operative': '#60a5fa', // blue-400
-                        'completed': '#10b981', // emerald-500
-                        'confirmed': '#f97316', // orange-500
-                        'en-curso': '#eab308', // yellow-600
+                        // Colores de Marca OCHA - Guía Corporativa
+                        'ocha-blue': '#009edb', // UN Blue (Primario, Títulos, ACTIVO)
+                        'ocha-yellow': '#ffc800', // OCHA Yellow (Acento, EN CURSO)
+                        'gray-text': '#374151', // gray-700 para texto principal
+                        
+                        // Colores Funcionales (Estados)
+                        'status-critical': '#ef4444', // Red (CRÍTICO/RIESGO)
+                        'status-completed': '#34d399', // Green (COMPLETADO)
+                        'status-confirmed': '#f97316', // Orange (CONFIRMADO)
+                        'status-en-curso': '#ffc800', // Yellow (EN CURSO)
+                        'status-latent-bg': '#f3f4f6', // gray-50 (Fondo sutil para Latente)
                     }
                 }
             }
@@ -36,209 +36,254 @@
         /* Estilo para la fuente Inter (importación) */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-        /* Asegura que el scrollbar sea discreto en modo oscuro */
+        /* Estilos generales para Light Mode */
+        body {
+            /* Scrollbar más limpio en Light Mode */
+            scrollbar-color: #d1d5db #f3f4f6; /* thumb track */
+        }
         body::-webkit-scrollbar {
             width: 8px;
         }
         body::-webkit-scrollbar-track {
-            background: #111827; /* gray-900 */
+            background: #f3f4f6;
         }
         body::-webkit-scrollbar-thumb {
-            background-color: #475569; /* slate-600 */
+            background-color: #d1d5db;
             border-radius: 4px;
+        }
+
+        /* Estilo para tarjetas y tablas (limpio y corporativo) */
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* Asegura que el contenido de las celdas se ajuste al ancho de la tabla */
+        .responsive-cell {
+            white-space: normal !important; /* Anula cualquier regla nowrap */
+            word-break: break-words; /* Rompe palabras largas para evitar desbordamiento */
+            overflow-wrap: break-word; /* Compatibilidad */
+        }
+
+        /* Ajuste específico para la columna 'Próximo Movimiento' en móviles */
+        @media (max-width: 767px) {
+            .hide-on-mobile {
+                display: none;
+            }
+            /* Aumentamos el peso de la primera columna en móviles */
+            .w-1\/3-mobile {
+                 width: 45%; /* Aumenta el espacio de la tarea crítica */
+            }
+            .w-1\/4-mobile {
+                width: 55%; /* Reduce el espacio del estado */
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-slate-100 font-sans min-h-screen p-4 md:p-8 dark">
+<body class="bg-white text-gray-900 font-sans min-h-screen p-4 md:p-10">
 
-    <!-- Encabezado del Dashboard -->
-    <header class="mb-6 text-center">
-        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
-            DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO v2.4
-        </h1>
-        <p class="text-slate-400 text-xl font-medium">Resumen de Ejes de Ejecución y Priorización (Fuente: MFP v2.4)</p>
-        <p class="text-sm text-slate-500 mt-1">Checksum: dzero_v2_estructura_corregida_20251112</p>
-    </header>
+    <!-- Contenedor principal del Encabezado (Sin Logo, Ocupa todo el ancho) -->
+    <div class="flex flex-col items-center justify-center mb-8 pb-4 border-b border-gray-200">
+        
+        <!-- Títulos del Dashboard -->
+        <header class="text-center w-full">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-ocha-blue mb-1">
+                DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO v2.4
+            </h1>
+            <p class="text-gray-700 text-xl font-medium">Resumen de Ejes de Ejecución y Priorización (Fuente: MFP v2.4)</p>
+            <p class="text-sm text-gray-500 mt-1">Checksum: dzero_v2_estructura_columna_20251113</p>
+        </header>
+    </div>
 
-    <!-- Botón de retorno al menú principal D0 (Mantenido) -->
-    <div class="mb-10 text-center">
+    <!-- Botón de retorno al menú principal D0 (Estilizado con UN Blue) -->
+    <div class="mb-12 text-center">
         <a href="https://juanantonioduarte-web.github.io/mis-artefactos-web/index.html"
-           class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-blue-500/50 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
+           class="inline-flex items-center justify-center px-8 py-3 border-2 border-ocha-blue text-base font-semibold rounded-full shadow-lg text-white bg-ocha-blue hover:bg-ocha-blue/90 transition duration-300 ease-in-out transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-ocha-blue focus:ring-opacity-50">
             <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
-            Volver al menú Principal D0
+            Volver al Menú D0
         </a>
     </div>
 
-    <!-- Contenedor principal de la Matriz -->
-    <div id="dashboard-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10 max-w-7xl mx-auto">
-        <!-- Los cards de Dominio se renderizarán aquí -->
+    <!-- Contenido del Dashboard: Matriz Estratégica en COLUMNA ÚNICA -->
+    <!-- Se cambia de grid-cols-3 a grid-cols-1 para forzar la columna única -->
+    <div class="grid grid-cols-1 gap-8 max-w-6xl mx-auto"> 
+
+        <!-- DOMINIO 1: CORPORATIVO (OCHA) - Ahora ocupa todo el ancho -->
+        <div class="bg-white p-6 rounded-xl border-t-4 border-ocha-blue card-shadow">
+            <h2 class="text-2xl font-bold text-ocha-blue mb-2">DOMINIO CORPORATIVO (OCHA)</h2>
+            <p class="text-sm text-gray-600 mb-4 italic">Conecta ejecución técnica con impacto estratégico regional tangible.</p>
+            
+            <div class="space-y-4">
+                <!-- Tarjeta de Proyectos PWO (Tabla) -->
+                <div class="border border-gray-200 rounded-lg overflow-x-auto"> <!-- Añadimos overflow-x-auto para el scroll en tablas en móviles -->
+                    <div class="bg-gray-100 p-3 text-lg font-semibold text-gray-800 border-b border-gray-200">Proyecto PWO</div>
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <!-- Ajuste de ancho para mobile vs desktop con clases responsive -->
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3 w-1\/3-mobile">Tarea Crítica</th>
+                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4 w-1\/4-mobile">Estado</th>
+                                <!-- Esta columna se oculta en móviles si se vuelve demasiado apretado -->
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4/12 hidden md:table-cell">Próximo Movimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Fila 1 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Presentación resultados D1</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-completed text-white">COMPLETADO</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Réplica regional VZLA/COL</td>
+                            </tr>
+                            <!-- Fila 2 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Misión COL (23 Nov-5 Dic)</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-confirmed text-white">CONFIRMADO</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Inspección in situ + protocolo triage IT</td>
+                            </tr>
+                            <!-- Fila 3 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Misión VZLA (8-19 Dic)</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-confirmed text-white">CONFIRMADO (Pte. Visa)</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Réplica metodología + informe regional</td>
+                            </tr>
+                            <!-- Fila 4 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Estandarización metodología</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-en-curso text-gray-900">EN CURSO</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Matriz decisión + infografía end-users</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- DOMINIO 2: PERSONAL (POSICIONAMIENTO) - Ahora ocupa todo el ancho -->
+        <div class="bg-white p-6 rounded-xl border-t-4 border-status-critical card-shadow">
+            <h2 class="text-2xl font-bold text-status-critical mb-2">DOMINIO PERSONAL (POSICIONAMIENTO)</h2>
+            <p class="text-sm text-gray-600 mb-4 italic">Convierte expertise tácito en oportunidades concretas con evidencias medibles.</p>
+            
+            <div class="space-y-4">
+                 <!-- Tarjeta de Proyectos PMSL (Tabla) -->
+                 <div class="border border-gray-200 rounded-lg overflow-x-auto">
+                    <div class="bg-gray-100 p-3 text-lg font-semibold text-gray-800 border-b border-gray-200">Proyecto PMSL</div>
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3 w-1\/3-mobile">Tarea Crítica</th>
+                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4 w-1\/4-mobile">Estado</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4/12 hidden md:table-cell">Próximo Movimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Fila 1 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Scrapping activo (10 agencias)</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-ocha-blue text-white">ACTIVO 
+                                        <span class="ml-1 text-status-critical font-bold">[CRÍTICO]</span>
+                                    </span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Estructura final + Publicación 1ra ficha</td>
+                            </tr>
+                            <!-- Fila 2 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">Revisión de CV/Portafolio</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-en-curso text-gray-900">EN CURSO</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Ajuste de tono + frecuencia + ritual dominical 10min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOMINIO 3: INNOVACIÓN (LABORATORIO) - Ahora ocupa todo el ancho -->
+        <div class="bg-white p-6 rounded-xl border-t-4 border-ocha-yellow card-shadow">
+            <h2 class="text-2xl font-bold text-ocha-yellow mb-2">DOMINIO INNOVACIÓN (LABORATORIO)</h2>
+            <p class="text-sm text-gray-600 mb-4 italic">Estandariza evolución deliberada de productos y procesos.</p>
+            
+            <div class="space-y-4">
+                 <!-- Tarjeta de MÓDULOS (Tabla) -->
+                 <div class="border border-gray-200 rounded-lg overflow-x-auto">
+                    <div class="bg-gray-100 p-3 text-lg font-semibold text-gray-800 border-b border-gray-200">Módulos de Laboratorio</div>
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3 w-1\/3-mobile">Módulo</th>
+                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4 w-1\/4-mobile">Estado</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4/12 hidden md:table-cell">Próxima Activación</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- DW-002 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile font-medium text-ocha-blue">DW-002</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-ocha-yellow text-gray-900">EN USO</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">3 fichas validadas para activar DW-003</td>
+                            </tr>
+                            <!-- Módulos LATENTES -->
+                            <tr class="hover:bg-gray-50 bg-status-latent-bg">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">PSY-DEC+NL</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-700">LATENTE</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Esperando proyecto grande</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 bg-status-latent-bg">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">TA+IH</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-700">LATENTE</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Esperando oportunidad concreta</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 bg-status-latent-bg">
+                                <td class="px-3 py-3 responsive-cell w-1\/3-mobile">AET-ALIGN</td>
+                                <td class="px-3 py-3 responsive-cell text-center w-1\/4-mobile">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-300 text-gray-700">LATENTE</span>
+                                </td>
+                                <td class="px-3 py-3 responsive-cell text-gray-500 hidden md:table-cell">Esperando necesidad granularidad tonal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sección de Línea Temporal y Hallazgo Estratégico -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 card-shadow">
+            <h3 class="text-xl font-bold text-ocha-blue mb-3 border-b pb-2 border-gray-200">LÍNEA TEMPORAL ESTRATÉGICA</h3>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li class="pl-2"><strong>NOV 2025:</strong> Misión Colombia (23 Nov-5 Dic) | Aplicaciones PMSL activas | Protocolo triage IT desplegado</li>
+                <li class="pl-2"><strong>DIC 2025:</strong> Misión Venezuela (8-19 Dic) | Réplica regional | Cierre ciclo 2025</li>
+                <li class="pl-2"><strong>2026:</strong> Posicionamiento consolidado | Ecosistema maduro</li>
+            </ul>
+        </div>
+        <div class="bg-red-50 p-6 rounded-xl border border-status-critical card-shadow">
+            <h3 class="text-xl font-bold text-status-critical mb-3 border-b pb-2 border-status-critical/30">HALLAZGO ESTRATÉGICO ACTUAL (NOV 2025)</h3>
+            <p class="text-gray-800 italic">
+                "Ejecutando sobre dos vectores críticos: 1) PWO con metodología estandarizada (Colombia/Venezuela) y 2) PMSL."
+            </p>
+        </div>
     </div>
 
-    <!-- Línea Temporal Transversal -->
-    <section class="max-w-7xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-slate-600 pb-2 text-white flex items-center">
-            <svg class="w-6 h-6 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Línea Temporal Estratégica Actualizada
-        </h2>
-        <div id="timeline-container" class="space-y-4">
-            <!-- Los eventos de la Línea Temporal se renderizarán aquí -->
-        </div>
-    </section>
+    <!-- Pie de página (Checksum) -->
+    <footer class="mt-12 text-center text-gray-500 text-sm">
+        <p>Dashboard impulsado por D0 | Chekcsum: dzero_v2_estructura_columna_20251113</p>
+    </footer>
 
-    <!-- JavaScript para manejar y renderizar los datos -->
-    <script>
-        // Datos extraídos y adaptados del PDF "12/11/2025 - DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO - Actualizado | Fuente: MFP v2.4"
-        const strategicData = [
-            {
-                domain: "DOMINIO CORPORATIVO (OCHA)",
-                subtitle: "¿QUÉ RESUELVE? → Conecta ejecución técnica con impacto estratégico regional tangible.",
-                theme: "border-red-500 hover:shadow-red-500/50",
-                items: [
-                    { project: "PWO", task: "Presentación resultados D1", status: "COMPLETADO", move: "Réplica regional VZLA/COL", critical: true },
-                    { project: "PWO", task: "Misión COL (23 Nov-5 Dic)", status: "CONFIRMADO", move: "Inspección in situ + protocolo triage IT", critical: true },
-                    { project: "PWO", task: "Misión VZLA (8-19 Dic)", status: "CONFIRMADO (Pte. Visa)", move: "Réplica metodología + informe regional", critical: true },
-                    { project: "PWO", task: "Estandarización metodología", status: "EN CURSO", move: "Matriz decisión + infografía end-users", critical: true }
-                ]
-            },
-            {
-                domain: "DOMINIO PERSONAL (POSICIONAMIENTO)",
-                subtitle: "¿QUÉ RESUELVE? → Convierte expertise tácito en oportunidades concretas con evidencias medibles.",
-                theme: "border-cyan-500 hover:shadow-cyan-500/50",
-                items: [
-                    { project: "PMSL", task: "Scrapping activo (10 agencias)", status: "ACTIVO [CRÍTICO]", move: "Ritual AM 5 días/semana + 1 tableta cena/2 almuerzo + ritual dominical 10min", critical: true }
-                ]
-            },
-            {
-                domain: "DOMINIO INNOVACIÓN (LABORATORIO)",
-                subtitle: "¿QUÉ RESUELVE? → Estandariza evolución deliberada de productos y procesos.",
-                theme: "border-yellow-500 hover:shadow-yellow-500/50",
-                items: [
-                    { project: "DW-002", task: "Fichas de lecciones aprendidas", status: "EN USO", move: "3 fichas validadas para activar DW-003", critical: true },
-                    { project: "PSY-DEC+NL", task: "Psicología Decisional + Neuro-L", status: "LATENTE", move: "Esperando proyecto grande", critical: false },
-                    { project: "TA+IH", task: "Tecnologías de Alineación + Infra Humana", status: "LATENTE", move: "Esperando oportunidad concreta", critical: false },
-                    { project: "AET-ALIGN", task: "Alineación de Tono Estructural", status: "LATENTE", move: "Esperando necesidad granularidad tonal", critical: false },
-                    { project: "DT+IA", task: "Design Thinking + IA", status: "LATENTE", move: "Esperando ventana de capacidad", critical: false },
-                    { project: "TWR+IA", task: "Time Window Refinements + IA", status: "LATENTE", move: "Esperando ráfaga ejecución 1 semana", critical: false }
-                ]
-            }
-        ];
-
-        // Definición de los datos de la línea temporal
-        const timelineData = [
-            { period: "NOV 2025", event: "Misión Colombia (23 Nov-5 Dic) | Aplicaciones PMSL activas | Protocolo triage IT desplegado", indicator: "bg-red-600 text-white font-bold" },
-            { period: "DIC 2025", event: "Misión Venezuela (8-19 Dic) | Réplica regional | Cierre ciclo 2025", indicator: "bg-orange-500 text-white" },
-            { period: "2026", event: "Posicionamiento consolidado | Ecosistema maduro", indicator: "bg-teal-600 text-white" }
-        ];
-
-        /**
-         * Función para obtener clases de color basadas en el estado.
-         */
-        function getStatusClasses(statusText) {
-            let baseClasses = "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase whitespace-nowrap ";
-            let colorClasses = "";
-            let isCritical = statusText.includes("[CRÍTICO]");
-            let status = statusText.replace(" [CRÍTICO]", "").trim();
-
-            if (isCritical) {
-                 // Estado CRÍTICO (Prioridad máxima)
-                colorClasses = "bg-critical text-white shadow-md shadow-critical/50 ring-2 ring-critical-light";
-            } else if (status === "COMPLETADO") {
-                 // Estado COMPLETADO
-                colorClasses = "bg-completed text-gray-900";
-            } else if (status === "CONFIRMADO" || status.includes("Pte. Visa")) {
-                 // Estado CONFIRMADO
-                colorClasses = "bg-confirmed text-gray-900";
-            } else if (status === "EN CURSO" || status === "EN USO") {
-                 // Estado EN CURSO / EN USO
-                colorClasses = "bg-en-curso text-gray-900";
-            } else if (status === "ACTIVO") {
-                 // Estado ACTIVO (No crítico, pero en marcha)
-                colorClasses = "bg-active text-gray-900";
-            } else if (status === "LATENTE") {
-                 // Estado LATENTE
-                colorClasses = "bg-slate-600 text-slate-300";
-            } else {
-                 // Default para otros
-                 colorClasses = "bg-gray-500 text-white";
-            }
-
-            return baseClasses + colorClasses;
-        }
-
-        /**
-         * Renderiza los elementos de la matriz en un card de dominio.
-         */
-        function renderDomainCard(domainData) {
-            const itemsHtml = domainData.items.map(item => {
-                const statusClasses = getStatusClasses(item.status);
-                const isCritical = item.status.includes("[CRÍTICO]") || item.critical; // Usa critical por si acaso, aunque el nuevo status lo incluye
-
-                // Determina el icono de criticidad
-                const criticalIcon = isCritical ? 
-                    '<svg class="w-4 h-4 ml-1 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>' : 
-                    '';
-
-                return `
-                    <div class="p-4 border-b border-slate-700 last:border-b-0 hover:bg-slate-800 transition duration-150 rounded-lg">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                            <!-- Fila 1: Proyecto y Estado -->
-                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md mb-2 md:mb-0">${item.project}</span>
-                            <div class="${statusClasses}">
-                                ${item.status}
-                                ${criticalIcon}
-                            </div>
-                        </div>
-                        <!-- Fila 2: Tarea Crítica y Próximo Movimiento -->
-                        <p class="text-slate-300 text-sm font-light mb-1 italic">Tarea Crítica: ${item.task}</p>
-                        <p class="text-white text-md font-medium">Próximo Movimiento: ${item.move}</p>
-                    </div>
-                `;
-            }).join('');
-
-            // Construcción del card de dominio
-            return `
-                <div class="bg-primary-dark border-t-4 ${domainData.theme} rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-1 text-white">${domainData.domain}</h3>
-                        <p class="text-sm text-slate-400 mb-4">${domainData.subtitle}</p>
-                        <div class="divide-y divide-slate-700 bg-secondary-dark rounded-lg overflow-hidden border border-slate-700">
-                            ${itemsHtml}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        /**
-         * Renderiza el componente de la línea temporal.
-         */
-        function renderTimelineItem(timelineItem) {
-            return `
-                <div class="flex items-start bg-primary-dark p-4 rounded-lg shadow-xl border border-slate-700 hover:bg-slate-800 transition duration-200">
-                    <div class="flex-shrink-0 mr-4">
-                        <span class="rounded-full ${timelineItem.indicator} text-xs md:text-sm px-4 py-1 font-mono uppercase shadow-lg">
-                            ${timelineItem.period}
-                        </span>
-                    </div>
-                    <p class="text-lg text-slate-200">${timelineItem.event}</p>
-                </div>
-            `;
-        }
-
-        // Función de inicialización
-        function initDashboard() {
-            const container = document.getElementById('dashboard-container');
-            const timeline = document.getElementById('timeline-container');
-
-            // Renderizar Cards de Dominio
-            container.innerHTML = strategicData.map(renderDomainCard).join('');
-
-            // Renderizar Línea Temporal
-            timeline.innerHTML = timelineData.map(renderTimelineItem).join('');
-        }
-
-        // Ejecutar la inicialización
-        window.onload = initDashboard;
-    </script>
 </body>
 </html>
