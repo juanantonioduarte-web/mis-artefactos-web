@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Misión Regional - OCHA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS and JS (Used by Claude AI Component) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+    <script>
+        // Configuración de Tailwind para colores y fuentes OCHA
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'un-blue': '#009edb', // Color principal de OCHA / UN
+                        'ocha-yellow': '#ffc800', // Color de acento de OCHA
+                        'ocha-gray': '#f4f4f4', // Fondo suave
+                    },
+                    fontFamily: {
+                        // 'Arial' es la fuente para usuarios comunes, 'Roboto' para avanzados. Usamos Roboto como fallback si Arial no está disponible.
+                        sans: ['Roboto', 'Arial', 'sans-serif'], 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos específicos para Leaflet y contenedores */
+        #map {
+            height: 75vh; /* Altura fija para el mapa */
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e5e7eb; /* Borde sutil */
+        }
+        
+        .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+            border-radius: 8px;
+        }
+
+        /* Estilos del popup del mapa (Para el componente de Claude AI) */
+        .popup-title {
+            font-weight: 700;
+            color: #009edb;
+            font-size: 1.1em;
+            margin-bottom: 2px;
+        }
+        .popup-dates {
+            font-size: 0.9em;
+            color: #374151;
+        }
+
+        /* Estilos de la Leyenda */
+        .legend-map {
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            font-size: 14px;
+        }
+        .legend-map h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 3px;
+        }
+        .legend-item-map {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-ocha-gray min-h-screen font-sans p-4 sm:p-8">
+
+    <!-- Encabezado del Dashboard -->
+    <header class="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-white rounded-xl shadow-lg border-t-4 border-un-blue">
+        <div class="flex items-center mb-4 sm:mb-0">
+            <!-- Logo OCHA -->
+            <!-- Usamos un placeholder ya que no se permiten imágenes base64 ni URL externas de imágenes directamente -->
+            <div class="h-10 w-10 bg-un-blue rounded-full flex items-center justify-center mr-3 text-white font-bold text-xl">
+                 
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Misión Regional COL/VZLA</h1>
+        </div>
+        <p class="text-sm text-gray-500 bg-ocha-yellow/20 p-2 rounded-lg font-medium">Estado: CONFIRMADO | Periodo: Nov - Dic 2025</p>
+    </header>
+
+    <!-- Contenedor Principal del Dashboard: 70% Mapa | 30% Detalles -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Columna 1: Mapa Interactivo (70%) -->
+        <div class="lg:col-span-8">
+            <div id="map">
+                <!-- El mapa Leaflet se insertará aquí -->
+            </div>
+        </div>
+
+        <!-- Columna 2: Panel de Detalles (30%) -->
+        <div class="lg:col-span-4">
+            <div id="details-panel" class="bg-white p-6 rounded-xl shadow-lg h-full border-t-4 border-ocha-yellow/70 transition-all duration-300">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2 text-un-blue">Detalles de la Parada</h2>
+                
+                <div id="city-details" class="space-y-4 text-gray-700">
+                    <p class="text-sm italic text-gray-500">Haz clic en un marcador en el mapa para ver los detalles de la ciudad y la misión.</p>
+                    
+                    <div class="detail-card p-3 bg-un-blue/10 rounded-lg">
+                        <p class="font-semibold text-un-blue">Ubicación:</p>
+                        <p id="detail-city" class="text-lg font-medium">-</p>
+                    </div>
+                    
+                    <div class="detail-card p-3 bg-ocha-yellow/10 rounded-lg">
+                        <p class="font-semibold text-gray-600">Fechas de Misión:</p>
+                        <p id="detail-dates">-</p>
+                    </div>
+                    
+                    <div class="detail-card p-3 bg-gray-100 rounded-lg">
+                        <p class="font-semibold text-gray-600">Descripción/Tareas:</p>
+                        <p id="detail-description" class="text-sm italic">Pendiente de detalle específico por parada (Inspección in situ, Réplica regional, etc.)</p>
+                    </div>
+
+                    <p class="text-xs text-right pt-4 text-gray-400">Fuente: MFP v2.4 (12/11/2025)</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // =================================================================
+        // Lógica de Inicialización del Mapa (Adaptado del componente de Claude AI)
+        // =================================================================
+        
+        let map;
+
+        // Función para actualizar el panel de detalles
+        function updateDetailsPanel(cityData) {
+            document.getElementById('detail-city').innerText = cityData.name + (cityData.country ? `, ${cityData.country}` : '');
+            document.getElementById('detail-dates').innerText = cityData.dates;
+            
+            let descriptionText;
+            const cityKey = cityData.name.split(' ')[0].toLowerCase();
+            
+            switch(cityKey) {
+                case 'panamá':
+                    descriptionText = cityData.isReturn ? 'Punto de Retorno: Cierre ciclo 2025, Informe regional.' : 'Punto de Salida: Aplicaciones PMSL activas, Protocolo triage IT desplegado.';
+                    break;
+                case 'quibdó':
+                case 'popayán':
+                case 'pasto':
+                    descriptionText = 'Misión COL: Inspección in situ + protocolo triage IT.';
+                    break;
+                case 'bogotá':
+                    descriptionText = 'Misión COL: Presentación resultados D1, Réplica regional VZLA/COL.';
+                    break;
+                case 'caracas':
+                case 'san': // San Cristóbal
+                case 'ciudad': // Ciudad Guayana
+                    descriptionText = 'Misión VZLA: Réplica metodología + informe regional, Posible estandarización metodología.';
+                    break;
+                default:
+                    descriptionText = 'Detalle de la parada no especificado.';
+            }
+
+            document.getElementById('detail-description').innerText = descriptionText;
+            
+            // Efecto visual al actualizar el panel
+            const panel = document.getElementById('details-panel');
+            panel.classList.add('animate-pulse-once');
+            setTimeout(() => {
+                panel.classList.remove('animate-pulse-once');
+            }, 500); // 500ms coincide con la animación CSS (no definida aquí, pero es una buena práctica)
+        }
+
+        // Definición de las ciudades y ruta
+        const cities = [
+            { name: "Panamá", country: "Panamá", lat: 8.98, lng: -79.52, dates: "Domingo 23 Nov", type: 'start' },
+            { name: "Quibdó", country: "Colombia", lat: 5.69, lng: -76.66, dates: "Lunes 24 – Miércoles 26 Nov", type: 'stop' },
+            { name: "Popayán", country: "Colombia", lat: 2.44, lng: -76.61, dates: "Jueves 27 – Viernes 28 Nov", type: 'stop' },
+            { name: "Pasto", country: "Colombia", lat: 1.21, lng: -77.28, dates: "Lunes 1 – Martes 2 Dic", type: 'stop' },
+            { name: "Bogotá", country: "Colombia", lat: 4.71, lng: -74.07, dates: "Miércoles 3 – Viernes 5 Dic", type: 'stop' },
+            { name: "Caracas", country: "Venezuela", lat: 10.48, lng: -66.90, dates: "Martes 9 – Viernes 12 Dic", type: 'stop' },
+            { name: "San Cristóbal", country: "Venezuela", lat: 7.77, lng: -72.23, dates: "Lunes 15 – Martes 16 Dic", type: 'stop' },
+            { name: "Ciudad Guayana", country: "Venezuela", lat: 8.31, lng: -62.71, dates: "Miércoles 17 – Jueves 18 Dic", type: 'stop' },
+            { name: "Panamá (Retorno)", country: "Panamá", lat: 8.98, lng: -79.52, dates: "Viernes 19 Dic", type: 'return', isReturn: true }
+        ];
+
+        // Mapear coordenadas para la línea de ruta
+        const routeCoordinates = cities.map(city => [city.lat, city.lng]);
+
+        // Función para obtener el color del marcador según el tipo
+        function getMarkerColor(type) {
+            switch (type) {
+                case 'start':
+                    return '#10b981'; // Verde (Emerald de Tailwind)
+                case 'stop':
+                    return '#ef4444'; // Rojo (Red de Tailwind)
+                case 'return':
+                    return '#8b5cf6'; // Morado (Violet de Tailwind)
+                default:
+                    return '#3b82f6';
+            }
+        }
+        
+        // Inicializar el mapa
+        window.onload = function() {
+            try {
+                map = L.map('map').setView([5, -70], 5); // Centro inicial de la región
+
+                // Agregar capa de OpenStreetMap
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+
+                // Agregar línea de ruta (Polilínea)
+                const routeLine = L.polyline(routeCoordinates, {
+                    color: '#009edb', // Azul UN
+                    weight: 4,
+                    opacity: 0.7
+                }).addTo(map);
+
+                // Agregar marcadores y popups
+                cities.forEach((city, index) => {
+                    const markerColor = getMarkerColor(city.type);
+
+                    // Usar un icono personalizado con el color OCHA
+                    const customIcon = L.divIcon({
+                        className: 'custom-div-icon',
+                        html: `<div style="background-color: ${markerColor}; width: 15px; height: 15px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.4);"></div>`,
+                        iconSize: [15, 15],
+                        iconAnchor: [7, 7]
+                    });
+
+                    const marker = L.marker([city.lat, city.lng], { icon: customIcon }).addTo(map);
+
+                    // Contenido del Popup (Copia de Claude AI)
+                    const popupContent = `
+                        <div class="popup-title">${city.name}${city.isReturn ? ' (Retorno)' : ''}${city.country && !city.isReturn ? ', ' + city.country : ''}</div>
+                        <div class="popup-dates">${city.dates}</div>
+                    `;
+                    marker.bindPopup(popupContent);
+
+                    // === MODIFICACIÓN CLAVE: Evento para actualizar el Panel de Detalles ===
+                    marker.on('click', function() {
+                        updateDetailsPanel(city);
+                        routeLine.setStyle({ color: '#ccc', weight: 2 }); // Desenfocar ruta al seleccionar un punto
+
+                        // Enfatizar la ruta hasta el punto actual (opcional, pero estético)
+                        const subRouteCoords = routeCoordinates.slice(0, index + 1);
+                        const subRoute = L.polyline(subRouteCoords, {
+                            color: '#009edb',
+                            weight: 4,
+                            opacity: 1
+                        }).addTo(map);
+
+                        // Remover la subruta anterior si existe
+                        map.eachLayer(function(layer) {
+                            if (layer instanceof L.Polyline && layer !== routeLine && layer !== subRoute) {
+                                map.removeLayer(layer);
+                            }
+                        });
+                        
+                        // Abrir el popup del marcador al hacer click
+                        marker.openPopup();
+                    });
+
+                    // Abrir popup y actualizar panel del primer punto automáticamente
+                    if (index === 0) {
+                        marker.openPopup();
+                        updateDetailsPanel(city);
+                    }
+                });
+
+                // Ajustar el zoom para mostrar toda la ruta
+                map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+
+                // Lógica de Leyenda (Copia de Claude AI)
+                const legend = L.control({ position: 'bottomright' });
+                
+                legend.onAdd = function (map) {
+                    const div = L.DomUtil.create('div', 'legend-map');
+                    div.innerHTML = `
+                        <h4>Leyenda de Paradas</h4>
+                        <div class="legend-item-map">
+                            <div class="legend-color" style="background: #10b981;"></div>
+                            <span>Punto de Salida (Panamá)</span>
+                        </div>
+                        <div class="legend-item-map">
+                            <div class="legend-color" style="background: #ef4444;"></div>
+                            <span>Paradas Intermedias</span>
+                        </div>
+                        <div class="legend-item-map">
+                            <div class="legend-color" style="background: #8b5cf6;"></div>
+                            <span>Punto de Retorno (Panamá)</span>
+                        </div>
+                    `;
+                    return div;
+                };
+                
+                legend.addTo(map);
+            } catch (error) {
+                console.error("Error al inicializar el mapa Leaflet:", error);
+            }
+        }
+    </script>
+</body>
+</html>
