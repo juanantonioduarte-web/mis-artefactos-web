@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASHBOARD D0 - Matriz Estratégica con Mapa de Misión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- LIBRERÍAS LEAFLET PARA MAPA REAL E INTERACTIVO -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <!-- FIN LEAFLET -->
+    
+    <style>
+        /* Fuente Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        :root {
+            --color-primary: #009edb; /* UN Blue / OCHA Blue */
+            --color-accent: #ffc800; /* Yellow accent */
+            --color-col-route: #f58220; /* Naranja/Tierra */
+            --color-ven-route: #009edb; /* Azul OCHA */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Fondo gris muy claro (Slate-50) */
+            color: #1f2937; /* Texto oscuro (Gray-800) */
+            min-height: 100vh;
+        }
+        
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-internal-bg {
+             background-color: #f8fafc; /* Slate-50 para fondos internos */
+        }
+
+        /* Estilos específicos para Leaflet Map */
+        #mapid {
+            height: 380px; /* Altura fija para el contenedor del mapa */
+            width: 100%;
+            border-radius: 0.5rem; /* rounded-lg */
+        }
+        
+        /* Estilo para Popups */
+        .leaflet-popup-content-wrapper {
+            border-radius: 0.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .popup-title {
+            font-weight: bold;
+            color: var(--color-primary);
+            font-size: 1.1em;
+            margin-bottom: 3px;
+        }
+        
+        .popup-dates {
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        /* Leyenda simple */
+        .legend-map {
+            background: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .legend-item-map {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+            border: 1px solid #333;
+        }
+
+        /* Animación para el panel de detalles */
+        @keyframes highlight {
+            0% { background-color: #fff; }
+            50% { background-color: #fce7f3; } /* Rosa suave para un ligero flash */
+            100% { background-color: #f8fafc; }
+        }
+        .active-point-info {
+            animation: highlight 0.5s ease-out;
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <script>
+        // Configuración de Tailwind para usar colores personalizados
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ocha-blue': '#009edb',
+                        'ocha-yellow': '#ffc800',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Header / Título Principal -->
+    <header class="mb-8 border-b border-ocha-blue pb-4 max-w-6xl mx-auto">
+        <h1 class="text-3xl font-extrabold text-ocha-blue">DASHBOARD D0 - MAPA MATRIZ ESTRATÉGICO</h1>
+        <p class="text-sm text-gray-600">Actualizado al 13/11/2025 | Fuente: MFP v2.4</p>
+    </header>
+
+    <!-- Contenedor Principal de Tarjetas (Una sola columna) -->
+    <main class="grid grid-cols-1 gap-8 max-w-6xl mx-auto">
+
+        <!-- CARD 1: DOMINIO CORPORATIVO (OCHA) -->
+        <div class="col-span-1 p-6 card h-fit">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">DOMINIO CORPORATIVO (OCHA)</h2>
+            
+            <div class="space-y-4">
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Presentación resultados D1</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-green-600">COMPLETADO</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Réplica regional VZLA/COL</p>
+                </div>
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Misión COL (23 Nov-5 Dic)</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-ocha-yellow">CONFIRMADO</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Inspección in situ + protocolo triage IT</p>
+                </div>
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Misión VZLA (8-19 Dic)</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-ocha-yellow">CONFIRMADO (Pte. Visa)</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Réplica metodología + informe regional</p>
+                </div>
+                <div class="p-3 rounded card-internal-bg border border-gray-200">
+                    <p class="text-ocha-blue font-semibold">PWO: Estandarización metodología</p>
+                    <p class="text-sm text-gray-700">Estado: <span class="font-bold text-yellow-500">EN CURSO</span></p>
+                    <p class="text-xs text-gray-500">Próximo: Matriz decisión + infografía end-users</p>
+                </div>
+            </div>
+            
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ RESUELVE? → Conecta ejecución técnica con impacto estratégico regional tangible.</p>
+        </div>
+        
+        <!-- CARD 2: MISIÓN COLOMBIA & VENEZUELA (MAPA INTERACTIVO LEAFLET) -->
+        <div class="col-span-1 p-6 card">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-ocha-blue pb-2 flex items-center">
+                MISIÓN COLOMBIA & VENEZUELA 
+                <span class="ml-2 inline-block px-3 py-1 text-xs font-medium rounded-full bg-ocha-blue text-white">RUTA ACTIVA</span>
+            </h2>
+
+            <!-- Contenedor del Mapa y la Leyenda -->
+            <div class="flex flex-col md:flex-row gap-6">
+                
+                <!-- Contenedor del Mapa Leaflet -->
+                <div class="w-full md:w-2/3 p-2 card-internal-bg border border-gray-200 rounded-lg flex items-center justify-center relative">
+                    <div id="mapid"></div> <!-- Aquí se inicializa Leaflet -->
+                </div>
+
+                <!-- Detalle del Punto de Ruta Seleccionado / Tabla de Ruta -->
+                <div class="w-full md:w-1/3 space-y-4">
+                    <div id="point-detail" class="p-4 rounded-lg card-internal-bg border border-gray-200 h-28 flex flex-col justify-center transition-all duration-300">
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">Punto de la Ruta</h3>
+                        <p class="text-ocha-blue font-semibold" id="point-name">Seleccione un punto del mapa</p>
+                        <p class="text-sm text-gray-700" id="point-dates">para ver los detalles de la fecha.</p>
+                    </div>
+
+                    <div class="h-64 overflow-y-auto card-internal-bg border border-gray-200 rounded-lg p-3">
+                        <h4 class="text-sm font-semibold text-gray-500 mb-2">ITINERARIO COMPLETO</h4>
+                        <table class="min-w-full text-xs text-gray-700">
+                            <thead>
+                                <tr class="border-b border-gray-300 text-left">
+                                    <th class="py-1 text-ocha-blue">País</th>
+                                    <th class="py-1 text-ocha-blue">Ubicación</th>
+                                    <th class="py-1 text-ocha-blue">Fechas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- COLOMBIA -->
+                                <tr><td class="pt-2 text-gray-900 font-semibold" colspan="3">COLOMBIA</td></tr>
+                                <tr><td></td><td>Panamá (Salida)</td><td>Dom 23 Nov</td></tr>
+                                <tr><td></td><td>Quibdó</td><td>Lun 24 - Mié 26 Nov</td></tr>
+                                <tr><td></td><td>Popayán</td><td>Jue 27 - Vie 28 Nov</td></tr>
+                                <tr><td></td><td>Pasto</td><td>Lun 1 - Mar 2 Dic</td></tr>
+                                <tr><td></td><td>Bogotá</td><td>Mié 3 - Vie 5 Dic</td></tr>
+                                <!-- VENEZUELA -->
+                                <tr><td class="pt-3 text-gray-900 font-semibold" colspan="3">VENEZUELA</td></tr>
+                                <tr><td></td><td>Caracas</td><td>Mar 9 - Vie 12 Dic</td></tr>
+                                <tr><td></td><td>San Cristobal</td><td>Lun 15 - Mar 16 Dic</td></tr>
+                                <tr><td></td><td>Ciudad Guayana</td><td>Mié 17 - Jue 18 Dic</td></tr>
+                                <tr><td></td><td>Panamá (Retorno)</td><td>Vie 19 Dic</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ MUESTRA? → Visualización detallada de la trayectoria operacional de PWO, facilitando la coordinación logística y el seguimiento de hitos.</p>
+        </div>
+        
+        <!-- CARD 3: DOMINIO PERSONAL (POSICIONAMIENTO) -->
+        <div class="col-span-1 p-6 card h-fit">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">DOMINIO PERSONAL (POSICIONAMIENTO)</h2>
+            <div class="p-3 rounded card-internal-bg border border-gray-200">
+                <p class="text-ocha-blue font-semibold">PMSL: Scrapping activo (10 agencias)</p>
+                <p class="text-sm text-gray-700">Estado: <span class="font-bold text-red-600">ACTIVO [CRÍTICO]</span></p>
+                <p class="text-xs text-gray-500">Próximo: Alta frecuencia + ritual dominical 10min</p>
+            </div>
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ RESUELVE? → Convierte expertise tácito en oportunidades concretas con evidencias medibles.</p>
+        </div>
+
+        <!-- CARD 4: DOMINIO INNOVACIÓN (LABORATORIO) -->
+        <div class="col-span-1 p-6 card h-fit">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">DOMINIO INNOVACIÓN (LABORATORIO)</h2>
+            <div class="p-3 rounded card-internal-bg border border-gray-200">
+                <p class="text-ocha-blue font-semibold">DW-002</p>
+                <p class="text-sm text-gray-700">Estado: <span class="font-bold text-green-600">EN USO</span></p>
+                <p class="text-xs text-gray-500">Próxima: 3 fichas validadas para activar DW-003</p>
+            </div>
+            <!-- Lista de módulos latentes -->
+            <div class="mt-4 space-y-1">
+                <p class="text-sm text-gray-500">Módulos Latentes:</p>
+                <ul class="list-disc list-inside text-xs text-gray-600 ml-4">
+                    <li>PSY-DEC+NL</li>
+                    <li>TA+IH</li>
+                    <li>AET-ALIGN</li>
+                    <li>DT+IA</li>
+                    <li>TWR+IA</li>
+                </ul>
+            </div>
+            <p class="text-xs italic mt-4 text-gray-500">¿QUÉ RESUELVE? → Estandariza evolución deliberada de productos y procesos.</p>
+        </div>
+
+        <!-- CARD 5: LÍNEA TEMPORAL / HALLAZGO ESTRATÉGICO -->
+        <div class="col-span-1 p-6 card">
+            <h2 class="text-xl font-bold mb-4 text-gray-900 border-b border-gray-200 pb-2">LÍNEA TEMPORAL Y HALLAZGO ESTRATÉGICO</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Línea Temporal -->
+                <div>
+                    <h3 class="text-lg font-semibold text-ocha-yellow mb-2">LÍNEA TEMPORAL ESTRATÉGICA</h3>
+                    <ul class="space-y-2">
+                        <li class="p-3 border-l-4 border-ocha-blue card-internal-bg rounded">
+                            <span class="font-bold">NOV 2025:</span> Misión Colombia (23 Nov-5 Dic) | Protocolo triage IT
+                        </li>
+                        <li class="p-3 border-l-4 border-ocha-blue card-internal-bg rounded">
+                            <span class="font-bold">DIC 2025:</span> Misión Venezuela (8-19 Dic) | Réplica regional | Cierre ciclo
+                        </li>
+                        <li class="p-3 border-l-4 border-ocha-blue card-internal-bg rounded">
+                            <span class="font-bold">2026:</span> Posicionamiento consolidado | Ecosistema maduro
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Hallazgo Estratégico -->
+                <div>
+                    <h3 class="text-lg font-semibold text-ocha-yellow mb-2">HALLAZGO ESTRATÉGICO ACTUAL (NOV 2025)</h3>
+                    <blockquote class="border-l-4 border-ocha-yellow pl-4 italic text-gray-700 bg-yellow-50 p-4 rounded">
+                        "Ejecutando sobre dos vectores críticos: 1) PWO con metodología estandarizada (Colombia/Venezuela) y 2) PMSL..."
+                    </blockquote>
+                    <p class="text-xs mt-2 text-gray-500">Foco: Convergencia de proyectos tácticos y estratégicos.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pointNameElement = document.getElementById('point-name');
+            const pointDatesElement = document.getElementById('point-dates');
+            const detailCard = document.getElementById('point-detail');
+
+            // 1. Inicializar el mapa Leaflet
+            // Coordenadas centrales: Centro de la zona (cerca de la frontera COL/VEN)
+            const map = L.map('mapid').setView([6.0, -70.0], 5); 
+
+            // Capa de Tiles (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // 2. Datos de la Misión (Coordenadas reales)
+            const missionCities = [
+                // Nota: Panamá Capital (Salida/Retorno)
+                { id: 'pt-0', name: "Panamá (Salida)", country: "Panamá", dates: "Dom 23 Nov (Inicio)", coords: [8.9806, -79.5195], color: 'var(--color-accent)', type: 'start' }, 
+                
+                // Colombia (Ruta Naranja)
+                { id: 'pt-2', name: "Quibdó", country: "Colombia", dates: "Lun 24 - Mié 26 Nov", coords: [5.6946, -76.6505], color: 'var(--color-col-route)', type: 'stop' },
+                { id: 'pt-3', name: "Popayán", country: "Colombia", dates: "Jue 27 - Vie 28 Nov", coords: [2.4414, -76.6062], color: 'var(--color-col-route)', type: 'stop' },
+                { id: 'pt-4', name: "Pasto", country: "Colombia", dates: "Lun 1 - Mar 2 Dic", coords: [1.2136, -77.2811], color: 'var(--color-col-route)', type: 'stop' },
+                { id: 'pt-1', name: "Bogotá", country: "Colombia", dates: "Dom 23 Nov y Mié 3 - Vie 5 Dic", coords: [4.7110, -74.0721], color: 'var(--color-col-route)', type: 'stop' },
+                
+                // Venezuela (Ruta Azul OCHA)
+                { id: 'pt-5', name: "Caracas", country: "Venezuela", dates: "Mar 9 - Vie 12 Dic", coords: [10.4806, -66.9036], color: 'var(--color-ven-route)', type: 'stop' },
+                { id: 'pt-6', name: "San Cristobal", country: "Venezuela", dates: "Lun 15 - Mar 16 Dic", coords: [7.7661, -72.2227], color: 'var(--color-ven-route)', type: 'stop' },
+                { id: 'pt-7', name: "Ciudad Guayana", country: "Venezuela", dates: "Mié 17 - Jue 18 Dic", coords: [8.3039, -62.7566], color: 'var(--color-ven-route)', type: 'stop' },
+                
+                // Panamá (Punto de Retorno - mismo lugar que Salida)
+                { id: 'pt-8', name: "Panamá (Retorno)", country: "Panamá", dates: "Vie 19 Dic (Fin de Misión)", coords: [8.9806, -79.5195], color: 'var(--color-accent)', type: 'end' }, 
+            ];
+
+            // 3. Crear Rutas (Polyline)
+            const colombiaRoutePoints = [
+                missionCities[0].coords, // Panamá Salida
+                missionCities[3].coords, // Popayán (usando Popayán como punto clave intermedio)
+                missionCities[4].coords, // Pasto
+                missionCities[2].coords, // Quibdó
+                missionCities[1].coords, // Bogotá
+            ];
+            const venezuelaRoutePoints = [
+                missionCities[1].coords, // Bogotá (punto de transición)
+                missionCities[5].coords, // Caracas
+                missionCities[6].coords, // San Cristobal
+                missionCities[7].coords, // Ciudad Guayana
+                missionCities[8].coords, // Panamá Retorno
+            ];
+            
+            // Unir todas las coordenadas para el ajuste de vista
+            const allCoords = missionCities.map(city => city.coords);
+            
+            // Ruta Colombia (Naranja)
+            L.polyline(colombiaRoutePoints, {
+                color: 'var(--color-col-route)',
+                weight: 5,
+                opacity: 0.8
+            }).addTo(map);
+
+            // Ruta Venezuela (Azul OCHA) - Nota: Se asume un enlace entre Bogotá y Caracas
+            L.polyline(venezuelaRoutePoints, {
+                color: 'var(--color-ven-route)',
+                weight: 5,
+                opacity: 0.8
+            }).addTo(map);
+
+
+            // 4. Crear Marcadores (Markers)
+            let markers = [];
+            
+            // Función para actualizar el panel de detalles
+            const updateDetailPanel = (name, dates) => {
+                pointNameElement.textContent = name;
+                pointDatesElement.textContent = dates;
+                
+                // Efecto de resaltado
+                detailCard.classList.remove('active-point-info');
+                void detailCard.offsetWidth; // Truco para reiniciar la animación CSS
+                detailCard.classList.add('active-point-info');
+            };
+
+            missionCities.forEach((city, index) => {
+                // Definición del icono personalizado para cada ciudad
+                let markerIcon;
+
+                if (city.type === 'start') {
+                    // Start marker (Yellow, large)
+                    markerIcon = L.divIcon({
+                        className: 'custom-div-icon',
+                        html: `<div style="background-color: ${city.color}; border: 3px solid white; width: 18px; height: 18px; border-radius: 50%;"></div>`,
+                        iconSize: [18, 18],
+                        iconAnchor: [9, 9]
+                    });
+                } else if (city.type === 'end') {
+                    // End marker (Yellow ring)
+                     markerIcon = L.divIcon({
+                        className: 'custom-div-icon-ring',
+                        html: `<div style="background-color: transparent; border: 3px solid ${city.color}; width: 22px; height: 22px; border-radius: 50%;"></div>`,
+                        iconSize: [22, 22],
+                        iconAnchor: [11, 11]
+                    });
+                } else {
+                    // Stop marker (Color de la ruta)
+                    markerIcon = L.divIcon({
+                        className: 'custom-div-icon',
+                        html: `<div style="background-color: ${city.color}; border: 2px solid white; width: 14px; height: 14px; border-radius: 50%;"></div>`,
+                        iconSize: [14, 14],
+                        iconAnchor: [7, 7]
+                    });
+                }
+
+                const marker = L.marker(city.coords, { icon: markerIcon, cityId: city.id }).addTo(map);
+
+                // Contenido del Popup
+                const popupContent = `
+                    <div class="popup-title">${city.name} (${city.country})</div>
+                    <div class="popup-dates">${city.dates}</div>
+                `;
+                
+                marker.bindPopup(popupContent);
+                markers.push(marker);
+
+                // Evento Click para actualizar el panel de detalles
+                marker.on('click', function (e) {
+                    updateDetailPanel(city.name + ' (' + city.country + ')', city.dates);
+                    e.target.openPopup();
+                });
+
+                // Abrir popup del primer punto automáticamente al cargar
+                if (city.type === 'start') {
+                    marker.openPopup();
+                    updateDetailPanel(city.name + ' (' + city.country + ')', city.dates);
+                }
+            });
+
+            // Ajustar el zoom para mostrar toda la ruta
+            const routeLineGroup = L.featureGroup(markers);
+            map.fitBounds(routeLineGroup.getBounds(), { padding: [20, 20] });
+
+            // 5. Añadir Leyenda al mapa
+            const legend = L.control({ position: 'bottomright' });
+            
+            legend.onAdd = function (map) {
+                const div = L.DomUtil.create('div', 'legend-map');
+                div.innerHTML = `
+                    <h4>Rutas de Misión</h4>
+                    <div class="legend-item-map">
+                        <div class="legend-color" style="background: var(--color-col-route);"></div>
+                        <span>Ruta Colombia</span>
+                    </div>
+                    <div class="legend-item-map">
+                        <div class="legend-color" style="background: var(--color-ven-route);"></div>
+                        <span>Ruta Venezuela</span>
+                    </div>
+                    <div class="legend-item-map">
+                        <div class="legend-color" style="background: var(--color-accent);"></div>
+                        <span>Inicio/Fin</span>
+                    </div>
+                `;
+                return div;
+            };
+            
+            legend.addTo(map);
+
+        });
+    </script>
+</body>
+</html>
