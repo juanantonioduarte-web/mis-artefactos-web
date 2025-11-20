@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Adquisición Satelital - Australia Black Summer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo OCHA/Técnico */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .ocha-blue {
+            color: #2b7f98; /* Azul primario institucional */
+        }
+        .ocha-bg-blue {
+            background-color: #2b7f98;
+        }
+        .section-header {
+            border-left: 5px solid #2b7f98;
+            padding-left: 1rem;
+        }
+        .timeline-container {
+            position: relative;
+            padding-top: 3rem;
+        }
+        .timeline-line {
+            height: 4px;
+            background-color: #ccc;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+        }
+        .timeline-point {
+            position: relative;
+            z-index: 10;
+        }
+        .phase-box {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+        .phase-box:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .critical-phase {
+            background-color: #fcebeb; /* Rojo claro para crisis */
+            border-color: #dc3545;
+        }
+        .key-param-badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            margin: 0.25rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-2xl p-6 md:p-10">
+        
+        <header class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold ocha-blue">Plan de Adquisición Satelital</h1>
+            <h2 class="text-xl md:text-2xl font-semibold text-gray-700">PHC-GIS-001-01: Australia Black Summer (2019-2020)</h2>
+            <p class="text-gray-500 mt-2">Guía técnica para la selección de imágenes por fases de análisis.</p>
+        </header>
+
+        <!-- Sección 1: Línea Temporal y Parámetros Clave -->
+        <section class="mb-12">
+            <h3 class="text-2xl font-bold mb-6 section-header">1. Línea de Tiempo y Ventanas Críticas</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 timeline-container">
+                
+                <!-- Datos de Fases -->
+                <div id="fases-container" class="md:col-span-5 grid grid-cols-5 gap-4">
+                    <!-- FASE 1 -->
+                    <div class="phase-box p-4 rounded-lg">
+                        <p class="text-xs font-semibold ocha-blue uppercase">Línea Base</p>
+                        <p class="text-sm font-bold mt-1">Mar 2019 - Ago 2019</p>
+                        <p class="text-xs text-gray-500 mb-2">Estado de vegetación saludable.</p>
+                        <div class="border-t pt-2">
+                            <span class="key-param-badge bg-green-100 text-green-800">NDVI Base</span>
+                            <span class="key-param-badge bg-green-100 text-green-800">Humedad Suelo Inicial</span>
+                        </div>
+                    </div>
+                    <!-- FASE 2 -->
+                    <div class="phase-box p-4 rounded-lg">
+                        <p class="text-xs font-semibold ocha-blue uppercase">Susceptibilidad</p>
+                        <p class="text-sm font-bold mt-1">Sep 2019 - Dic 2019</p>
+                        <p class="text-xs text-gray-500 mb-2">Acumulación de estrés hídrico.</p>
+                        <div class="border-t pt-2">
+                            <span class="key-param-badge bg-yellow-100 text-yellow-800">NDMI (Estrés)</span>
+                            <span class="key-param-badge bg-yellow-100 text-yellow-800">LST (Temperatura)</span>
+                        </div>
+                    </div>
+                    <!-- FASE 3 -->
+                    <div class="phase-box p-4 rounded-lg critical-phase border-4">
+                        <p class="text-xs font-semibold text-red-700 uppercase">Propagación CRÍTICA</p>
+                        <p class="text-sm font-bold mt-1">Ene 2020 - Feb 2020</p>
+                        <p class="text-xs text-gray-500 mb-2">Máxima actividad de ignición.</p>
+                        <div class="border-t pt-2">
+                            <span class="key-param-badge bg-red-100 text-red-800">Focos Activos (VIIRS)</span>
+                            <span class="key-param-badge bg-red-100 text-red-800">NBR (Severidad)</span>
+                        </div>
+                    </div>
+                    <!-- FASE 4 -->
+                    <div class="phase-box p-4 rounded-lg">
+                        <p class="text-xs font-semibold ocha-blue uppercase">Impacto Inmediato</p>
+                        <p class="text-sm font-bold mt-1">Mar 2020 - Abr 2020</p>
+                        <p class="text-xs text-gray-500 mb-2">Evaluación inicial de daños.</p>
+                        <div class="border-t pt-2">
+                            <span class="key-param-badge bg-indigo-100 text-indigo-800">dNBR (Cicatriz Final)</span>
+                            <span class="key-param-badge bg-indigo-100 text-indigo-800">Exposición de Suelo</span>
+                        </div>
+                    </div>
+                    <!-- FASE 5 -->
+                    <div class="phase-box p-4 rounded-lg">
+                        <p class="text-xs font-semibold ocha-blue uppercase">Recuperación</p>
+                        <p class="text-sm font-bold mt-1">May 2020 - Mar 2021</p>
+                        <p class="text-xs text-gray-500 mb-2">Monitoreo de biomasa y regeneración.</p>
+                        <div class="border-t pt-2">
+                            <span class="key-param-badge bg-green-100 text-green-800">NDVI Tendencia</span>
+                            <span class="key-param-badge bg-green-100 text-green-800">Recuperación Biomasa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 2: Fuentes Satelitales Óptimas -->
+        <section class="mb-10">
+            <h3 class="text-2xl font-bold mb-4 section-header">2. Fuentes Satelitales y Aplicación</h3>
+
+            <div class="overflow-x-auto shadow-lg rounded-xl">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="ocha-bg-blue text-white">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider rounded-tl-xl">Satélite</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Resolución Espacial (m)</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Frecuencia (días)</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Bandas Críticas (NIR/SWIR)</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider rounded-tr-xl">Aplicación Sugerida</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 text-gray-800">
+                        <tr class="hover:bg-blue-50/50">
+                            <td class="px-6 py-4 whitespace-nowrap font-bold text-base ocha-blue">Sentinel-2</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">10m (VNIR)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">5 días</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">Sí (13 bandas)</td>
+                            <td class="px-6 py-4 text-sm font-medium">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">PRINCIPAL para NBR/dNBR</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50">
+                            <td class="px-6 py-4 whitespace-nowrap font-bold text-base text-gray-700">Landsat 8/9</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">30m</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">16 días</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">Sí (11 bandas, incluye TIR)</td>
+                            <td class="px-6 py-4 text-sm">
+                                <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">Series Temporales Largas</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-blue-50/50">
+                            <td class="px-6 py-4 whitespace-nowrap font-bold text-base text-red-600">VIIRS</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">375m</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">Diaria / Nocturna</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">Bandas Infrarrojas</td>
+                            <td class="px-6 py-4 text-sm">
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">CRÍTICO para Focos Activos 24/7</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección 3: Recomendaciones Clave -->
+        <section>
+            <h3 class="text-2xl font-bold mb-4 section-header">3. Recomendaciones de Adquisición</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="p-5 bg-green-50 border-l-4 border-green-500 rounded-lg">
+                    <p class="font-bold text-lg text-green-800">Período de Adquisición Crítico:</p>
+                    <p class="text-green-700 mt-1">Septiembre 2019 - Marzo 2021 (18 meses)</p>
+                </div>
+
+                <div class="p-5 bg-blue-50 border-l-4 border-blue-500 rounded-lg">
+                    <p class="font-bold text-lg text-blue-800">Frecuencia Mínima:</p>
+                    <p class="text-blue-700 mt-1">1 imagen cada **10 días** (Ideal: 5 días)</p>
+                </div>
+
+                <div class="p-5 bg-orange-50 border-l-4 border-orange-500 rounded-lg">
+                    <p class="font-bold text-lg text-orange-800">Filtro Esencial:</p>
+                    <p class="text-orange-700 mt-1">**Baja Cobertura Nubosa** (Especialmente en fases 1, 4 y 5)</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-10 pt-4 border-t text-center text-xs text-gray-500">
+            <p>DSRI - Documento Condensado para Análisis Satelital (Basado en PHC-GIS-001-01)</p>
+        </footer>
+    </div>
+</body>
+</html>
