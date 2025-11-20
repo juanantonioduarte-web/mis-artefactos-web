@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriz DSRI - Análisis de Incendios Históricos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo OCHA: Tipografía clara y paleta institucional */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Fondo Neutral */
+        }
+        .ocha-blue {
+            color: #2b7f98; /* Azul primario institucional (similar a OCHA) */
+        }
+        .ocha-bg-blue {
+            background-color: #2b7f98;
+        }
+        .severity-high { background-color: #dc3545; } /* Rojo (Alerta Máxima) */
+        .severity-mid { background-color: #ffc107; } /* Amarillo (Alerta Media) */
+        .card-shadow { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .score-bar { height: 8px; border-radius: 4px; }
+        
+        /* OCHA-style list items for technical insights */
+        .insight-list li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #495057;
+        }
+        .insight-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #2b7f98; /* Icono en Azul OCHA */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8 p-4 bg-white rounded-xl card-shadow">
+            <h1 class="text-3xl font-bold ocha-blue mb-1">Matriz Comparativa Consolidada de Incendios Forestales</h1>
+            <p class="text-gray-600 text-lg">Priorización de Casos Históricos para Análisis Satelital Técnico (Top 4)</p>
+        </header>
+
+        <div id="incendio-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Los datos se cargarán aquí mediante JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Datos consolidados de la matriz
+        const incendios = [
+            {
+                nombre: "Australia Black Summer",
+                periodo: "2019 - 2020",
+                pais: "Australia",
+                score: 9.6,
+                aspectos_clave: [
+                    "Megafuego de 18-27 millones de hectáreas.",
+                    "Análisis de series temporales de más de 6 meses (pre/durante/post).",
+                    "Modelado de dispersión de humo estratosférico (AOD).",
+                    "Regeneración pos-incendio en ecosistemas diversos."
+                ],
+                fuentes_satelitales: ["Sentinel-2", "Landsat 8/9", "MODIS/VIIRS", "CALIPSO"]
+            },
+            {
+                nombre: "Amazonas",
+                periodo: "Pico 2019",
+                pais: "Brasil/Bolivia",
+                score: 8.83,
+                aspectos_clave: [
+                    "Clasificación de causas: Deforestación vs. quema agrícola.",
+                    "Análisis de biomasa y ciclo de carbono global.",
+                    "Uso de SAR (Sentinel-1) para penetrar la nubosidad.",
+                    "Monitoreo de anomalías térmicas (puntos calientes)."
+                ],
+                fuentes_satelitales: ["Landsat 8/9", "Sentinel-2", "MODIS/VIIRS", "Sentinel-1 SAR"]
+            },
+            {
+                nombre: "Canadá",
+                periodo: "Temporada Récord 2023",
+                pais: "Canadá",
+                score: 8.77,
+                aspectos_clave: [
+                    "Duración excepcional y extensión (>18 millones de hectáreas).",
+                    "Seguimiento del penacho de humo transcontinental (GOES-16/17).",
+                    "Modelado de dispersión atmosférica y calidad del aire.",
+                    "Análisis interanual de frecuencia e intensidad."
+                ],
+                fuentes_satelitales: ["GOES-16/17", "Sentinel-2", "Landsat", "Sentinel-5P"]
+            },
+            {
+                nombre: "Los Ángeles",
+                periodo: "2025 (Caso Anómalo)",
+                pais: "EE. UU. (California)",
+                score: 9.2,
+                aspectos_clave: [
+                    "Análisis complejo de Interfaz Urbano-Forestal (WUI).",
+                    "Anomalía de incendio invernal (fuego atípico).",
+                    "Uso de imágenes de muy alta resolución (UHR).",
+                    "Estudios de atribución climática inmediata (factor 25x)."
+                ],
+                fuentes_satelitales: ["Sentinel-2", "Landsat 8/9", "Planet Labs (UHR)", "Sentinel-1 SAR"]
+            }
+        ];
+
+        // Función para generar una barra de color basada en el score (0-10)
+        function getScoreBar(score) {
+            const percentage = score * 10; // Convertir 10/10 a 100%
+            let colorClass = 'severity-low bg-green-500';
+
+            if (score >= 9.0) {
+                colorClass = 'severity-high';
+            } else if (score >= 7.5) {
+                colorClass = 'severity-mid bg-yellow-500';
+            } else {
+                colorClass = 'bg-orange-500';
+            }
+            
+            return `
+                <div class="w-full bg-gray-200 rounded-full score-bar">
+                    <div class="score-bar rounded-full ${colorClass}" style="width: ${percentage}%;"></div>
+                </div>
+            `;
+        }
+
+        const gridContainer = document.getElementById('incendio-grid');
+
+        // Renderizar las tarjetas
+        incendios.forEach((incendio) => {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-xl p-6 card-shadow transition-transform duration-300 hover:scale-[1.02] border-t-8 border-r-4 ocha-bg-blue border-opacity-70';
+            card.style.borderTopColor = incendio.score >= 9.0 ? '#dc3545' : incendio.score >= 8.0 ? '#ffc107' : '#007bff';
+
+            // Contenido HTML de la tarjeta
+            card.innerHTML = `
+                <!-- Encabezado y Puntuación -->
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-extrabold ocha-blue leading-tight">${incendio.nombre}</h2>
+                        <p class="text-sm font-semibold text-gray-500">${incendio.periodo} | ${incendio.pais}</p>
+                    </div>
+                    <div class="ml-4 text-center p-2 rounded-lg bg-gray-100 border border-gray-300">
+                        <span class="text-2xl font-bold ${incendio.score >= 9.0 ? 'text-red-600' : 'text-orange-600'}">${incendio.score.toFixed(1)}</span>
+                        <span class="text-xs text-gray-500 block">/ 10</span>
+                    </div>
+                </div>
+
+                <!-- Barra de Puntuación Visual -->
+                <div class="mb-5">
+                    ${getScoreBar(incendio.score)}
+                </div>
+
+                <!-- Aspectos Técnicos Clave -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-700 mb-2 border-b pb-1 border-gray-200">Insights Técnicos Clave</h3>
+                    <ul class="insight-list">
+                        ${incendio.aspectos_clave.map(a => `<li>${a}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <!-- Fuentes Satelitales -->
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2 border-b pb-1 border-gray-200">Fuentes Satelitales Sugeridas</h3>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        ${incendio.fuentes_satelitales.map(f => `
+                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700 border border-gray-300">
+                                ${f}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            gridContainer.appendChild(card);
+        });
+    </script>
+</body>
+</html>
